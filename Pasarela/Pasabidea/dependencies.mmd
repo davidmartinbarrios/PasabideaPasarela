@@ -1,0 +1,30 @@
+graph TD
+    I["Interfaces"] 
+    E["Entities"]
+    H["Helpers"]
+    SR["sqlRepository"]
+    B["Business"]
+    APP["Application"]
+    UI["Pasabidea (UI)"]
+
+    %% Dependencias (A --> B significa A debe compilarse antes que B; B depende de A)
+    I --> SR
+    E --> SR
+    H --> SR
+
+    I --> B
+    E --> B
+    H --> B
+    SR --> B
+
+    I --> APP
+    E --> APP
+    B --> APP
+
+    APP --> UI
+    H --> UI
+    E --> UI
+
+    %% Orden de compilación sugerido (topológico)
+    classDef order fill:#efefef,stroke:#333;
+    step1["1. Interfaces"]:::order --> step2["2. Entities"]:::order --> step3["3. Helpers"]:::order --> step4["4. sqlRepository"]:::order --> step5["5. Business"]:::order --> step6["6. Application"]:::order --> step7["7. Pasabidea (UI)"]:::order

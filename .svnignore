@@ -1,0 +1,15 @@
+.vs
+bin
+obj
+Debug
+Release
+x86
+x64
+TestResults
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.cache
+*.log
+

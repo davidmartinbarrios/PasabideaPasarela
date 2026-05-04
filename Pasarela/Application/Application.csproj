@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E4FF51B3-DA50-46FE-BB86-41C1E124FE48}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Application</RootNamespace>
+    <AssemblyName>Application</AssemblyName>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AOs\AttributeApplication.cs" />
+    <Compile Include="AOs\BpmnExportApplication.cs" />
+    <Compile Include="AOs\Conectores_DIApplication.cs" />
+    <Compile Include="AOs\ConnectorApplication.cs" />
+    <Compile Include="AOs\Cw_Data_UsageApplication.cs" />
+    <Compile Include="AOs\Cw_Inter_ObjectApplication.cs" />
+    <Compile Include="AOs\Cw_LookupApplication.cs" />
+    <Compile Include="AOs\Cw_ObjectApplication.cs" />
+    <Compile Include="AOs\Cw_Object_TypeApplication.cs" />
+    <Compile Include="AOs\Cw_Prop_TypeApplication.cs" />
+    <Compile Include="AOs\DiagramApplication.cs" />
+    <Compile Include="AOs\EntityApplication.cs" />
+    <Compile Include="AOs\ErwinDiagramApplication.cs" />
+    <Compile Include="AOs\EventApplication.cs" />
+    <Compile Include="AOs\JoinerApplication.cs" />
+    <Compile Include="AOs\MugiLatestWfFlowApplication.cs" />
+    <Compile Include="AOs\OrganizationApplication.cs" />
+    <Compile Include="AOs\ProcessApplication.cs" />
+    <Compile Include="AOs\Process_BreakApplication.cs" />
+    <Compile Include="AOs\ShapeApplication.cs" />
+    <Compile Include="AOs\Text_FieldApplication.cs" />
+    <Compile Include="DTOs\AttributeDTO.cs" />
+    <Compile Include="DTOs\Conectores_DIDTO.cs" />
+    <Compile Include="DTOs\ConnectorDTO.cs" />
+    <Compile Include="DTOs\Cw_Data_UsageDTO.cs" />
+    <Compile Include="DTOs\Cw_Inter_ObjectDTO.cs" />
+    <Compile Include="DTOs\Cw_LookupDTO.cs" />
+    <Compile Include="DTOs\Cw_ObjectDTO.cs" />
+    <Compile Include="DTOs\Cw_Object_TypeDTO.cs" />
+    <Compile Include="DTOs\Cw_Prop_TypeDTO.cs" />
+    <Compile Include="DTOs\DiagramDTO.cs" />
+    <Compile Include="DTOs\EntityDTO.cs" />
+    <Compile Include="DTOs\ErwinDiagramDTO.cs" />
+    <Compile Include="DTOs\EventDTO.cs" />
+    <Compile Include="DTOs\JoinerDTO.cs" />
+    <Compile Include="DTOs\MugiLatestWfFlowDTO.cs" />
+    <Compile Include="DTOs\OrganizationDTO.cs" />
+    <Compile Include="DTOs\ProcessDTO.cs" />
+    <Compile Include="DTOs\Process_BreakDTO.cs" />
+    <Compile Include="DTOs\Query_ResponseDTO.cs" />
+    <Compile Include="DTOs\ResponseBaseDTO.cs" />
+    <Compile Include="DTOs\ShapeDTO.cs" />
+    <Compile Include="DTOs\Text_FieldDTO.cs" />
+    <Compile Include="Interfaces\IAttributeApplication.cs" />
+    <Compile Include="Interfaces\IBpmnExportApplication.cs" />
+    <Compile Include="Interfaces\IConectores_DIApplication.cs" />
+    <Compile Include="Interfaces\IConnectorApplication.cs" />
+    <Compile Include="Interfaces\ICw_Data_UsageApplication.cs" />
+    <Compile Include="Interfaces\ICw_Inter_ObjectApplication.cs" />
+    <Compile Include="Interfaces\ICw_LookupApplication.cs" />
+    <Compile Include="Interfaces\ICw_ObjectApplication.cs" />
+    <Compile Include="Interfaces\ICw_Object_TypeApplication.cs" />
+    <Compile Include="Interfaces\ICw_Prop_TypeApplication.cs" />
+    <Compile Include="Interfaces\IDiagramApplication.cs" />
+    <Compile Include="Interfaces\IEntityApplication.cs" />
+    <Compile Include="Interfaces\IErwinDiagramApplication.cs" />
+    <Compile Include="Interfaces\IEventApplication - Copia.cs" />
+    <Compile Include="Interfaces\IJoinerApplication.cs" />
+    <Compile Include="Interfaces\IMugiLatestWfFlowApplication.cs" />
+    <Compile Include="Interfaces\IOrganizationApplication.cs" />
+    <Compile Include="Interfaces\IProcessApplication.cs" />
+    <Compile Include="Interfaces\IProcess_Break.cs" />
+    <Compile Include="Interfaces\IShapeApplication.cs" />
+    <Compile Include="Interfaces\IText_FieldApplication.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{638a2740-fe13-44cc-ada9-44cebe1ec959}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{39a73647-0ea5-410f-bbef-d7d8aa8d2c95}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{60aacb7b-0e7f-422d-90f8-7ff4a783bf52}</Project>
+      <Name>Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{3f2531d0-2ec9-4cfa-9fb1-b3213cfe3230}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>MUGI</title>
+
+    <link href="https://unpkg.com/tabulator-tables@6.2.5/dist/css/tabulator.min.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --color-red: #d20a11;
+            --color-red-dark: #b1080e;
+            --color-text: #000000;
+            --color-text-soft: #666666;
+            --color-border: #ebebe6;
+            --color-bg: #ffffff;
+            --color-bg-soft: #f8f8f6;
+            --color-hover: #fff5f5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Raleway', Arial, sans-serif !important;
+        }
+
+        body,
+        input, textarea, select, button, option,
+        label, span, div, p, a, li, ul, ol,
+        h1, h2, h3, h4, h5, h6,
+        table, thead, tbody, tfoot, tr, th, td,
+        small, strong, em, b, i, u,
+        pre, code, blockquote,
+        svg, text, tspan, foreignObject,
+        [class], [id] {
+            font-family: 'Raleway', Arial, sans-serif !important;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            flex: 0 0 auto;
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+            padding: 14px 18px 12px 18px;
+        }
+
+        .topbar h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--color-text);
+            line-height: 1.1;
+        }
+
+        .topbar .subtitle {
+            margin-top: 4px;
+            color: var(--color-red);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        #main-table {
+            flex: 1 1 auto;
+            min-height: 0;
+            width: 100%;
+            background: var(--color-bg);
+            overflow: hidden;
+        }
+
+        .subtable-wrapper {
+            background: #fff;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .subtable-container {
+            padding: 10px 16px 14px 56px;
+            background: linear-gradient(to bottom, #fff 0%, #fcfcfb 100%);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .subtable-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            color: var(--color-red);
+            margin-bottom: 8px;
+        }
+
+        .drag-col {
+            cursor: move;
+            text-align: center;
+            color: var(--color-text-soft);
+        }
+
+        .expand-btn {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border: 1px solid transparent;
+            color: var(--color-red);
+            font-size: 18px;
+            line-height: 1;
+            user-select: none;
+        }
+
+        .expand-btn:hover {
+            border-color: var(--color-red);
+            background: #fff;
+        }
+
+        .cell-strong {
+            font-weight: 700;
+            color: #000;
+        }
+
+        .mono-like {
+            font-family: Consolas, "Courier New", monospace !important;
+            font-size: 12px;
+        }
+
+        /* TABULATOR */
+        .tabulator {
+            border: none !important;
+            background: #fff !important;
+            font-size: 13px;
+        }
+
+        .tabulator .tabulator-header {
+            background: #fff !important;
+            border-bottom: 1px solid var(--color-border) !important;
+        }
+
+        .tabulator .tabulator-header .tabulator-col {
+            background: #fff !important;
+            color: #000 !important;
+            border-right: 1px solid var(--color-border) !important;
+            font-weight: 700;
+        }
+
+        .tabulator .tabulator-header .tabulator-col:last-child {
+            border-right: none !important;
+        }
+
+        .tabulator-row {
+            border-bottom: 1px solid var(--color-border) !important;
+            background: #fff !important;
+        }
+
+        .tabulator-row .tabulator-cell {
+            border-right: 1px solid #f2f2ef !important;
+            padding: 10px 10px !important;
+            vertical-align: middle;
+        }
+
+        .tabulator-row .tabulator-cell:last-child {
+            border-right: none !important;
+        }
+
+        .tabulator .tabulator-footer {
+            border-top: 1px solid var(--color-border) !important;
+            background: #fff !important;
+        }
+
+        .tabulator input {
+            border-radius: 0 !important;
+            border: 1px solid #cfcfc8 !important;
+            padding: 5px 6px !important;
+            background: #fff !important;
+        }
+
+        .tabulator input:focus,
+        .tabulator input:hover {
+            border-color: #000 !important;
+            outline: none !important;
+        }
+
+        .tabulator-row:hover {
+            background: #fff !important;
+        }
+
+        .row-accent {
+            position: relative;
+        }
+
+        .row-accent::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 6px;
+            bottom: 6px;
+            width: 4px;
+            background: var(--color-red);
+        }
+
+        /* Subtable tuned to same internal style */
+        .subtable-table .tabulator {
+            border: 1px solid var(--color-border) !important;
+        }
+
+        .subtable-table .tabulator .tabulator-header {
+            background: #fafaf8 !important;
+        }
+
+        .subtable-table .tabulator .tabulator-header .tabulator-col {
+            background: #fafaf8 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <h2>MUGI - ARTEZ-000-0000200372 - Modelo 030 - Cambio de NIF</h2>
+        <div class="subtitle">Definición de flujo y parámetros</div>
+    </div>
+
+    <div id="main-table"></div>
+
+    <script src="https://unpkg.com/tabulator-tables@6.2.5/dist/js/tabulator.min.js"></script>
+    <script>
+        const data = [
+            {
+                flow: "ARTEZ-000-0000200372",
+                version: 4,
+                flowOrder: 0,
+                id: 0,
+                action: "BEGIN",
+                path: "INICIO",
+                comments: "Definición Pasarela",
+                children: [
+                    { id: 0, param: "STATE", value: "INICIO", comments: "Definición Pasarela" }
+                ]
+            },
+            {
+                flow: "ARTEZ-000-0000200372",
+                version: 4,
+                flowOrder: 100,
+                id: 0,
+                action: "LABEL",
+                path: "INICIO_TRAMITACION",
+                comments: "",
+                children: [
+                    { id: 0, param: "STATE", value: "INICIO_TRAMITACION", comments: "" },
+                    { id: 1, param: "SUBMIT", value: "0", comments: "" },
+                    { id: 2, param: "LEVEL", value: "1", comments: "" }
+                ]
+            },
+            {
+                flow: "ARTEZ-000-0000200372",
+                version: 4,
+                flowOrder: 200,
+                id: 0,
+                action: "APIINIENDEXT",
+                path: "INICIAR_TRAMITACION",
+                comments: "",
+                children: [
+                    { id: 0, param: "PROJECT", value: "DBN8INFRAESTRUCTURA", comments: "" },
+                    { id: 1, param: "FLOW", value: "INICIAR_TRAMITACION", comments: "" },
+                    { id: 2, param: "REFERENCE", value: "=$CONCAT([%REFERENCE%];[_N8_0001])/$", comments: "" },
+                    { id: 3, param: "INIT", value: "1", comments: "" },
+                    { id: 4, param: "LEVEL", value: "2", comments: "" },
+                    { id: 5, param: "DEFERRED", value: "0", comments: "" },
+                    { id: 6, param: "@CODIGO_APLICACION", value: "N8", comments: "" },
+                    { id: 7, param: "@IDNT_DOMINIO", value: "@INICIO!IDNT_DOMINIO", comments: "" },
+                    { id: 8, param: "@PATH_RETORNO", value: "RECU_DATOS_ENTRADA_001", comments: "" },
+                    { id: 9, param: "ENABLE", value: "0", comments: "" }
+                ]
+            },
+            {
+                flow: "ARTEZ-000-0000200372",
+                version: 4,
+                flowOrder: 300,
+                id: 0,
+                action: "LABEL",
+                path: "RECU_DATOS_ENTRADA_001",
+                comments: "Recuperar datos de entradas",
+                children: [
+                    { id: 0, param: "STATE", value: "RECU_DATOS_ENTRADA", comments: "Recuperar datos de entradas" },
+                    { id: 1, param: "SUBMIT", value: "0", comments: "" },
+                    { id: 2, param: "LEVEL", value: "1", comments: "" }
+                ]
+            },
+            {
+                flow: "ARTEZ-000-0000200372",
+                version: 4,
+                flowOrder: 400,
+                id: 0,
+                action: "APIINIENDEXT",
+                path: "CREAR_TAREA_AUTOMA_001",
+                comments: "",
+                children: [
+                    { id: 0, param: "PROJECT", value: "DBN8INFRAESTRUCTURA", comments: "" },
+                    { id: 1, param: "FLOW", value: "CREAR_TAREA_AUTOMATICA", comments: "" }
+                ]
+            },
+            {
+                flow: "ARTEZ-000-0000200372",
+                version: 4,
+                flowOrder: 500,
+                id: 0,
+                action: "APIINIENDEXT",
+                path: "ACTUALIZAR_NIF_1_1",
+                comments: "",
+                children: [
+                    { id: 0, param: "PROJECT", value: "DBN8HACIENDA_SERVICIOS", comments: "" },
+                    { id: 1, param: "FLOW", value: "ACTUALIZAR_NIF", comments: "" },
+                    { id: 42, param: "@RDO_ACTUALIZAR_NIF_OUT", value: "RDO_ACTUALIZAR_NIF", comments: "" }
+                ]
+            },
+            {
+                flow: "ARTEZ-000-0000200372",
+                version: 4,
+                flowOrder: 600,
+                id: 0,
+                action: "APIINIENDEXT",
+                path: "FINALIZAR_TAREA_001",
+                comments: "",
+                children: [
+                    { id: 0, param: "PROJECT", value: "DBN8INFRAESTRUCTURA", comments: "" },
+                    { id: 1, param: "FLOW", value: "FINALIZAR_TAREA", comments: "" }
+                ]
+            }
+        ];
+
+        function toggleSubtable(e, cell) {
+            const row = cell.getRow();
+            const rowEl = row.getElement();
+            const existing = rowEl.nextElementSibling;
+
+            if (existing && existing.classList.contains("subtable-wrapper")) {
+                existing.remove();
+                cell.getElement().innerHTML = `<span class="expand-btn">＋</span>`;
+                return;
+            }
+
+            const wrapper = document.createElement("div");
+            wrapper.className = "subtable-wrapper";
+
+            const holder = document.createElement("div");
+            holder.className = "subtable-container";
+            holder.innerHTML = `
+                <div class="subtable-title">Parámetros de ${row.getData().path}</div>
+                <div class="subtable-table"></div>
+            `;
+
+            wrapper.appendChild(holder);
+            rowEl.insertAdjacentElement("afterend", wrapper);
+
+            const subtableEl = holder.querySelector(".subtable-table");
+
+            const subtable = new Tabulator(subtableEl, {
+                data: row.getData().children || [],
+                layout: "fitColumns",
+                movableRows: true,
+                reactiveData: true,
+                columns: [
+                    {
+                        rowHandle: true,
+                        formatter: "handle",
+                        width: 40,
+                        hozAlign: "center",
+                        headerSort: false,
+                        cssClass: "drag-col"
+                    },
+                    { title: "Id", field: "id", width: 80, headerFilter: "input" },
+                    {
+                        title: "Param",
+                        field: "param",
+                        width: 260,
+                        headerFilter: "input",
+                        formatter: function(cell) {
+                            return `<span class="cell-strong">${cell.getValue() || ""}</span>`;
+                        }
+                    },
+                    {
+                        title: "Value",
+                        field: "value",
+                        headerFilter: "input",
+                        formatter: function(cell) {
+                            return `<span class="mono-like">${cell.getValue() || ""}</span>`;
+                        }
+                    },
+                    { title: "Comments", field: "comments", headerFilter: "input" }
+                ],
+                movableRowsStopped: function () {
+                    row.getData().children = subtable.getData();
+                }
+            });
+
+            cell.getElement().innerHTML = `<span class="expand-btn">－</span>`;
+        }
+
+        const table = new Tabulator("#main-table", {
+            data,
+            height: "100%",
+            layout: "fitColumns",
+            reactiveData: true,
+            movableRows: true,
+            columns: [
+                {
+                    title: "",
+                    field: "expand",
+                    width: 52,
+                    hozAlign: "center",
+                    headerSort: false,
+                    formatter: function(cell) {
+                        const row = cell.getRow().getData();
+                        return row.children && row.children.length > 0
+                            ? `<span class="expand-btn">＋</span>`
+                            : "";
+                    },
+                    cellClick: toggleSubtable
+                },
+                {
+                    rowHandle: true,
+                    formatter: "handle",
+                    width: 44,
+                    hozAlign: "center",
+                    headerSort: false,
+                    cssClass: "drag-col"
+                },
+                {
+                    title: "Action",
+                    field: "action",
+                    width: 180,
+                    headerFilter: "input",
+                    formatter: function(cell) {
+                        return `<span class="cell-strong">${cell.getValue() || ""}</span>`;
+                    }
+                },
+                {
+                    title: "Path",
+                    field: "path",
+                    widthGrow: 2,
+                    headerFilter: "input",
+                    formatter: function(cell) {
+                        return `<span class="mono-like">${cell.getValue() || ""}</span>`;
+                    }
+                },
+                { title: "FlowOrder", field: "flowOrder", width: 120, headerFilter: "input" },
+                { title: "Id", field: "id", width: 80, headerFilter: "input" },
+                {
+                    title: "Flow",
+                    field: "flow",
+                    width: 220,
+                    headerFilter: "input",
+                    formatter: function(cell) {
+                        return `<span class="mono-like">${cell.getValue() || ""}</span>`;
+                    }
+                },
+                { title: "Version", field: "version", width: 100, headerFilter: "input" },
+                { title: "Comments", field: "comments", widthGrow: 2, headerFilter: "input" }
+            ],
+            rowFormatter: function(row) {
+                const data = row.getData();
+                const el = row.getElement();
+                el.classList.remove("row-accent");
+                if (data.action === "BEGIN" || data.action === "LABEL") {
+                    el.classList.add("row-accent");
+                }
+            },
+            movableRowsStopped: function () {
+                console.log("Nuevo orden padre:", table.getData());
+            }
+        });
+    </script>
+</body>
+</html>

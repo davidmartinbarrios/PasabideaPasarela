@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Pasabidea - Procedimientos</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: #f7f8fa;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .layout {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 340px;
+            min-width: 260px;
+            max-width: 520px;
+            height: 100%;
+            background: #ffffff;
+            border-right: 1px solid #dcdfe4;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.2s ease, min-width 0.2s ease;
+        }
+
+            .sidebar.collapsed {
+                width: 0;
+                min-width: 0;
+                border-right: none;
+                overflow: hidden;
+            }
+
+        .sidebar-header {
+            height: 48px;
+            padding: 8px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f7f8fa;
+            font-weight: 600;
+        }
+
+        .sidebar iframe,
+        .content iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        .content {
+            flex: 1;
+            min-width: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+        }
+
+        .topbar {
+            height: 48px;
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f7f8fa;
+        }
+
+        .toggle-btn {
+            width: 34px;
+            height: 34px;
+            border: 1px solid #d0d5dd;
+            border-radius: 8px;
+            background: #ffffff;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+            .toggle-btn:hover {
+                background: #eef2f7;
+            }
+
+        .title {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .iframe-wrap {
+            flex: 1;
+            min-height: 0;
+        }
+
+
+
+        /**/
+
+        .toolbar {
+            height: 52px;
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #1f2937;
+            border-bottom: 1px solid #374151;
+        }
+
+            .toolbar button {
+                border: 0;
+                border-radius: 8px;
+                padding: 8px 14px;
+                font-size: 14px;
+                color: #fff;
+                background: #374151;
+                cursor: pointer;
+                transition: background .15s ease;
+            }
+
+                .toolbar button:hover {
+                    background: #4b5563;
+                }
+
+        #split {
+            flex: 1;
+            display: flex;
+            min-height: 0;
+            width: 100%;
+            height: calc(100% - 52px);
+        }
+
+        .pane {
+            min-width: 0;
+            min-height: 0;
+            height: 100%;
+            overflow: hidden;
+            background: #fff;
+        }
+
+            .pane iframe {
+                width: 100%;
+                height: 100%;
+                border: 0;
+                display: block;
+                background: #fff;
+            }
+
+        .gutter {
+            background: #d1d5db;
+            position: relative;
+            flex: 0 0 10px;
+            cursor: col-resize;
+        }
+
+            .gutter::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 4px;
+                height: 56px;
+                transform: translate(-50%, -50%);
+                border-radius: 999px;
+                background: #6b7280;
+            }
+
+            .gutter:hover {
+                background: #cbd5e1;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+
+        <div class="toolbar">
+            <button id="btnLeft">Origen</button>
+            <button id="btnCenter">50%</button>
+            <button id="btnRight">Destino</button>
+        </div>
+
+        <div id="split">
+            <div class="pane" id="leftPane">
+
+                <!-- IZQUIERDA: listado grupo -> procedimiento -->
+                <aside id="sidebar" class="sidebar">
+                    <div class="sidebar-header">
+                        <span>Procedimientos</span>
+                    </div>
+
+                    <!--<div class="iframe-wrap">
+                     <iframe id="procsFrame" src="procs.html"></iframe>
+                </div>-->
+
+                    <div class="iframe-wrap pane">
+                        <iframe id="iframeProcs" src="https://app.local/procs/index.html" title="BPMN"></iframe>
+                    </div>
+                </aside>
+
+                <!-- DERECHA: BPMN seleccionado -->
+                <main class="content">
+                    <div class="topbar">
+                        <button id="btnToggleSidebar" class="toggle-btn" title="Mostrar/Ocultar menú">
+                            ☰
+                        </button>
+                        <span id="selectedTitle" class="title">Seleccione un procedimiento</span>
+                    </div>
+
+                    <div class="pane" id="leftPaneBpmn">
+                        <iframe id="iframeBpmn" src="https://app.local/bpmn/index.html" title="BPMN"></iframe>
+                    </div>
+                </main>
+            </div>
+
+            <div class="pane" id="rightPane">
+                <iframe id="iframeMugi" src="https://app.local/mugi/index.html" title="MUGI"></iframe>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <script>
+    const sidebar = document.getElementById("sidebar");
+    const btnToggleSidebar = document.getElementById("btnToggleSidebar");
+    const bpmnFrame = document.getElementById("iframeBpmn");
+    const selectedTitle = document.getElementById("selectedTitle");
+
+    btnToggleSidebar.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+    });
+
+    /*
+      procs.html debe enviar algo así al seleccionar:
+
+      window.parent.postMessage({
+        type: "procedure-selected",
+        groupId: "DBN8AYUDAS_SUBVENCIONES",
+        procedureId: "ARTEZ-000-0000200281",
+        procedureName: "Mi procedimiento"
+      }, "*");
+    */
+
+    window.addEventListener("message", (event) => {
+      const data = event.data;
+
+      if (!data || data.type !== "procedure-selected") {
+        return;
+      }
+
+      selectedTitle.textContent =
+        (data.groupId ? data.groupId + " / " : "") +
+        (data.procedureName || data.procedureId || "Procedimiento");
+
+      bpmnFrame.contentWindow.postMessage({
+        type: "load-procedure",
+        groupId: data.groupId,
+        procedureId: data.procedureId,
+        procedureName: data.procedureName
+      }, "*");
+    });
+    </script>
+    <script src="https://unpkg.com/split.js/dist/split.min.js"></script>
+    <script>
+     const split = Split(['#leftPane', '#rightPane'], {
+         sizes: [50, 50],
+         minSize: [0, 0],
+         gutterSize: 10,
+         cursor: 'col-resize'
+     });
+
+     document.getElementById('btnLeft').addEventListener('click', () => {
+         split.setSizes([100, 0]);
+     });
+
+     document.getElementById('btnCenter').addEventListener('click', () => {
+         split.setSizes([50, 50]);
+     });
+
+     document.getElementById('btnRight').addEventListener('click', () => {
+         split.setSizes([0, 100]);
+     });
+    </script>
+</body>
+</html>

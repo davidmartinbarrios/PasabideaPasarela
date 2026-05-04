@@ -1,0 +1,239 @@
+%% PASARELA - Relaciones inferidas (el esquema no declara FKs)
+%% Convenciones:
+%%  - Relaciones con ||--o{ / ||--|{ = fuerte (PK hija contiene PK padre)
+%%  - Relaciones con }o..o{ / }o..|| = probable (campos comunes / semantica)
+%% Nota: Esto está en formato ER (erDiagram), que se renderiza como diagrama de base de datos.
+
+erDiagram
+
+  %% =========================
+  %% A) Usuarios / batch / logs
+  %% =========================
+  USUARIOS {
+    string USERID PK
+  }
+  ERRORES {
+    string USERID
+    datetime FECHA
+  }
+  ERRORES_HISTORICO {
+    string USERID
+    datetime FECHA
+  }
+  PROCESOS_PENDIENTES {
+    string PROCEDIMIENTO PK
+    string USERID PK
+    int ID PK
+  }
+  PROCESOS_HISTORICO {
+    string PROCEDIMIENTO PK
+    string USERID PK
+    int ID PK
+    datetime FECHA PK
+  }
+
+  %% Fuertes
+  USUARIOS ||--o{ ERRORES : "USERID"
+  USUARIOS ||--o{ ERRORES_HISTORICO : "USERID"
+  USUARIOS ||--o{ PROCESOS_PENDIENTES : "USERID"
+  USUARIOS ||--o{ PROCESOS_HISTORICO : "USERID"
+
+  %% Probable (pasa a historico)
+  PROCESOS_PENDIENTES }o..o{ PROCESOS_HISTORICO : "pasa a historico"
+
+  %% ==================================
+  %% B) Modelado CM -> Pasarela (diagrama)
+  %% ==================================
+  DIAGRAMA {
+    string PROCEDIMIENTO PK
+    int ORDEN_N1 PK
+    int ORDEN_N2 PK
+    int ORDEN_N3 PK
+    int ORDEN_N4 PK
+    int ORDEN_N5 PK
+    int ID_DIAGRAMA
+    int DI_ID
+    int ID_PADRE
+  }
+  ACCIONES_DI {
+    string PROCEDIMIENTO PK
+    int ORDEN_N1 PK
+    int ORDEN_N2 PK
+    int ORDEN_N3 PK
+    int ORDEN_N4 PK
+    int ORDEN_N5 PK
+    int ORDEN_ACC PK
+    int ID_ACCION
+    string PATH_HIDRA
+    int NUM_SEQ
+  }
+  PARAM_ACC {
+    string PROCEDIMIENTO PK
+    int ORDEN_N1 PK
+    int ORDEN_N2 PK
+    int ORDEN_N3 PK
+    int ORDEN_N4 PK
+    int ORDEN_N5 PK
+    int ORDEN_ACC PK
+    int ORDEN_PA PK
+    string PARAMETRO
+    string VALOR
+  }
+  PROPIEDADES_DI {
+    string PROCEDIMIENTO PK
+    int ORDEN_N1 PK
+    int ORDEN_N2 PK
+    int ORDEN_N3 PK
+    int ORDEN_N4 PK
+    int ORDEN_N5 PK
+  }
+  CONECTORES_DI {
+    int DI_ID
+    int ORDEN_N1
+    int ORDEN_N2
+    int ORDEN_N3
+    int ORDEN_N4
+  }
+  CONECTOR_ACC {
+    int ID_DIAGRAMA
+    int DI_ID
+    int ACC_DESDE
+    int ACC_HASTA
+  }
+  VALIDACIONES {
+    string PROCEDIMIENTO
+    string MENSAJE
+  }
+
+  %% Fuertes
+  DIAGRAMA ||--o{ ACCIONES_DI : "DIAGRAMA_PK subset"
+  ACCIONES_DI ||--o{ PARAM_ACC : "ACCIONES_PK subset"
+  DIAGRAMA ||--o{ PROPIEDADES_DI : "mismas claves"
+
+  %% Probables
+  DIAGRAMA }o..o{ DIAGRAMA : "ID_PADRE -> ID_DIAGRAMA"
+  DIAGRAMA }o..o{ CONECTORES_DI : "DI_ID / ORDEN_N1..N4"
+  DIAGRAMA }o..o{ CONECTOR_ACC : "ID_DIAGRAMA o DI_ID"
+  DIAGRAMA }o..o{ VALIDACIONES : "PROCEDIMIENTO"
+
+  %% ======================================
+  %% C) Infraestructura de procedimientos
+  %% ======================================
+  TBPFIN01_PA {
+    string PROCEDIMIENTO
+    string CODPROCE
+    string CODENTID
+    string CODFAMIL
+  }
+  TBPFIN02_PA {
+    string PROCEDIMIENTO PK
+    string CODPROCE PK
+    string VERSIONP PK
+    string VERSIONH PK
+  }
+  TBPFIN03_PA {
+    string PROCEDIMIENTO PK
+    string CODPROCE PK
+    int ORDENTRA PK
+  }
+  TBPFIN04_PA {
+    string PROCEDIMIENTO PK
+    string CODPROCE PK
+    int ORDENTRA PK
+    string CODTRAAD PK
+    string CODUNITR PK
+    string CODUTRHN
+  }
+  TBPFIN23_PA {
+    string PROCEDIMIENTO PK
+    string CODENTID PK
+    string CODFAMIL PK
+    string CODUNITR PK
+    string CODUTRHN
+  }
+  EQUIV_UT {
+    string CODCM PK
+    string CODHN PK
+    string CODUTRHN
+  }
+  TBDCELTA_PA {
+    string TEXTO
+  }
+
+  %% Probables (porque no hay FK declarada)
+  TBPFIN01_PA }o..|| TBPFIN02_PA : "PROCEDIMIENTO + CODPROCE"
+  TBPFIN02_PA }o..|| TBPFIN03_PA : "PROCEDIMIENTO + CODPROCE"
+
+  %% Fuerte (subset PK)
+  TBPFIN03_PA ||--o{ TBPFIN04_PA : "PK subset"
+
+  %% Probables (por CODUTRHN)
+  TBPFIN04_PA }o..o{ TBPFIN23_PA : "CODUTRHN"
+  TBPFIN23_PA }o..o{ EQUIV_UT : "CODUTRHN"
+  TBPFIN04_PA }o..o{ EQUIV_UT : "CODUTRHN"
+
+  %% =========================
+  %% D) Variables
+  %% =========================
+  VARIABLES_PA {
+    string IDATRIBU PK
+    string CODHIDRA PK
+  }
+  VAR_ALTA_PA {
+    string PROCEDIMIENTO
+    int ORDEN
+    string CODHIDRA
+  }
+
+  VARIABLES_PA }o..o{ VAR_ALTA_PA : "CODHIDRA"
+
+  %% =========================
+  %% E) WF store (minimo)
+  %% =========================
+  wfFlows {
+    string Flow PK
+    string Version PK
+  }
+  wfFlowActions {
+    string Flow PK
+    string Version PK
+    int FlowOrder PK
+    int Id PK
+  }
+
+  wfFlows ||--o{ wfFlowActions : "Flow+Version"
+
+  %% =========================
+  %% F) Aux / sistema
+  %% =========================
+  INI {
+    string SECCION PK
+    string CLAVE PK
+  }
+  PARAMETROS {
+    string CLAVE
+    string VALOR
+  }
+  BDDDP4 {
+    string INFO
+  }
+  BDDDP4_BAK {
+    string INFO
+  }
+  BDDDP4_ORIGINAL {
+    string INFO
+  }
+  sysdiagrams {
+    int diagram_id PK
+  }
+  dtproperties {
+    int id PK
+  }
+
+  %% =========================
+  %% Conexiones transversales (probables)
+  %% =========================
+  PROCESOS_PENDIENTES }o..o{ DIAGRAMA : "PROCEDIMIENTO"
+  PROCESOS_PENDIENTES }o..o{ TBPFIN01_PA : "PROCEDIMIENTO"
+  ERRORES }o..o{ DIAGRAMA : "PROCEDIMIENTO"
+  ERRORES }o..o{ TBPFIN01_PA : "PROCEDIMIENTO"

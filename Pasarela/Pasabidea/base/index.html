@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Pasabidea - Procedimientos</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: #f7f8fa;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .toolbar {
+            height: 52px;
+            flex: 0 0 52px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #1f2937;
+            border-bottom: 1px solid #374151;
+        }
+
+            .toolbar button {
+                border: 0;
+                border-radius: 8px;
+                padding: 8px 14px;
+                font-size: 14px;
+                color: #fff;
+                background: #374151;
+                cursor: pointer;
+            }
+
+                .toolbar button:hover {
+                    background: #4b5563;
+                }
+
+        #split {
+            flex: 1;
+            display: flex;
+            min-height: 0;
+            width: 100%;
+        }
+
+        .pane {
+            min-width: 0;
+            min-height: 0;
+            height: 100%;
+            overflow: hidden;
+            background: #fff;
+        }
+
+            .pane iframe,
+            .iframe-wrap iframe {
+                width: 100%;
+                height: 100%;
+                border: 0;
+                display: block;
+                background: #fff;
+            }
+
+        .left-layout {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            min-width: 0;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            height: 100%;
+            min-width: 0;
+            background: #ffffff;
+            border-right: 1px solid #dcdfe4;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+            .sidebar.collapsed {
+                display: none;
+            }
+
+        .sidebar-header {
+            height: 48px;
+            flex: 0 0 48px;
+            padding: 8px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            background: #f7f8fa;
+            font-weight: 600;
+        }
+
+        .content {
+            height: 100%;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .topbar {
+            height: 48px;
+            flex: 0 0 48px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f7f8fa;
+        }
+
+        .toggle-btn {
+            width: 34px;
+            height: 34px;
+            border: 1px solid #d0d5dd;
+            border-radius: 8px;
+            background: #ffffff;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+            .toggle-btn:hover {
+                background: #eef2f7;
+            }
+
+        .title {
+            font-weight: 600;
+            color: #1f2937;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .iframe-wrap {
+            flex: 1;
+            min-height: 0;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        /* Split general BPMN / MUGI */
+        #split > .gutter {
+            background: #d1d5db;
+            position: relative;
+            flex: 0 0 10px;
+            cursor: col-resize;
+        }
+
+            #split > .gutter::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 4px;
+                height: 56px;
+                transform: translate(-50%, -50%);
+                border-radius: 999px;
+                background: #6b7280;
+            }
+
+        /* Split interno Procs / BPMN */
+        .left-layout > .gutter {
+            background: #eef0f3;
+            position: relative;
+            flex: 0 0 6px;
+            cursor: col-resize;
+        }
+
+            .left-layout > .gutter::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 3px;
+                height: 36px;
+                transform: translate(-50%, -50%);
+                border-radius: 999px;
+                background: #9ca3af;
+            }
+
+        .left-layout.sidebar-hidden > .gutter {
+            display: none;
+        }
+
+        #rightLayout.sidebar-hidden > .gutter {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="toolbar">
+        <button id="btnLeft">Origen</button>
+        <button id="btnCenter">50%</button>
+        <button id="btnRight">Destino</button>
+    </div>
+
+    <div id="split">
+
+        <div class="pane" id="leftPane">
+            <div id="leftLayout" class="left-layout">
+
+                <aside id="sidebar" class="sidebar">
+                    <div class="sidebar-header">
+                        <span>Procedimientos</span>
+                    </div>
+
+                    <div class="iframe-wrap">
+                        <iframe id="iframeProcs"
+                                src="https://app.local/procs/index.html"
+                                title="Procedimientos"></iframe>
+                    </div>
+                </aside>
+
+                <main id="bpmnPane" class="content">
+                    <div class="topbar">
+                        <button id="btnToggleSidebar"
+                                class="toggle-btn"
+                                title="Mostrar/Ocultar procedimientos">
+                            ☰
+                        </button>
+
+                        <span id="selectedTitle" class="title">
+                            Seleccione un procedimiento
+                        </span>
+                    </div>
+
+                    <div class="iframe-wrap">
+                        <iframe id="iframeBpmn"
+                                src="https://app.local/bpmn/index.html"
+                                title="BPMN"></iframe>
+                    </div>
+                </main>
+
+            </div>
+        </div>
+
+        <div class="pane" id="rightPane">
+            <div id="rightLayout" class="left-layout">
+
+                <aside id="destSidebar" class="sidebar">
+                    <div class="sidebar-header">
+                        <span>Destino</span>
+                    </div>
+
+                    <div class="iframe-wrap">
+                        <iframe id="iframeDest"
+                                src="https://app.local/dest/index.html"
+                                title="DEST"></iframe>
+                    </div>
+                </aside>
+
+                <main id="mugiPane" class="content">
+                    <div class="topbar">
+                        <button id="btnToggleDestSidebar"
+                                class="toggle-btn"
+                                title="Mostrar/Ocultar destino">
+                            ☰
+                        </button>
+
+                        <span class="title">MUGI</span>
+                    </div>
+
+                    <div class="iframe-wrap">
+                        <iframe id="iframeMugi"
+                                src="https://app.local/mugi/index.html"
+                                title="MUGI"></iframe>
+                    </div>
+                </main>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/split.js/dist/split.min.js"></script>
+
+    <script>
+        const leftLayout = document.getElementById("leftLayout");
+        const sidebar = document.getElementById("sidebar");
+        const btnToggleSidebar = document.getElementById("btnToggleSidebar");
+        const iframeBpmn = document.getElementById("iframeBpmn");
+        const selectedTitle = document.getElementById("selectedTitle");
+
+        let sidebarVisible = true;
+        let lastInnerSizes = [24, 76];
+
+        const mainSplit = Split(["#leftPane", "#rightPane"], {
+            sizes: [50, 50],
+            minSize: [0, 0],
+            gutterSize: 10,
+            cursor: "col-resize"
+        });
+
+        const innerSplit = Split(["#sidebar", "#bpmnPane"], {
+            sizes: lastInnerSizes,
+            minSize: [0, 0],
+            gutterSize: 6,
+            cursor: "col-resize"
+        });
+
+        btnToggleSidebar.addEventListener("click", () => {
+            sidebarVisible = !sidebarVisible;
+
+            if (!sidebarVisible) {
+                lastInnerSizes = innerSplit.getSizes();
+                sidebar.classList.add("collapsed");
+                leftLayout.classList.add("sidebar-hidden");
+                innerSplit.setSizes([0, 100]);
+            } else {
+                sidebar.classList.remove("collapsed");
+                leftLayout.classList.remove("sidebar-hidden");
+                innerSplit.setSizes(lastInnerSizes[0] > 2 ? lastInnerSizes : [24, 76]);
+            }
+        });
+
+        document.getElementById("btnLeft").addEventListener("click", () => {
+            mainSplit.setSizes([100, 0]);
+        });
+
+        document.getElementById("btnCenter").addEventListener("click", () => {
+            mainSplit.setSizes([50, 50]);
+        });
+
+        document.getElementById("btnRight").addEventListener("click", () => {
+            mainSplit.setSizes([0, 100]);
+        });
+
+        window.addEventListener("message", (event) => {
+            const data = event.data;
+
+            if (!data || data.type !== "procedure-selected") {
+                return;
+            }
+
+            selectedTitle.textContent =
+                (data.groupId ? data.groupId + " / " : "") +
+                (data.procedureName || data.procedureId || "Procedimiento");
+
+            iframeBpmn.contentWindow.postMessage({
+                type: "load-procedure",
+                groupId: data.groupId,
+                procedureId: data.procedureId,
+                procedureName: data.procedureName
+            }, "*");
+        });
+
+        //--
+
+        const rightLayout = document.getElementById("rightLayout");
+        const destSidebar = document.getElementById("destSidebar");
+        const btnToggleDestSidebar = document.getElementById("btnToggleDestSidebar");
+
+        let destSidebarVisible = true;
+        let lastRightInnerSizes = [24, 76];
+
+        const rightInnerSplit = Split(["#destSidebar", "#mugiPane"], {
+            sizes: lastRightInnerSizes,
+            minSize: [0, 0],
+            gutterSize: 6,
+            cursor: "col-resize"
+        });
+
+        btnToggleDestSidebar.addEventListener("click", () => {
+            destSidebarVisible = !destSidebarVisible;
+
+            if (!destSidebarVisible) {
+                lastRightInnerSizes = rightInnerSplit.getSizes();
+                destSidebar.classList.add("collapsed");
+                rightLayout.classList.add("sidebar-hidden");
+                rightInnerSplit.setSizes([0, 100]);
+            } else {
+                destSidebar.classList.remove("collapsed");
+                rightLayout.classList.remove("sidebar-hidden");
+                rightInnerSplit.setSizes(
+                    lastRightInnerSizes[0] > 2 ? lastRightInnerSizes : [24, 76]
+                );
+            }
+        });
+    </script>
+
+
+    <script>
+        window.addEventListener("message", function (event) {
+            const msg = event.data;
+            if (!msg || msg.type !== "procedure-selected") return;
+
+            const payload = msg.payload;
+
+            window.currentProcedure = payload;
+
+            // Aviso a C# WebView2
+            if (window.chrome && window.chrome.webview) {
+                window.chrome.webview.postMessage({
+                    type: "procedure-selected",
+                    payload: payload
+                });
+            }
+        });
+
+        function loadProceduresIntoIframe(items) {
+            const iframe = document.getElementById("iframeProcs");
+
+            iframe.contentWindow.postMessage({
+                type: "load-erwin-diagrams",
+                payload: items
+            }, "*");
+        }
+
+        function renderBpmnXml(xml) {
+            const iframe = document.getElementById("iframeBpmn");
+
+            iframe.contentWindow.postMessage({
+                type: "render-bpmn",
+                xml: xml
+            }, "*");
+        }
+    </script>
+
+</body>
+</html>

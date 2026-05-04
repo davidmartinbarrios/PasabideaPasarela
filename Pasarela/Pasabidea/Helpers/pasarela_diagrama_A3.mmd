@@ -1,0 +1,105 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"10px","fontFamily":"Arial"},"flowchart":{"curve":"stepAfter","nodeSpacing":12,"rankSpacing":22,"htmlLabels":true}} }%%
+flowchart LR
+  classDef modA fill:#E3F2FD,stroke:#1565C0,stroke-width:1px,color:#0D47A1
+  classDef modB fill:#E8F5E9,stroke:#2E7D32,stroke-width:1px,color:#1B5E20
+  classDef modC fill:#FFF3E0,stroke:#EF6C00,stroke-width:1px,color:#E65100
+  classDef modD fill:#F3E5F5,stroke:#6A1B9A,stroke-width:1px,color:#4A148C
+  classDef modE fill:#E0F7FA,stroke:#00838F,stroke-width:1px,color:#006064
+  classDef modF fill:#ECEFF1,stroke:#455A64,stroke-width:1px,color:#263238
+
+  LEG["LEYENDA<br/>- linea continua: fuerte<br/>- linea discontinua: probable"]:::modF
+
+  subgraph COL1[" "]
+    direction TB
+      subgraph A["A) Usuarios, ejecucion batch y logs"]
+        direction TB
+        USUARIOS["USUARIOS<br/>PK: USERID<br/>* USERID: varchar(50)<br/>- PASSWORD: varchar(50)<br/>- NOMBRE: varchar(50)<br/>- Activo: bit"]:::modA
+        ERRORES["ERRORES<br/>PK: (no declarada)<br/>- PROCEDIMIENTO: varchar(255)<br/>- USERID: varchar(50)<br/>- AMBITO: varchar(100)<br/>- DESCRIPCION: varchar(1024)<br/>- FECHA: datetime<br/>- LUGAR: varchar(200)"]:::modA
+        ERRORES_HISTORICO["ERRORES_HISTORICO<br/>PK: (no declarada)<br/>- PROCEDIMIENTO: varchar(255)<br/>- USERID: varchar(50)<br/>- AMBITO: varchar(100)<br/>- DESCRIPCION: varchar(1024)<br/>- FECHA: datetime<br/>- LUGAR: varchar(200)"]:::modA
+        PROCESOS_PENDIENTES["PROCESOS_PENDIENTES<br/>PK: PROCEDIMIENTO, USERID, ID<br/>* PROCEDIMIENTO: varchar(50)<br/>* USERID: varchar(50)<br/>* ID: numeric(18,0)<br/>- NOMBRE_CM: varchar(255)<br/>- FECHA_ACTIVACION: varchar(10)<br/>- NUEVA_VERSION: char(1)<br/>- CONEXION: varchar(255)<br/>- OBSERVACIONES: varchar(255)<br/>- FINALIZADO: char(1)<br/>- CONEXION2: varchar(255)<br/>- BASEDATOS: char(10)<br/>- FECHA: datetime<br/>- FECHAINICIO: datetime<br/>- FECHAFIN: datetime<br/>- GRUPO: varchar(50)"]:::modA
+        PROCESOS_HISTORICO["PROCESOS_HISTORICO<br/>PK: PROCEDIMIENTO, USERID, ID, FECHA<br/>* PROCEDIMIENTO: varchar(50)<br/>* USERID: varchar(50)<br/>* ID: numeric(18,0)<br/>- NOMBRE_CM: varchar(255)<br/>- FECHA_ACTIVACION: varchar(10)<br/>- NUEVA_VERSION: char(1)<br/>- CONEXION: varchar(255)<br/>- OBSERVACIONES: varchar(255)<br/>- FINALIZADO: char(1)<br/>- CONEXION2: varchar(255)<br/>- BASEDATOS: char(10)<br/>* FECHA: datetime<br/>- FECHAINICIO: datetime<br/>- FECHAFIN: datetime<br/>- GRUPO: varchar(50)"]:::modA
+      end
+      subgraph D["D) Variables"]
+        direction TB
+        VARIABLES_PA["VARIABLES_PA<br/>PK: IDATRIBU, CODHIDRA<br/>* IDATRIBU: decimal(18,0)<br/>- DESATRIB: varchar(250)<br/>* CODHIDRA: varchar(25)<br/>- INDTIPOA: char(1)<br/>- INDCTA: char(1)<br/>- DESCATRI: varchar(250)<br/>- DESEATRI: varchar(250)<br/>- FAMILIA: char(2)"]:::modD
+        VAR_ALTA_PA["VAR_ALTA_PA<br/>PK: (no declarada)<br/>- PROCEDIMIENTO: varchar(50)<br/>- NOMPROC: varchar(15)<br/>- ORDEN: decimal(18,0)<br/>- CODHIDRA: varchar(25)"]:::modD
+      end
+      subgraph F["F) Auxiliares / sistema"]
+        direction TB
+        INI["INI<br/>PK: SECCION, CLAVE<br/>* SECCION: varchar(50)<br/>* CLAVE: varchar(50)<br/>- VALOR: varchar(255)"]:::modF
+        PARAMETROS["PARAMETROS<br/>PK: (no declarada)<br/>- SECCION: nvarchar(20)<br/>- IDENTIFICADOR: nvarchar(20)<br/>- VALOR: nvarchar(1000)<br/>- OWNER: nvarchar(5)<br/>- ENTIDAD: nvarchar(5)<br/>- FAMILIA: nvarchar(5)<br/>- NOMBRE: nvarchar(2)<br/>- REFERENCIA: nvarchar(2)<br/>- ARRANQUE: nvarchar(20)<br/>- GESTION: nvarchar(20)<br/>- GENERALES: nvarchar(20)<br/>- WORD: nvarchar(20)<br/>- DOCUMENTOS: nvarchar(20)<br/>- MENSAJES: nvarchar(20)<br/>- ESPECIFICAS: nvarchar(20)<br/>- GENE_APLIC: nvarchar(20)"]:::modF
+        BDDDP4["BDDDP4<br/>PK: (no declarada)<br/>- CONTENIDO: varchar(8000)<br/>- ORDEN: int"]:::modF
+        BDDDP4_BAK["BDDDP4_BAK<br/>PK: (no declarada)<br/>- CONTENIDO: varchar(8000)<br/>- ORDEN: int"]:::modF
+        BDDDP4_ORIGINAL["BDDDP4_ORIGINAL<br/>PK: (no declarada)<br/>- CONTENIDO: varchar(8000)<br/>- ORDEN: int"]:::modF
+        sysdiagrams["sysdiagrams<br/>PK: diagram_id<br/>- name: sysname<br/>- principal_id: int<br/>* diagram_id: int<br/>- version: int<br/>- definition: varbinary(max)"]:::modF
+        dtproperties["dtproperties<br/>PK: id, property<br/>* id: int<br/>- objectid: int<br/>* property: varchar(64)<br/>- value: varchar(255)<br/>- uvalue: nvarchar(255)<br/>- lvalue: image<br/>- version: int"]:::modF
+      end
+  end
+
+  subgraph COL2[" "]
+    direction TB
+      subgraph B["B) Modelado CM -> Pasarela"]
+        direction TB
+        DIAGRAMA["DIAGRAMA<br/>PK: PROCEDIMIENTO, ORDEN_N1, ORDEN_N2, ORDEN_N3, ORDEN_N4, ORDEN_N5<br/>* PROCEDIMIENTO: varchar(50)<br/>* ORDEN_N1: numeric(18,0)<br/>* ORDEN_N2: numeric(18,0)<br/>* ORDEN_N3: numeric(18,0)<br/>* ORDEN_N4: numeric(18,0)<br/>* ORDEN_N5: numeric(18,0)<br/>- ID_DIAG_N1: numeric(18,0)<br/>- ID_DIAG_N2: numeric(18,0)<br/>- ID_DIAG_N3: numeric(18,0)<br/>- ID_DIAG_N4: numeric(18,0)<br/>- ID_DIAG_N5: numeric(18,0)<br/>- ID_DIAGRAMA: numeric(18,0)<br/>- CAT_DIAGRAMA: varchar(250)<br/>- ID_PADRE: numeric(18,0)<br/>- NUM_DIAGRAMA: numeric(18,0)<br/>- EXPLOTA_ACC: char(1)<br/>- NUM_SEQ: numeric(18,0)<br/>- INDPARA: char(3)<br/>- INDJUMP: char(1)<br/>- INDCANCEL: char(1)<br/>- NOMBRE: varchar(250)<br/>- SALIDAS: numeric(18,0)<br/>- INDCOMUN: char(1)<br/>- DI_ID: numeric(18,0)<br/>- NIVEL: numeric(18,0)<br/>- ARBOL: varchar(250)<br/>- USERDEFINED: nvarchar(4000)<br/>- PLAZOTIPO1: char(4)<br/>- PLAZOTIPO2: char(4)<br/>- NIV_TRAMIT: char(4)<br/>- BLOQUEO_EXP: char(1)<br/>- UNION_RAMAS: char(1)<br/>- TRAMIT_SIMUL: char(1)<br/>- TRAM_OCULTO: char(1)<br/>- IND_VALORVAR: char(1)<br/>- VUELTA_ATRAS: char(1)<br/>- NOMBRE_TRAM: varchar(250)<br/>- CODFASE: varchar(2)<br/>- CODSFASE: varchar(4)<br/>- DATFASUB: varchar(25)"]:::modB
+        PROPIEDADES_DI["PROPIEDADES_DI<br/>PK: (no declarada)<br/>- PROCEDIMIENTO: varchar(50)<br/>- ORDEN_N1: numeric(18,0)<br/>- ORDEN_N2: numeric(18,0)<br/>- ORDEN_N3: numeric(18,0)<br/>- ORDEN_N4: numeric(18,0)<br/>- ORDEN_N5: numeric(18,0)<br/>- ID_DIAGRAMA: numeric(18,0)<br/>- NOM_DIAGRAMA: varchar(250)<br/>- TIPO_DIAGRAMA: varchar(250)<br/>- PLAZTIP1_DI: varchar(250)<br/>- PLAZTIP2_DI: varchar(250)<br/>- NIVELTRAM_DI: varchar(250)<br/>- INDBLOQ_DI: varchar(250)<br/>- INDRAM_DI: varchar(250)<br/>- INDPERSINT: char(1)"]:::modB
+        ACCIONES_DI["ACCIONES_DI<br/>PK: PROCEDIMIENTO, ORDEN_N1, ORDEN_N2, ORDEN_N3, ORDEN_N4, ORDEN_N5, ORDEN_ACC<br/>* PROCEDIMIENTO: varchar(50)<br/>* ORDEN_N1: numeric(18,0)<br/>* ORDEN_N2: numeric(18,0)<br/>* ORDEN_N3: numeric(18,0)<br/>* ORDEN_N4: numeric(18,0)<br/>* ORDEN_N5: numeric(18,0)<br/>* ORDEN_ACC: numeric(18,0)<br/>- ID_ACCION: numeric(18,0)<br/>- NOM_ACCION: varchar(250)<br/>- NUM_ACCION: numeric(18,0)<br/>- TIPO_ACCION: varchar(250)<br/>- PATH_HIDRA: varchar(50)<br/>- NUM_SEQ: numeric(18,0)<br/>- DI_ID: numeric(18,0)<br/>- NOMBRE: varchar(250)<br/>- METOFLY: char(1)<br/>- NOMBRE_CM: varchar(255)"]:::modB
+        PARAM_ACC["PARAM_ACC<br/>PK: PROCEDIMIENTO, ORDEN_N1, ORDEN_N2, ORDEN_N3, ORDEN_N4, ORDEN_N5, ORDEN_ACC, ORDEN_PA<br/>* PROCEDIMIENTO: varchar(50)<br/>* ORDEN_N1: numeric(18,0)<br/>* ORDEN_N2: numeric(18,0)<br/>* ORDEN_N3: numeric(18,0)<br/>* ORDEN_N4: numeric(18,0)<br/>* ORDEN_N5: numeric(18,0)<br/>* ORDEN_ACC: decimal(18,0)<br/>- ORDEN_AC_SUB: decimal(18,0)<br/>- ID_ACCION: numeric(18,0)<br/>- PARAMETRO: varchar(250)<br/>- VALOR: varchar(250)<br/>* ORDEN_PA: numeric(18,0)"]:::modB
+        CONECTORES_DI["CONECTORES_DI<br/>PK: (no declarada)<br/>- PROCEDIMIENTO: varchar(50)<br/>- ID_CONECTOR: varchar(250)<br/>- DIAGRAMA: varchar(250)<br/>- NUM: numeric(18,0)<br/>- NUM_SEC_DESDE: numeric(18,0)<br/>- NUM_SEC_HASTA: numeric(18,0)<br/>- CAT_CONECTOR: varchar(250)<br/>- CAT_CONECTOR2: varchar(250)<br/>- DI_ID: numeric(18,0)<br/>- ORDEN_N1: numeric(18,0)<br/>- ORDEN_N2: numeric(18,0)<br/>- ORDEN_N3: numeric(18,0)<br/>- ORDEN_N4: numeric(18,0)<br/>- TIPO_CONECTOR: numeric(18,0)<br/>- SALIDA: char(1)"]:::modB
+        CONECTOR_ACC["CONECTOR_ACC<br/>PK: (no declarada)<br/>- PROCEDIMIENTO: varchar(50)<br/>- ID_CONECTOR: numeric(18,0)<br/>- ID_DIAGRAMA: numeric(18,0)<br/>- NUM_CONECTOR: numeric(18,0)<br/>- NUM_SEQ_DESDE: numeric(18,0)<br/>- NUM_SEQ_HASTA: numeric(18,0)<br/>- CAT_CONECTOR: varchar(250)<br/>- IND_SALIDA_TRAM: char(1)<br/>- DI_ID: numeric(18,0)<br/>- ACC_DESDE: char(50)<br/>- ACC_HASTA: char(50)<br/>- CAT_CONECTOR2: varchar(250)"]:::modB
+        VALIDACIONES["VALIDACIONES<br/>PK: (no declarada)<br/>- PROCEDIMIENTO: varchar(50)<br/>- MENSAJE: varchar(510)"]:::modB
+      end
+  end
+
+  subgraph COL3[" "]
+    direction TB
+      subgraph C["C) Infraestructura procedimientos (TBPFIN*_PA)"]
+        direction TB
+        TBPFIN01_PA["TBPFIN01_PA<br/>PK: (no declarada)<br/>- PROCEDIMIENTO: varchar(50)<br/>- CODPROCE: decimal(18,0)<br/>- CODENTID: decimal(18,0)<br/>- CODFAMIL: decimal(18,0)<br/>- CODEXTPR: char(15)<br/>- CODGRPRO: char(2)<br/>- EFSITADC: varchar(100)<br/>- EFSITADE: varchar(100)<br/>- DIRECURL: varchar(250)<br/>- DIRECCM: varchar(250)<br/>- ISOLITEL: char(1)<br/>- INDICADO: char(1)<br/>- CODASUNT: decimal(18,0)<br/>- CODURESP: decimal(18,0)<br/>- CODURESU: decimal(18,0)"]:::modC
+        TBPFIN02_PA["TBPFIN02_PA<br/>PK: PROCEDIMIENTO, CODPROCE, VERSIONP, VERSIONH<br/>* PROCEDIMIENTO: varchar(50)<br/>* CODPROCE: decimal(18,0)<br/>* VERSIONP: decimal(18,0)<br/>* VERSIONH: decimal(18,0)<br/>- FECVALDE: datetime<br/>- FECVALHA: datetime<br/>- NIVAUTOR: decimal(18,0)<br/>- ESTADOVP: char(1)<br/>- OBSERVAC: varchar(250)"]:::modC
+        TBPFIN03_PA["TBPFIN03_PA<br/>PK: PROCEDIMIENTO, CODPROCE, ORDENTRA<br/>* PROCEDIMIENTO: varchar(50)<br/>* CODPROCE: decimal(18,0)<br/>- VERSIONP: decimal(18,0)<br/>* ORDENTRA: decimal(18,0)<br/>- CODTRAAD: decimal(18,0)<br/>- INDPROCE: char(1)<br/>- NIVTRAMI: decimal(18,0)<br/>- INDBLOQ: char(1)<br/>- NOMBRE: char(50)<br/>- CDESTRAM: numeric(18,0)<br/>- INDSIMUL: char(1)<br/>- TRAMOCUL: char(1)<br/>- CODFASE: varchar(2)<br/>- CODSFASE: varchar(4)<br/>- DATFASUB: varchar(25)<br/>- VAR_FLUJO: varchar(254)<br/>- CRITERIO_COMP: varchar(2)<br/>- VALOR_FIJO: varchar(254)"]:::modC
+        TBPFIN04_PA["TBPFIN04_PA<br/>PK: PROCEDIMIENTO, CODPROCE, ORDENTRA, CODTRAAD, CODUNITR<br/>* PROCEDIMIENTO: varchar(50)<br/>* CODPROCE: decimal(18,0)<br/>- VERSIONP: decimal(18,0)<br/>* ORDENTRA: decimal(18,0)<br/>* CODTRAAD: decimal(18,0)<br/>* CODUNITR: char(15)<br/>- CODUTRHN: char(15)<br/>- INDTRAMI: char(1)<br/>- INDCOMUN: char(1)"]:::modC
+        TBPFIN23_PA["TBPFIN23_PA<br/>PK: PROCEDIMIENTO, CODENTID, CODFAMIL, CODUNITR<br/>* PROCEDIMIENTO: varchar(50)<br/>* CODENTID: decimal(18,0)<br/>* CODFAMIL: decimal(18,0)<br/>* CODUNITR: decimal(18,0)<br/>- CODUTRHN: char(15)<br/>- INDCONVE: char(1)<br/>- TIPOUNTR: char(1)<br/>- CARGO: char(8)<br/>- UTSUSTIT: decimal(18,0)<br/>- NUMORG: decimal(18,0)"]:::modC
+        EQUIV_UT["EQUIV_UT<br/>PK: CODCM, CODHN<br/>* CODCM: int<br/>* CODHN: int<br/>- CODUTRHN: char(15)"]:::modC
+        TBDCELTA_PA["TBDCELTA_PA<br/>PK: (no declarada)<br/>- PROCEDIMIENTO: varchar(50)<br/>- ELTA_AMBITO: char(10)<br/>- ELTA_CODTAB: char(2)<br/>- ELTA_IDIOMA: char(1)<br/>- ELTA_CLAVE: char(15)<br/>- ELTA_DESC20: char(20)<br/>- ELTA_DESC40: char(40)<br/>- ELTA_DESC60: char(60)<br/>- ELTA_FECBAJA: datetime<br/>- AUX: numeric(18,0)"]:::modC
+      end
+      subgraph E["E) WF (definicion de flujos)"]
+        direction TB
+        wfFlows["wfFlows<br/>PK: Flow, Version<br/>* Flow: char(25)<br/>* Version: int<br/>- Active: char(1)<br/>- FlowName: char(25)<br/>- Comments: varchar(255)<br/>- Running: char(1)<br/>- Start: datetime<br/>- StopOlderVersions: char(1)"]:::modE
+        wfFlowActions["wfFlowActions<br/>PK: Flow, Version, FlowOrder, Id<br/>* Flow: char(25)<br/>* Version: int<br/>* FlowOrder: int<br/>* Id: int<br/>- Action: char(25)<br/>- Path: char(25)<br/>- Param: char(25)<br/>- Value: varchar(500)<br/>- Comments: varchar(255)"]:::modE
+      end
+  end
+
+
+  %% Relaciones
+  USUARIOS -->|USERID| ERRORES
+  USUARIOS -->|USERID| ERRORES_HISTORICO
+  USUARIOS -->|USERID| PROCESOS_PENDIENTES
+  USUARIOS -->|USERID| PROCESOS_HISTORICO
+  PROCESOS_PENDIENTES -.->|PROC_USER_ID| PROCESOS_HISTORICO
+  DIAGRAMA -->|DIAGRAMA_PK| ACCIONES_DI
+  ACCIONES_DI -->|ACCIONES_PK| PARAM_ACC
+  DIAGRAMA -.->|DIAGRAMA_KEYS| PROPIEDADES_DI
+  DIAGRAMA -.->|ID_PADRE_ID_DIAGRAMA| DIAGRAMA
+  DIAGRAMA -.->|DI_ID_ORDEN_N1_N4| CONECTORES_DI
+  DIAGRAMA -.->|ID_DIAGRAMA_DI_ID| CONECTOR_ACC
+  DIAGRAMA -.->|PROCEDIMIENTO| VALIDACIONES
+  TBPFIN01_PA -.->|PROC_CODPROCE| TBPFIN02_PA
+  TBPFIN02_PA -.->|PROC_CODPROCE_VERSIONP| TBPFIN03_PA
+  TBPFIN03_PA -->|PROC_CODPROCE_ORDENTRA| TBPFIN04_PA
+  TBPFIN04_PA -.->|CODUTRHN| TBPFIN23_PA
+  TBPFIN23_PA -.->|CODUTRHN| EQUIV_UT
+  TBPFIN04_PA -.->|CODUTRHN| EQUIV_UT
+  TBPFIN01_PA -.->|PROC_CODENTID_CODFAMIL| TBPFIN23_PA
+  VARIABLES_PA -.->|CODHIDRA| VAR_ALTA_PA
+  VAR_ALTA_PA -.->|PROCEDIMIENTO| DIAGRAMA
+  VAR_ALTA_PA -.->|PROCEDIMIENTO| TBPFIN01_PA
+  wfFlows -->|FLOW_VERSION| wfFlowActions
+  PROCESOS_PENDIENTES -.->|PROCEDIMIENTO| DIAGRAMA
+  PROCESOS_PENDIENTES -.->|PROCEDIMIENTO| TBPFIN01_PA
+  ERRORES -.->|PROCEDIMIENTO| DIAGRAMA
+  ERRORES -.->|PROCEDIMIENTO| TBPFIN01_PA
+  VALIDACIONES -.->|PROCEDIMIENTO| TBPFIN01_PA
+
+  style COL1 fill:transparent,stroke:transparent
+  style COL2 fill:transparent,stroke:transparent
+  style COL3 fill:transparent,stroke:transparent

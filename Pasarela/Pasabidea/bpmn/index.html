@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>BPMN</title>
+
+    <!-- CSS oficial de bpmn-js (CDN) -->
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js@18.12.0/dist/assets/diagram-js.css">
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js@18.12.0/dist/assets/bpmn-font/css/bpmn.css">
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js@18.12.0/dist/assets/bpmn-font/css/bpmn-embedded.css">
+
+    <link rel="stylesheet" href="./app.css" />
+
+    <!-- TODO: SACAR LA FUENTE A CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        html, body,
+        input, textarea, select, button, option,
+        label, span, div, p, a, li, ul, ol,
+        h1, h2, h3, h4, h5, h6,
+        table, thead, tbody, tfoot, tr, th, td,
+        small, strong, em, b, i, u,
+        pre, code, blockquote,
+        svg, text, tspan, foreignObject,
+        [class], [id] {
+            font-family: 'Raleway', Arial, sans-serif !important;
+        }
+    </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button id="btnCreate">Crear ejemplo</button>
+    <button id="btnExport">Exportar XML</button>
+    <span class="hint">Tip: mueve elementos; zoom Ctrl+rueda</span>
+  </div>
+
+  <div id="canvas"></div>
+
+  <div class="panel">
+    <div class="panelHeader">
+      <strong>XML</strong>
+      <button id="btnClose" title="Cerrar">×</button>
+    </div>
+    <textarea id="xmlOut" spellcheck="false"></textarea>
+  </div>
+
+  <!-- bpmn-js modeler (CDN) -->
+  <script src="https://unpkg.com/bpmn-js@18.12.0/dist/bpmn-modeler.production.min.js"></script>
+
+  <script src="./app.js"></script>
+</body>
+</html>

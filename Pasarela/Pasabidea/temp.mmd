@@ -1,0 +1,12 @@
+﻿flowchart LR
+  ERWIN["Erwin Evolve<br/>diagramas + objetos"] -->|N8G-593| DBP["BD_PASARELA<br/>intermedia"]
+  ERWIN -->|N8G-595| DBPA["BD_PASARELA_ARTEZ<br/>intermedia"]
+  AD["AD<br/>config ARTEZ"] -->|N8G-747| DBPA
+
+  DBP -->|N8G-749 writer| NEG["BD_NEGOCIOS"]
+  DBP -->|N8G-749 writer| MUGI["MUGI"]
+
+  DBP -->|N8G-746| TESTS["Pruebas E2E<br/>Integración"]
+  DBPA -->|N8G-746| TESTS
+  NEG -->|N8G-746| TESTS
+  MUGI -->|N8G-746| TESTS

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>ARTEZ</title>
+
+    <link href="https://unpkg.com/tabulator-tables@6.2.5/dist/css/tabulator.min.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-red: #d20a11;
+            --color-text: #000000;
+            --color-text-soft: #666666;
+            --color-border: #ebebe6;
+            --color-bg: #ffffff;
+            --tree-line: #d9d9d3;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Raleway', Arial, sans-serif !important;
+        }
+
+        body,
+        input, textarea, select, button, option,
+        label, span, div, p, a, li, ul, ol,
+        h1, h2, h3, h4, h5, h6,
+        table, thead, tbody, tfoot, tr, th, td,
+        small, strong, em, b, i, u,
+        pre, code, blockquote,
+        svg, text, tspan, foreignObject,
+        [class], [id] {
+            font-family: 'Raleway', Arial, sans-serif !important;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            flex: 0 0 auto;
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+            padding: 14px 18px 12px 18px;
+        }
+
+            .topbar h2 {
+                margin: 0;
+                font-size: 24px;
+                font-weight: 400;
+                color: var(--color-text);
+                line-height: 1.1;
+            }
+
+            .topbar .subtitle {
+                margin-top: 4px;
+                color: var(--color-red);
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+        #main-table {
+            flex: 1 1 auto;
+            min-height: 0;
+            width: 100%;
+            background: var(--color-bg);
+            overflow: hidden;
+        }
+
+        .tabulator {
+            border: none !important;
+            background: #fff !important;
+            font-size: 13px;
+        }
+
+            .tabulator .tabulator-header {
+                background: #fff !important;
+                border-bottom: 1px solid var(--color-border) !important;
+            }
+
+                .tabulator .tabulator-header .tabulator-col {
+                    background: #fff !important;
+                    color: #000 !important;
+                    border-right: 1px solid var(--color-border) !important;
+                    font-weight: 700;
+                }
+
+        .tabulator-row {
+            border-bottom: 1px solid var(--color-border) !important;
+            background: #fff !important;
+        }
+
+            .tabulator-row:hover {
+                background: #fff5f5 !important;
+            }
+
+            .tabulator-row .tabulator-cell {
+                border-right: 1px solid #f2f2ef !important;
+                padding: 10px 10px !important;
+                vertical-align: middle;
+            }
+
+        .tabulator input {
+            border-radius: 0 !important;
+            border: 1px solid #cfcfc8 !important;
+            padding: 5px 6px !important;
+            background: #fff !important;
+        }
+
+            .tabulator input:focus,
+            .tabulator input:hover {
+                border-color: #000 !important;
+                outline: none !important;
+            }
+
+        .drag-col {
+            cursor: move;
+            text-align: center;
+            color: var(--color-text-soft);
+        }
+
+        .group-label {
+            font-weight: 700;
+            color: #000;
+        }
+
+        .expand-btn {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border: 1px solid transparent;
+            color: var(--color-red);
+            font-size: 18px;
+            line-height: 1;
+            user-select: none;
+        }
+
+            .expand-btn:hover {
+                border-color: var(--color-red);
+                background: #fff;
+            }
+
+        .tree-wrapper {
+            background: #fff;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .tree-container {
+            padding: 10px 16px 14px 56px;
+            background: linear-gradient(to bottom, #fff 0%, #fcfcfb 100%);
+        }
+
+        .tree-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            color: var(--color-red);
+            margin-bottom: 8px;
+        }
+
+        .tree-root,
+        .tree-root ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+            .tree-root ul {
+                margin-left: 18px;
+                padding-left: 18px;
+                border-left: 1px solid var(--tree-line);
+            }
+
+        .tree-node {
+            position: relative;
+            margin: 2px 0;
+        }
+
+            .tree-node::before {
+                content: "";
+                position: absolute;
+                top: 17px;
+                left: -18px;
+                width: 18px;
+                border-top: 1px solid var(--tree-line);
+            }
+
+        .tree-root > .tree-node::before {
+            display: none;
+        }
+
+        .tree-item {
+            min-height: 34px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: #000;
+            transition: all .15s ease;
+        }
+
+            .tree-item:hover {
+                background: #fff;
+                border-left: 4px solid var(--color-red);
+                padding-left: 4px;
+            }
+
+        .tree-toggle {
+            width: 18px;
+            min-width: 18px;
+            height: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-red);
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+            .tree-toggle.empty {
+                cursor: default;
+                color: transparent;
+            }
+
+        .tree-icon {
+            width: 18px;
+            min-width: 18px;
+            text-align: center;
+            color: var(--color-red);
+            font-size: 13px;
+        }
+
+        .tree-text {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tree-code {
+            font-size: 11px;
+            color: var(--color-text-soft);
+            font-weight: 700;
+            letter-spacing: .02em;
+        }
+
+        .tree-name {
+            font-size: 13px;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .tree-type {
+            font-size: 11px;
+            color: var(--color-text-soft);
+        }
+
+        .tree-children.collapsed {
+            display: none;
+        }
+
+        .row-accent {
+            position: relative;
+        }
+
+            .row-accent::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 6px;
+                bottom: 6px;
+                width: 4px;
+                background: var(--color-red);
+            }
+
+        .tabulator-row.proc-selected {
+            background: #fff5f5 !important;
+        }
+
+            .tabulator-row.proc-selected .tabulator-cell {
+                font-weight: 700;
+            }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <h2>ARTEZ</h2>
+        <div class="subtitle">Clasificación de grupos de procedimientos</div>
+    </div>
+
+    <div id="main-table"></div>
+
+    <script src="https://unpkg.com/tabulator-tables@6.2.5/dist/js/tabulator.min.js"></script>
+
+    <script>
+        let selectedProc = null;
+        let table = null;
+
+        const rootGroup = {
+            id: "GP-SIN-CLASIFICAR",
+            codigo: "GP-SIN-CLASIFICAR",
+            nombre: "Sin clasificar",
+            tipo: "Grupo de Procedimientos",
+            descripcion: "Diagramas Erwin cargados como procedimientos",
+            children: []
+        };
+
+        function hasChildren(node) {
+            return Array.isArray(node.children) && node.children.length > 0;
+        }
+
+        function getNodeIcon(tipo) {
+            switch ((tipo || "").toLowerCase()) {
+                case "grupo de procedimientos":
+                    return "■";
+                case "subgrupo":
+                    return "▣";
+                case "procedimiento":
+                    return "●";
+                case "bloque":
+                    return "◆";
+                default:
+                    return "•";
+            }
+        }
+
+        function mapErwinDiagramToProc(x) {
+            return {
+                id: x.DI_ID ?? x.di_id ?? x.Id ?? x.id,
+                codigo: String(x.DI_ID ?? x.di_id ?? ""),
+                nombre: x.DI_NAME ?? x.di_name ?? x.Nombre ?? x.nombre ?? "",
+                tipo: "Procedimiento",
+                descripcion: `ANO_TABNR=${x.ANO_TABNR ?? x.ano_tabnr ?? ""} | ANO_ID=${x.ANO_ID ?? x.ano_id ?? ""}`,
+                diId: x.DI_ID ?? x.di_id,
+                diName: x.DI_NAME ?? x.di_name,
+                anoId: x.ANO_ID ?? x.ano_id,
+                anoTabnr: x.ANO_TABNR ?? x.ano_tabnr,
+                raw: x,
+                children: []
+            };
+        }
+
+        function loadErwinDiagrams(items) {
+            rootGroup.children = (items || []).map(mapErwinDiagramToProc);
+
+            if (table) {
+                table.replaceData([rootGroup]);
+            } else {
+                initTable([rootGroup]);
+            }
+        }
+
+        function notifyProcedureSelected(proc) {
+            selectedProc = proc;
+
+            window.parent.postMessage({
+                type: "procedure-selected",
+                payload: {
+                    diId: proc.diId,
+                    diName: proc.diName,
+                    procedure: proc
+                }
+            }, "*");
+        }
+
+        function renderTreeNode(node) {
+            const childrenHtml = hasChildren(node)
+                ? `<ul class="tree-children collapsed">${node.children.map(renderTreeNode).join("")}</ul>`
+                : "";
+
+            const toggle = hasChildren(node)
+                ? `<span class="tree-toggle" onclick="toggleTreeNode(this, event))">＋</span>`
+                : `<span class="tree-toggle empty">·</span>`;
+
+            return `
+                    <li class="tree-node">
+                        <div class="tree-item" onclick='selectTreeProcedure(${JSON.stringify(node).replace(/'/g, "&apos;")})'>
+                            ${toggle}
+                            <span class="tree-icon">${getNodeIcon(node.tipo)}</span>
+                            <span class="tree-text">
+                                <span class="tree-code">${node.codigo || ""}</span>
+                                <span class="tree-name">${node.nombre || ""}</span>
+                                <span class="tree-type">${node.tipo || ""}</span>
+                            </span>
+                        </div>
+                        ${childrenHtml}
+                    </li>
+                `;
+        }
+
+        window.selectTreeProcedure = function (node) {
+            if (!node || node.tipo !== "Procedimiento") return;
+            notifyProcedureSelected(node);
+        };
+
+        window.toggleTreeNode = function (el) {
+            const li = el.closest(".tree-node");
+            const children = li.querySelector(":scope > .tree-children");
+            if (!children) return;
+
+            const collapsed = children.classList.contains("collapsed");
+            children.classList.toggle("collapsed");
+            el.textContent = collapsed ? "－" : "＋";
+
+            event.stopPropagation();
+        };
+
+        function toggleTreePanel(e, cell) {
+            const row = cell.getRow();
+            const rowData = row.getData();
+
+            if (!hasChildren(rowData)) return;
+
+            const rowEl = row.getElement();
+            const existing = rowEl.nextElementSibling;
+
+            if (existing && existing.classList.contains("tree-wrapper")) {
+                existing.remove();
+                cell.getElement().innerHTML = `<span class="expand-btn">＋</span>`;
+                return;
+            }
+
+            const wrapper = document.createElement("div");
+            wrapper.className = "tree-wrapper";
+
+            const holder = document.createElement("div");
+            holder.className = "tree-container";
+            holder.innerHTML = `
+                    <div class="tree-title">Estructura de ${rowData.nombre}</div>
+                    <ul class="tree-root">
+                        ${rowData.children.map(renderTreeNode).join("")}
+                    </ul>
+                `;
+
+            wrapper.appendChild(holder);
+            rowEl.insertAdjacentElement("afterend", wrapper);
+
+            cell.getElement().innerHTML = `<span class="expand-btn">－</span>`;
+
+            e.stopPropagation();
+        }
+
+        function initTable(data) {
+            table = new Tabulator("#main-table", {
+                data: data,
+                height: "100%",
+                layout: "fitColumns",
+                reactiveData: true,
+                movableRows: true,
+                columns: [
+                    {
+                        title: "",
+                        field: "expand",
+                        width: 52,
+                        hozAlign: "center",
+                        headerSort: false,
+                        formatter: function (cell) {
+                            const row = cell.getRow().getData();
+                            return hasChildren(row) ? `<span class="expand-btn">＋</span>` : "";
+                        },
+                        cellClick: toggleTreePanel
+                    },
+                    {
+                        rowHandle: true,
+                        formatter: "handle",
+                        width: 44,
+                        hozAlign: "center",
+                        headerSort: false,
+                        cssClass: "drag-col"
+                    },
+                    { title: "DI_ID", field: "diId", width: 90, headerFilter: "input" },
+                    { title: "Código", field: "codigo", width: 150, headerFilter: "input" },
+                    {
+                        title: "Nombre",
+                        field: "nombre",
+                        widthGrow: 2,
+                        headerFilter: "input",
+                        formatter: function (cell) {
+                            return `<span class="group-label">${cell.getValue() || ""}</span>`;
+                        }
+                    },
+                    { title: "Tipo", field: "tipo", width: 180, headerFilter: "input" },
+                    { title: "Descripción", field: "descripcion", widthGrow: 2, headerFilter: "input" }
+                ],
+                rowClick: function (e, row) {
+                    const d = row.getData();
+
+                    if (d.tipo !== "Procedimiento") return;
+
+                    document.querySelectorAll(".tabulator-row.proc-selected")
+                        .forEach(x => x.classList.remove("proc-selected"));
+
+                    row.getElement().classList.add("proc-selected");
+
+                    notifyProcedureSelected(d);
+                },
+                rowFormatter: function (row) {
+                    const d = row.getData();
+                    const el = row.getElement();
+
+                    el.classList.remove("row-accent");
+
+                    if (d.tipo === "Grupo de Procedimientos") {
+                        el.classList.add("row-accent");
+                    }
+                },
+                movableRowsStopped: function () {
+                    console.log("Nuevo orden raíz:", table.getData());
+                }
+            });
+        }
+
+        window.addEventListener("message", function (event) {
+            const msg = event.data;
+            if (!msg || !msg.type) return;
+
+            if (msg.type === "load-erwin-diagrams") {
+                loadErwinDiagrams(msg.payload || []);
+            }
+        });
+
+        initTable([rootGroup]);
+
+        window.toggleTreeNode = function (el, ev) {
+            if (ev) ev.stopPropagation();
+
+            const li = el.closest(".tree-node");
+            const children = li.querySelector(":scope > .tree-children");
+            if (!children) return;
+
+            const collapsed = children.classList.contains("collapsed");
+            children.classList.toggle("collapsed");
+            el.textContent = collapsed ? "－" : "＋";
+        };
+    </script>
+</body>
+</html>

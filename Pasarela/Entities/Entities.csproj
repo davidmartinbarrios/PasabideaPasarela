@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{39A73647-0EA5-410F-BBEF-D7D8AA8D2C95}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Entities</RootNamespace>
+    <AssemblyName>Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="POCOs\BpmnDiagramHeader.cs" />
+    <Compile Include="POCOs\Attribute.cs" />
+    <Compile Include="POCOs\Conectores_DI.cs" />
+    <Compile Include="POCOs\Connector.cs" />
+    <Compile Include="POCOs\Cw_Data_Usage.cs" />
+    <Compile Include="POCOs\Cw_Inter_Object.cs" />
+    <Compile Include="POCOs\Cw_Lookup.cs" />
+    <Compile Include="POCOs\Cw_Object.cs" />
+    <Compile Include="POCOs\Cw_Object_Type.cs" />
+    <Compile Include="POCOs\Cw_Prop_Type.cs" />
+    <Compile Include="POCOs\Diagram.cs" />
+    <Compile Include="POCOs\Entity.cs" />
+    <Compile Include="POCOs\ErwinDiagram.cs" />
+    <Compile Include="POCOs\Event.cs" />
+    <Compile Include="POCOs\Joiner.cs" />
+    <Compile Include="POCOs\MugiLatestWfFlow.cs" />
+    <Compile Include="POCOs\Organization.cs" />
+    <Compile Include="POCOs\Process.cs" />
+    <Compile Include="POCOs\Process_Break.cs" />
+    <Compile Include="POCOs\Query_Response.cs" />
+    <Compile Include="POCOs\Shape.cs" />
+    <Compile Include="POCOs\Text_Field.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

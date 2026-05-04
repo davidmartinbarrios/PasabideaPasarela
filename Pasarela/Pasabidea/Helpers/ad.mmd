@@ -1,0 +1,16 @@
+﻿erDiagram
+  VersionProcedimientoBLT ||--o{ TBN8VersionProcedimientoBLTDocumento : version
+  Documento ||--o{ TBN8VersionProcedimientoBLTDocumento : documento
+  Fundamento ||--|| Documento : base_fundamento
+  TBN8ServicioTramitacion ||--o{ TBN8VersionProcedimientoBLTDocumento : servicio
+
+  VersionProcedimientoBLT ||--o{ TBN8VersionProcedimientoBLTTipoActuacion : version
+  TBN8TipoActuacion ||--o{ TBN8VersionProcedimientoBLTTipoActuacion : tipo
+
+  Tramite ||--o{ FormularioTramite : tramite
+  Formulario ||--o{ FormularioTramite : formulario
+
+  Tramite ||--o{ ActividadBPMNTramite : actividad
+  Tramite ||--o{ ActuacionTramite : actuacion
+  Tramite ||--o{ TBN8TramiteConfiguracion : config
+  Tramite ||--o{ TBN8TareaAutomaticaConfiguracion : tarea_auto
