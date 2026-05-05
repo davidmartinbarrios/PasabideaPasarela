@@ -1,10 +1,24 @@
-﻿namespace Artez.AdReader;
+using System;
+using System.Collections.Generic;
 
-public sealed class AdConfigSnapshot
+namespace Artez.AdReader
 {
-    // Tabla -> filas (cada fila = diccionario columna->valor)
-    public required IReadOnlyDictionary<string, IReadOnlyList<IReadOnlyDictionary<string, object?>>> Tables { get; init; }
+    public sealed class AdConfigSnapshot
+    {
+        public AdConfigSnapshot()
+        {
+            Tables = new Dictionary<string, IReadOnlyList<IReadOnlyDictionary<string, object>>>();
+        }
 
-    public IReadOnlyList<IReadOnlyDictionary<string, object?>> Get(string tableName)
-        => Tables.TryGetValue(tableName, out var rows) ? rows : Array.Empty<IReadOnlyDictionary<string, object?>>();
+        // Tabla -> filas (cada fila = diccionario columna->valor).
+        public IReadOnlyDictionary<string, IReadOnlyList<IReadOnlyDictionary<string, object>>> Tables { get; set; }
+
+        public IReadOnlyList<IReadOnlyDictionary<string, object>> Get(string tableName)
+        {
+            IReadOnlyList<IReadOnlyDictionary<string, object>> rows;
+            return Tables.TryGetValue(tableName, out rows)
+                ? rows
+                : Array.Empty<IReadOnlyDictionary<string, object>>();
+        }
+    }
 }

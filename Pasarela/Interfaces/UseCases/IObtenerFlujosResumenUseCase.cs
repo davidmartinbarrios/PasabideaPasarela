@@ -1,11 +1,15 @@
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Pasabidea.Application.Dtos;
 using Pasabidea.Application.UseCases;
 
-namespace Pasabidea.Interfaces.UseCases;
-
-public interface IObtenerFlujosResumenUseCase
+namespace Pasabidea.Interfaces.UseCases
 {
-    Task<IReadOnlyList<FlujoResumenDto>> ExecuteAsync(
-        ObtenerFlujosResumenRequest request,
-        CancellationToken cancellationToken = default);
+    public interface IObtenerFlujosResumenUseCase
+    {
+        Task<IReadOnlyList<FlujoResumenDto>> ExecuteAsync(
+            ObtenerFlujosResumenRequest request,
+            CancellationToken cancellationToken = default(CancellationToken));
+    }
 }

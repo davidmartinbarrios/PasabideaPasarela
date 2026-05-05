@@ -1,75 +1,82 @@
+using System;
+using System.Collections.Generic;
 using System.Data;
-using Microsoft.Data.SqlClient;
+using System.Data.SqlClient;
+using System.Threading;
+using System.Threading.Tasks;
 using Pasabidea.Business.Models;
 using Pasabidea.Interfaces.Repositories;
 
-namespace Pasabidea.Infrastructure.Repositories;
-
-public sealed class FlujosRepository : IFlujosRepository
+namespace Pasabidea.Infrastructure.Repositories
 {
-    private readonly string _connectionString;
-
-    public FlujosRepository(string connectionString)
+    public sealed class FlujosRepository : IFlujosRepository
     {
-        if (string.IsNullOrWhiteSpace(connectionString))
+        private readonly string _connectionString;
+
+        public FlujosRepository(string connectionString)
         {
-            throw new ArgumentException("La cadena de conexión no puede estar vacía.", nameof(connectionString));
-        }
-
-        _connectionString = connectionString;
-    }
-
-    public async Task<IReadOnlyList<FlujoResumen>> ObtenerUltimasVersionesAsync(
-        string patronBaseDatos,
-        CancellationToken cancellationToken = default)
-    {
-        if (string.IsNullOrWhiteSpace(patronBaseDatos))
-        {
-            patronBaseDatos = "DBN8%";
-        }
-
-        var resultado = new List<FlujoResumen>();
-
-        await using var connection = new SqlConnection(_connectionString);
-        await connection.OpenAsync(cancellationToken);
-
-        var sql = BuildSql();
-
-        await using var command = new SqlCommand(sql, connection)
-        {
-            CommandType = CommandType.Text,
-            CommandTimeout = 120
-        };
-
-        command.Parameters.Add(new SqlParameter("@PatronBaseDatos", SqlDbType.NVarChar, 128)
-        {
-            Value = patronBaseDatos
-        });
-
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-
-        var ordinalBaseDatos = reader.GetOrdinal("BaseDatos");
-        var ordinalFlow = reader.GetOrdinal("Flow");
-        var ordinalVersion = reader.GetOrdinal("Version");
-        var ordinalComments = reader.GetOrdinal("Comments");
-
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            resultado.Add(new FlujoResumen
+            if (string.IsNullOrWhiteSpace(connectionString))
             {
-                BaseDatos = reader.IsDBNull(ordinalBaseDatos) ? string.Empty : reader.GetString(ordinalBaseDatos),
-                Flow = reader.IsDBNull(ordinalFlow) ? string.Empty : Convert.ToString(reader.GetValue(ordinalFlow)) ?? string.Empty,
-                Version = reader.IsDBNull(ordinalVersion) ? string.Empty : Convert.ToString(reader.GetValue(ordinalVersion)) ?? string.Empty,
-                Comments = reader.IsDBNull(ordinalComments) ? null : Convert.ToString(reader.GetValue(ordinalComments))
-            });
+                throw new ArgumentException("La cadena de conexion no puede estar vacia.", nameof(connectionString));
+            }
+
+            _connectionString = connectionString;
         }
 
-        return resultado;
-    }
+        public async Task<IReadOnlyList<FlujoResumen>> ObtenerUltimasVersionesAsync(
+            string patronBaseDatos,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (string.IsNullOrWhiteSpace(patronBaseDatos))
+            {
+                patronBaseDatos = "DBN8%";
+            }
 
-    private static string BuildSql()
-    {
-        return @"
+            var resultado = new List<FlujoResumen>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
+
+                var sql = BuildSql();
+
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.CommandTimeout = 120;
+
+                    command.Parameters.Add(new SqlParameter("@PatronBaseDatos", SqlDbType.NVarChar, 128)
+                    {
+                        Value = patronBaseDatos
+                    });
+
+                    using (var reader = await command.ExecuteReaderAsync(cancellationToken).ConfigureAwait(false))
+                    {
+                        var ordinalBaseDatos = reader.GetOrdinal("BaseDatos");
+                        var ordinalFlow = reader.GetOrdinal("Flow");
+                        var ordinalVersion = reader.GetOrdinal("Version");
+                        var ordinalComments = reader.GetOrdinal("Comments");
+
+                        while (await reader.ReadAsync(cancellationToken).ConfigureAwait(false))
+                        {
+                            resultado.Add(new FlujoResumen
+                            {
+                                BaseDatos = reader.IsDBNull(ordinalBaseDatos) ? string.Empty : reader.GetString(ordinalBaseDatos),
+                                Flow = reader.IsDBNull(ordinalFlow) ? string.Empty : Convert.ToString(reader.GetValue(ordinalFlow)) ?? string.Empty,
+                                Version = reader.IsDBNull(ordinalVersion) ? string.Empty : Convert.ToString(reader.GetValue(ordinalVersion)) ?? string.Empty,
+                                Comments = reader.IsDBNull(ordinalComments) ? null : Convert.ToString(reader.GetValue(ordinalComments))
+                            });
+                        }
+                    }
+                }
+            }
+
+            return resultado;
+        }
+
+        private static string BuildSql()
+        {
+            return @"
 DECLARE @sql nvarchar(max) = N'';
 
 SELECT @sql = @sql +
@@ -122,10 +129,9 @@ SELECT
     Comments
 FROM FlujosRanked
 WHERE rn = 1
-ORDER BY BaseDatos, Flow;
-';
+ORDER BY BaseDatos, Flow;';
 
-EXEC sys.sp_executesql @sql;
-";
+EXEC sp_executesql @sql;";
+        }
     }
 }
