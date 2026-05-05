@@ -11,8 +11,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security.Policy;
-using System.Text.Json;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace Pasabidea
@@ -23,6 +23,11 @@ namespace Pasabidea
             new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
         private bool _webView2HooksInstalled = false;
+
+        private static JavaScriptSerializer CreateJsonSerializer()
+        {
+            return new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
+        }
 
         public MainForm()
         {
@@ -48,28 +53,30 @@ namespace Pasabidea
             {
                 var json = e.WebMessageAsJson;
 
-                //using var doc = JsonDocument.Parse(json);
-                using (var doc = JsonDocument.Parse(json))
-                {
-                    // usar doc aquí
-                
-                    var root = doc.RootElement;
+                var serializer = CreateJsonSerializer();
+                var root = serializer.Deserialize<Dictionary<string, object>>(json);
 
-                    var type = root.GetProperty("type").GetString();
+                object typeObject;
+                if (root == null ||
+                    !root.TryGetValue("type", out typeObject) ||
+                    Convert.ToString(typeObject) != "procedure-selected")
+                    return;
 
-                    if (type != "procedure-selected")
-                        return;
+                object payloadObject;
+                var payload = root.TryGetValue("payload", out payloadObject)
+                    ? payloadObject as Dictionary<string, object>
+                    : null;
 
-                    var payload = root.GetProperty("payload");
+                if (payload == null)
+                    return;
 
-                    int diId = payload.GetProperty("diId").GetInt32();
-                    string diName = payload.GetProperty("diName").GetString();
+                int diId = Convert.ToInt32(payload["diId"]);
+                string diName = Convert.ToString(payload["diName"]);
 
-                    txtDI_ID.Text = diId.ToString();
-                    cmbProc.Text = diName;
+                txtDI_ID.Text = diId.ToString();
+                cmbProc.Text = diName;
 
-                    await ExportarYRenderizarBpmnAsync(diId);
-                }
+                await ExportarYRenderizarBpmnAsync(diId);
             }
             catch (Exception ex)
             {
@@ -96,7 +103,7 @@ namespace Pasabidea
                 return;
             }
 
-            string xmlJson = JsonSerializer.Serialize(resp.Data);
+            string xmlJson = CreateJsonSerializer().Serialize(resp.Data);
 
             string script = $@"
         window.renderBpmnXml({xmlJson});
@@ -353,7 +360,7 @@ namespace Pasabidea
 
     //        var data = result.Data.ToList();
 
-    //        string json = JsonSerializer.Serialize(data);
+    //        string json = CreateJsonSerializer().Serialize(data);
 
     //        string script = $@"
     //    window.loadProceduresIntoIframe({json});
@@ -384,7 +391,7 @@ namespace Pasabidea
             cmbProc.Items.Clear();
             cmbProc.Items.AddRange(data.Select(x => x.DI_NAME).ToArray());
 
-            string json = JsonSerializer.Serialize(data);
+            string json = CreateJsonSerializer().Serialize(data);
 
             string script = $@"
         window.loadProceduresIntoIframe({json});

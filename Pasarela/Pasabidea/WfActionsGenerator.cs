@@ -47,7 +47,7 @@ namespace Pasabidea
     {
         public async Task<WfActionsGenerationResult> GenerarWfActionsAsync(
             WfActionsGenerationRequest request,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             if (request == null) throw new ArgumentNullException(nameof(request));
             request.Validate();
