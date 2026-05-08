@@ -3,6 +3,7 @@ using Lantik.Pasarela.Application.Interfaces;
 using Lantik.Pasarela.Business.BOs;
 using Lantik.Pasarela.Entities.POCOs;
 using Lantik.Pasarela.Helpers;
+using System;
 using System.Collections.Generic;
 
 namespace Lantik.Pasarela.Application.AOs
@@ -42,6 +43,11 @@ namespace Lantik.Pasarela.Application.AOs
             responseDTO.Data = retList;
             responseDTO.Query_Result.ParseResponse(response.Query_Result);
             return responseDTO;
+        }
+
+        public object ObtenerModelosARTEZ()
+        {
+            throw new NotImplementedException();
         }
     }
 }

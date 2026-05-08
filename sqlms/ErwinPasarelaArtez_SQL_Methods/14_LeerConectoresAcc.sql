@@ -1,0 +1,63 @@
+﻿/*
+Proyecto: Pasarela / ERWIN -> PASARELA_ARTEZ
+Clase origen: ErwinPasarelaArtezTransformer
+Uso: ajustar variables DECLARE superiores y ejecutar en SSMS.
+Fecha generación: 2026-05-06
+*/
+
+/* Método: LeerConectoresAcc
+   Ejecutar en BD origen ERWIN.
+   Devuelve filas con forma de CONECTOR_ACC.
+*/
+
+-- USE erwin_evolve;
+-- GO
+
+DECLARE @P_MODEL_NAME sysname = N'ARTEZELI';
+DECLARE @P_DI_ID int = 3750;
+DECLARE @P_PROCEDIMIENTO nvarchar(255) = N'TA999900';
+
+;WITH Tramites AS
+(
+    SELECT
+        ROW_NUMBER() OVER (ORDER BY S.SH_Y DESC, S.SH_X ASC, S.SH_SEQ) AS ORDEN_N1,
+        S.ANO_ID AS ID_DIAGRAMA
+    FROM dbo.SHAPE S
+    WHERE S.MODEL_NAME = @P_MODEL_NAME
+      AND S.DI_ID = @P_DI_ID
+      AND S.ANO_TABNR = 8953
+),
+DiagramasHijo AS
+(
+    SELECT
+        T.ORDEN_N1,
+        T.ID_DIAGRAMA,
+        D.DI_ID AS DI_ID_ACC
+    FROM Tramites T
+    JOIN dbo.DIAGRAM D
+      ON D.MODEL_NAME = @P_MODEL_NAME
+     AND D.ANO_ID = T.ID_DIAGRAMA
+     AND D.DI_TYPE <> 1
+)
+SELECT
+    @P_PROCEDIMIENTO AS PROCEDIMIENTO,
+    J.ANO_ID AS ID_CONECTOR,
+    DH.ID_DIAGRAMA,
+    J.JO_SEQ AS NUM_CONECTOR,
+    J.SH_SEQ_FROM AS NUM_SEQ_DESDE,
+    J.SH_SEQ_TO AS NUM_SEQ_HASTA,
+    ISNULL(LU.LU_NAME, 'Normal') AS CAT_CONECTOR,
+    'N' AS IND_SALIDA_TRAM,
+    J.DI_ID,
+    DH.ORDEN_N1
+FROM DiagramasHijo DH
+JOIN dbo.JOINER J
+  ON J.MODEL_NAME = @P_MODEL_NAME
+ AND J.DI_ID = DH.DI_ID_ACC
+LEFT JOIN dbo.CONNECTOR C
+  ON C.MODEL_NAME = J.MODEL_NAME
+ AND C.CO_ID = J.ANO_ID
+LEFT JOIN dbo.CW_LOOKUP LU
+  ON LU.MODEL_NAME = J.MODEL_NAME
+ AND LU.LU_ID = C.CO_TYPE
+ORDER BY DH.ORDEN_N1, J.JO_SEQ;

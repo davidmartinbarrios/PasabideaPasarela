@@ -1,0 +1,36 @@
+﻿/*
+Proyecto: Pasarela / ERWIN -> PASARELA_ARTEZ
+Clase origen: ErwinPasarelaArtezTransformer
+Uso: ajustar variables DECLARE superiores y ejecutar en SSMS.
+Fecha generación: 2026-05-06
+*/
+
+/* Método: InsertAccionDi
+   Ejecutar en BD destino PASARELA_ARTEZ / PASARELA.
+   Plantilla para insertar UNA fila.
+*/
+
+-- USE PASARELA_ARTEZ;
+-- GO
+
+DECLARE @PROCEDIMIENTO nvarchar(255) = N'TA999900';
+DECLARE @ORDEN_N1 int = 1, @ORDEN_N2 int = 0, @ORDEN_N3 int = 0, @ORDEN_N4 int = 0, @ORDEN_N5 int = 0;
+DECLARE @ORDEN_ACC int = 1;
+DECLARE @ID_ACCION int = 0;
+DECLARE @NOM_ACCION nvarchar(500) = N'PON_NOM_ACCION';
+DECLARE @NUM_ACCION int = @ID_ACCION;
+DECLARE @TIPO_ACCION nvarchar(1) = N'T';
+DECLARE @PATH_HIDRA nvarchar(500) = N'PON_PATH_HIDRA';
+DECLARE @NUM_SEQ int = 0;
+DECLARE @DI_ID int = 3750;
+
+INSERT INTO dbo.ACCIONES_DI
+(
+    PROCEDIMIENTO, ORDEN_N1, ORDEN_N2, ORDEN_N3, ORDEN_N4, ORDEN_N5,
+    ORDEN_ACC, ID_ACCION, NOM_ACCION, NUM_ACCION, TIPO_ACCION, PATH_HIDRA, NUM_SEQ, DI_ID
+)
+VALUES
+(
+    @PROCEDIMIENTO, @ORDEN_N1, @ORDEN_N2, @ORDEN_N3, @ORDEN_N4, @ORDEN_N5,
+    @ORDEN_ACC, @ID_ACCION, @NOM_ACCION, @NUM_ACCION, @TIPO_ACCION, @PATH_HIDRA, @NUM_SEQ, @DI_ID
+);

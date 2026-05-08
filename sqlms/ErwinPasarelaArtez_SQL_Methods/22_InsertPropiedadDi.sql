@@ -1,0 +1,38 @@
+﻿/*
+Proyecto: Pasarela / ERWIN -> PASARELA_ARTEZ
+Clase origen: ErwinPasarelaArtezTransformer
+Uso: ajustar variables DECLARE superiores y ejecutar en SSMS.
+Fecha generación: 2026-05-06
+*/
+
+/* Método: InsertPropiedadDi
+   Ejecutar en BD destino PASARELA_ARTEZ / PASARELA.
+   Plantilla para insertar UNA fila.
+*/
+
+-- USE PASARELA_ARTEZ;
+-- GO
+
+DECLARE @PROCEDIMIENTO nvarchar(255) = N'TA999900';
+DECLARE @ORDEN_N1 int = 1, @ORDEN_N2 int = 0, @ORDEN_N3 int = 0, @ORDEN_N4 int = 0, @ORDEN_N5 int = 0;
+DECLARE @ID_DIAGRAMA int = 0;
+DECLARE @NOM_DIAGRAMA nvarchar(500) = N'PON_NOM_DIAGRAMA';
+DECLARE @TIPO_DIAGRAMA nvarchar(255) = N'';
+DECLARE @PLAZTIP1_DI nvarchar(250) = NULL, @PLAZTIP2_DI nvarchar(250) = NULL, @NIVELTRAM_DI nvarchar(250) = NULL;
+DECLARE @INDBLOQ_DI nvarchar(250) = NULL, @INDRAM_DI nvarchar(250) = NULL;
+DECLARE @INDPERSINT nvarchar(1) = N'N';
+
+INSERT INTO dbo.PROPIEDADES_DI
+(
+    PROCEDIMIENTO, ORDEN_N1, ORDEN_N2, ORDEN_N3, ORDEN_N4, ORDEN_N5,
+    ID_DIAGRAMA, NOM_DIAGRAMA, TIPO_DIAGRAMA,
+    PLAZTIP1_DI, PLAZTIP2_DI, NIVELTRAM_DI,
+    INDBLOQ_DI, INDRAM_DI, INDPERSINT
+)
+VALUES
+(
+    @PROCEDIMIENTO, @ORDEN_N1, @ORDEN_N2, @ORDEN_N3, @ORDEN_N4, @ORDEN_N5,
+    @ID_DIAGRAMA, @NOM_DIAGRAMA, @TIPO_DIAGRAMA,
+    @PLAZTIP1_DI, @PLAZTIP2_DI, @NIVELTRAM_DI,
+    @INDBLOQ_DI, @INDRAM_DI, @INDPERSINT
+);

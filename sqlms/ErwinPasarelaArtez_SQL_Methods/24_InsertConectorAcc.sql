@@ -1,0 +1,35 @@
+﻿/*
+Proyecto: Pasarela / ERWIN -> PASARELA_ARTEZ
+Clase origen: ErwinPasarelaArtezTransformer
+Uso: ajustar variables DECLARE superiores y ejecutar en SSMS.
+Fecha generación: 2026-05-06
+*/
+
+/* Método: InsertConectorAcc
+   Ejecutar en BD destino PASARELA_ARTEZ / PASARELA.
+   Plantilla para insertar UNA fila.
+*/
+
+-- USE PASARELA_ARTEZ;
+-- GO
+
+DECLARE @PROCEDIMIENTO nvarchar(255) = N'TA999900';
+DECLARE @ID_CONECTOR int = 0;
+DECLARE @ID_DIAGRAMA int = 0;
+DECLARE @NUM_CONECTOR int = 0;
+DECLARE @NUM_SEQ_DESDE int = 0;
+DECLARE @NUM_SEQ_HASTA int = 0;
+DECLARE @CAT_CONECTOR nvarchar(255) = N'Normal';
+DECLARE @IND_SALIDA_TRAM nvarchar(1) = N'N';
+DECLARE @DI_ID int = 3750;
+
+INSERT INTO dbo.CONECTOR_ACC
+(
+    PROCEDIMIENTO, ID_CONECTOR, ID_DIAGRAMA, NUM_CONECTOR,
+    NUM_SEQ_DESDE, NUM_SEQ_HASTA, CAT_CONECTOR, IND_SALIDA_TRAM, DI_ID
+)
+VALUES
+(
+    @PROCEDIMIENTO, @ID_CONECTOR, @ID_DIAGRAMA, @NUM_CONECTOR,
+    @NUM_SEQ_DESDE, @NUM_SEQ_HASTA, @CAT_CONECTOR, @IND_SALIDA_TRAM, @DI_ID
+);

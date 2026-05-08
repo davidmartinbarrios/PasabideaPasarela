@@ -3,6 +3,7 @@ using Lantik.Pasarela.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Security.Cryptography;
 
@@ -41,6 +42,127 @@ namespace Lantik.Pasarela.sqlRepository
             DBErwin = new DBContext(Settings.BD_DP4);
             DBPasarela = new DBContext(Settings.BD_PASARELA);
         }
+        
+        public static string ObtenerPropiedadObjetoDiagrama(
+            string connectionString,
+            string modelName,
+            int diId,
+            string tipoObjeto,
+            string scriptNamePropiedad)
+        {
+            const string sql = @"
+SELECT TOP (1)
+    LTRIM(RTRIM(
+        COALESCE(
+            NULLIF(P.N.value('(value/text())[1]', 'nvarchar(4000)'), N''),
+            NULLIF(P.N.value('(text())[1]', 'nvarchar(4000)'), N''),
+            NULLIF(P.N.value('(*/@value)[1]', 'nvarchar(4000)'), N''),
+            NULLIF(P.N.value('(*/@id)[1]', 'nvarchar(4000)'), N''),
+            NULLIF(P.N.value('(*/@name)[1]', 'nvarchar(4000)'), N'')
+        )
+    )) AS VALOR
+FROM erwin_evolve.dbo.SHAPE S
+JOIN erwin_evolve.dbo.CW_OBJECT_TYPE OT
+    ON OT.MODEL_NAME = S.MODEL_NAME
+   AND OT.OT_ID = S.ANO_TABNR
+JOIN erwin_evolve.dbo.CW_OBJECT CO
+    ON CO.MODEL_NAME = S.MODEL_NAME
+   AND CO.OT_ID = S.ANO_TABNR
+   AND CO.GO_ID = S.ANO_ID
+CROSS APPLY
+(
+    SELECT TRY_CAST(CONVERT(nvarchar(max), CO.USERDEFINED) AS xml) AS XML_DATA
+) X
+CROSS APPLY X.XML_DATA.nodes('//*[local-name()=""property""]') P(N)
+WHERE S.MODEL_NAME = @MODEL_NAME
+  AND S.DI_ID = @DI_ID
+  AND OT.OT_NAME = @TIPO_OBJETO
+  AND P.N.value('@scriptname', 'nvarchar(500)') COLLATE DATABASE_DEFAULT
+      = @SCRIPTNAME_PROPIEDAD COLLATE DATABASE_DEFAULT
+ORDER BY S.SH_SEQ;";
+
+            using (var cn = new SqlConnection(connectionString))
+            using (var cmd = new SqlCommand(sql, cn))
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandTimeout = 60;
+
+                cmd.Parameters.Add("@MODEL_NAME", SqlDbType.NVarChar, 100).Value = modelName;
+                cmd.Parameters.Add("@DI_ID", SqlDbType.Int).Value = diId;
+                cmd.Parameters.Add("@TIPO_OBJETO", SqlDbType.NVarChar, 200).Value = tipoObjeto;
+                cmd.Parameters.Add("@SCRIPTNAME_PROPIEDAD", SqlDbType.NVarChar, 500).Value = scriptNamePropiedad;
+
+                cn.Open();
+
+                object result = cmd.ExecuteScalar();
+
+                return result == null || result == DBNull.Value
+                    ? null
+                    : Convert.ToString(result).Trim();
+            }
+        }
+
+        public static string ObtenerCodigoProcedimiento(
+            string connectionString,
+            string modelName,
+            int diId)
+        {
+            return ObtenerPropiedadObjetoDiagrama(
+                connectionString,
+                modelName,
+                diId,
+                "Procedimiento",
+                "CÓDIGOPROCEDIMIENTO"
+            );
+        }
+    
+
+//    public static string ObtenerCodigoProcedimiento(string connectionString, string modelName, int diId)
+//        {
+//            const string sql = @"
+//SELECT TOP (1)
+//    LTRIM(RTRIM(
+//        COALESCE(
+//            NULLIF(P.N.value('(value/text())[1]', 'nvarchar(4000)'), N''),
+//            NULLIF(P.N.value('(text())[1]', 'nvarchar(4000)'), N'')
+//        )
+//    )) AS CODIGO_PROCEDIMIENTO
+//FROM erwin_evolve.dbo.SHAPE S
+//JOIN erwin_evolve.dbo.CW_OBJECT_TYPE OT
+//    ON OT.MODEL_NAME = S.MODEL_NAME
+//   AND OT.OT_ID = S.ANO_TABNR
+//JOIN erwin_evolve.dbo.CW_OBJECT CO
+//    ON CO.MODEL_NAME = S.MODEL_NAME
+//   AND CO.OT_ID = S.ANO_TABNR
+//   AND CO.GO_ID = S.ANO_ID
+//CROSS APPLY (
+//    SELECT TRY_CAST(CONVERT(nvarchar(max), CO.USERDEFINED) AS xml) AS XML_DATA
+//) X
+//CROSS APPLY X.XML_DATA.nodes('//*[local-name()=""property""]') P(N)
+//WHERE S.MODEL_NAME = @MODEL_NAME
+//  AND S.DI_ID = @DI_ID
+//  AND OT.OT_NAME = N'Procedimiento'
+//  AND P.N.value('@scriptname', 'nvarchar(500)') = N'CÓDIGOPROCEDIMIENTO';";
+
+//            using (var cn = new SqlConnection(connectionString))
+//            using (var cmd = new SqlCommand(sql, cn))
+//            {
+//                cmd.CommandType = CommandType.Text;
+//                cmd.CommandTimeout = 60;
+
+//                cmd.Parameters.Add("@MODEL_NAME", SqlDbType.NVarChar, 100).Value = modelName;
+//                cmd.Parameters.Add("@DI_ID", SqlDbType.Int).Value = diId;
+
+//                cn.Open();
+
+//                object result = cmd.ExecuteScalar();
+
+//                if (result == null || result == DBNull.Value)
+//                    return null;
+
+//                return Convert.ToString(result).Trim();
+//            }
+//        }
 
         public ResponseBase<int> GenerarDesdeDiId(int diId, string procedimiento, string modelName = "ARTEZELI")
         {
@@ -59,6 +181,7 @@ namespace Lantik.Pasarela.sqlRepository
                 var conectoresDi = LeerConectoresDi(diId, procedimiento, modelName);
                 foreach (DataRow dr in conectoresDi.Rows)
                     InsertConectorDi(dr);
+
 
                 var propiedades = LeerPropiedadesDi(diId, procedimiento, modelName);
                 foreach (DataRow dr in propiedades.Rows)
