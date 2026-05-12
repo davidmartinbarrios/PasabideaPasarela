@@ -86,6 +86,8 @@ namespace Lantik.Pasarela.Pasarela
             }, $"Form1.btnListartabProcess_Click");
         }
 
+        private DiagramDTO _diagramaTarget = null;
+
         private void btnListarDiagram_Click(object sender, EventArgs e)
         {
             SafeExecutor.SafeExecution(() =>
@@ -101,7 +103,8 @@ namespace Lantik.Pasarela.Pasarela
                     response = new DiagramApplication().ObtenerTodos();
                 else if (!string.IsNullOrEmpty(txtDiagramModelName.Text) && !string.IsNullOrEmpty(txtDI_ID.Text))
                 {
-                    response = new DiagramApplication().GetByDIModelName(txtDiagramModelName.Text,int.Parse(txtDI_ID.Text));
+                    response = new DiagramApplication().GetByDIModelName(txtDiagramModelName.Text, int.Parse(txtDI_ID.Text));
+                    _diagramaTarget = response.Data.Count > 0 ? response.Data[0] : null;
                 }
                 else
                 {
@@ -164,6 +167,7 @@ namespace Lantik.Pasarela.Pasarela
                         string columnValue = row[i]?.ToString() ?? "NULL";
                         rowData.AppendFormat("{0}: {1}, ", columnName, columnValue);
                     }
+                
                     // Remove the trailing comma and space
                     if (rowData.Length > 2)
                     {
@@ -608,14 +612,15 @@ namespace Lantik.Pasarela.Pasarela
         {
             SafeExecutor.SafeExecution(() =>
             {
-                Logger.Debug("");
-                txtDiagramModelName.Text = "ARTEZELI";
-                txtDI_ID.Text = "3731";
+                if (_diagramaTarget == null)
+                    return;
 
-                txtDI_ID.Text = "_Modelo 030 NIF V5";
+                Logger.Debug("Ejecutamos " + _diagramaTarget.NOMBRE);
+
+                DiagramDTO diagram = _diagramaTarget; //dgvDiagram.DataSource
 
                 // GET_DIAGRAM_BY_DI_NAME_SQL
-                //ResponseBaseDTO<IList<DiagramDTO>> response = new DiagramApplication().GetByDIName(txtDI_ID.Text);
+                var response = new DiagramApplication().InsertDiagram1(diagram);
 
                 // Convertimos la lista obtenida en un DataTable
                 //DataTable dt = VO.Utils.ToDataTable<DiagramDTO>(response.Data);

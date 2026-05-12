@@ -173,7 +173,7 @@ namespace Lantik.Pasarela.Application.AOs
             ResponseBaseDTO<IList<DiagramDTO>> responseDTO = new ResponseBaseDTO<IList<DiagramDTO>>();
 
             Logger.Debug("LLamamos al metodo GetByDIModelName");
-            ResponseBase<IList<Diagram>> response = new DiagramBusiness().GetByDIModelName("", 0);
+            ResponseBase<IList<Diagram>> response = new DiagramBusiness().GetByDIModelName("", 0); // TODO: Porqué está vacío??? usamos de base ARTEZELI
 
             IList<DiagramDTO> retList = new List<DiagramDTO>();
             DiagramDTO retDiagram;

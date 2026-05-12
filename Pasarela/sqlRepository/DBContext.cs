@@ -7,7 +7,7 @@ using Lantik.Pasarela.Helpers;
 
 namespace Lantik.Pasarela.sqlRepository
 {
-    internal class DBContext
+    public class DBContext
     {
         #region variables
         private string _prv_ConnectionString = string.Empty;

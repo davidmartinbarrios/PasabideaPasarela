@@ -14,7 +14,7 @@ namespace Pasabidea
 {
     /// <summary>
     /// TODO: MB57 Hay que darle una vuelta a la generación al ORM, hay que generar 8 clases en diferentes proyectos para
-    /// que genere una consulta SQL, no es muy eficiente. Además, el código generado es bastante feo y difícil de mantener.
+    /// que genere una consulta SQL, no es muy eficiente. Además, el código generado es bastante difícil de mantener.
     /// **EXCEPCIONALMENTE**, para este caso concreto de generación de wfFlows/wfFlowActions, es más sencillo y mantenible 
     /// escribir el código a mano que generar un ORM específico. Sobre todo porque la lógica de expansión de acciones es 
     /// bastante compleja y difícil de expresar con un modelo de clases. Una vez que tenga cierto nivel de madurez y estabilidad, 

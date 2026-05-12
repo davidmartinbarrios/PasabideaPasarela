@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="test\PASABIDEA_ARTEZ" />
     <Compile Include="VO\Utils.cs" />
     <Compile Include="WfActionsGenerator.cs" />
     <Content Include="base\index - Copia.html">
@@ -217,6 +218,10 @@
     <ProjectReference Include="..\Helpers\Helpers.csproj">
       <Project>{60aacb7b-0e7f-422d-90f8-7ff4a783bf52}</Project>
       <Name>Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pasabidea.Core\Pasabidea.Core.csproj">
+      <Project>{749e3554-d884-46f7-b89c-637a4c0a7a9c}</Project>
+      <Name>Pasabidea.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\sqlRepository\sqlRepository.csproj">
       <Project>{d7a65813-d323-45f7-8bdd-56cc7003a1f5}</Project>

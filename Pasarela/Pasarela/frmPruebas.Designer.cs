@@ -37,6 +37,7 @@ namespace Lantik.Pasarela.Pasarela
             this.dgvProcess = new System.Windows.Forms.DataGridView();
             this.btnListartabProcess = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btnEjecutar = new System.Windows.Forms.Button();
             this.txtDI_ID = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtDiagramModelName = new System.Windows.Forms.TextBox();
@@ -81,7 +82,6 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage15 = new System.Windows.Forms.TabPage();
             this.dgvCw_Inter_Object = new System.Windows.Forms.DataGridView();
             this.btnListarCw_Inter_Object = new System.Windows.Forms.Button();
-            this.btnEjecutar = new System.Windows.Forms.Button();
             this.TabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShape)).BeginInit();
@@ -133,7 +133,7 @@ namespace Lantik.Pasarela.Pasarela
             this.TabControl.Controls.Add(this.tabPage14);
             this.TabControl.Controls.Add(this.tabPage15);
             this.TabControl.Location = new System.Drawing.Point(8, 8);
-            this.TabControl.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TabControl.Margin = new System.Windows.Forms.Padding(2);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
             this.TabControl.Size = new System.Drawing.Size(1573, 566);
@@ -144,9 +144,9 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage1.Controls.Add(this.dgvShape);
             this.tabPage1.Controls.Add(this.btnListarShape);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage1.Size = new System.Drawing.Size(1565, 540);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "SHAPE";
@@ -156,7 +156,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvShape.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvShape.Location = new System.Drawing.Point(7, 65);
-            this.dgvShape.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvShape.Margin = new System.Windows.Forms.Padding(2);
             this.dgvShape.Name = "dgvShape";
             this.dgvShape.RowHeadersWidth = 62;
             this.dgvShape.RowTemplate.Height = 28;
@@ -166,7 +166,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarShape
             // 
             this.btnListarShape.Location = new System.Drawing.Point(7, 6);
-            this.btnListarShape.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarShape.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarShape.Name = "btnListarShape";
             this.btnListarShape.Size = new System.Drawing.Size(164, 40);
             this.btnListarShape.TabIndex = 2;
@@ -179,9 +179,9 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage2.Controls.Add(this.dgvProcess);
             this.tabPage2.Controls.Add(this.btnListartabProcess);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage2.Size = new System.Drawing.Size(1565, 540);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "PROCESS";
@@ -191,7 +191,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvProcess.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProcess.Location = new System.Drawing.Point(5, 64);
-            this.dgvProcess.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvProcess.Margin = new System.Windows.Forms.Padding(2);
             this.dgvProcess.Name = "dgvProcess";
             this.dgvProcess.RowHeadersWidth = 62;
             this.dgvProcess.RowTemplate.Height = 28;
@@ -201,7 +201,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListartabProcess
             // 
             this.btnListartabProcess.Location = new System.Drawing.Point(5, 5);
-            this.btnListartabProcess.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListartabProcess.Margin = new System.Windows.Forms.Padding(2);
             this.btnListartabProcess.Name = "btnListartabProcess";
             this.btnListartabProcess.Size = new System.Drawing.Size(164, 40);
             this.btnListartabProcess.TabIndex = 4;
@@ -219,22 +219,34 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage3.Controls.Add(this.dgvDiagram);
             this.tabPage3.Controls.Add(this.btnListarDiagram);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage3.Size = new System.Drawing.Size(1565, 540);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "DIAGRAM";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // btnEjecutar
+            // 
+            this.btnEjecutar.Location = new System.Drawing.Point(709, 11);
+            this.btnEjecutar.Margin = new System.Windows.Forms.Padding(2);
+            this.btnEjecutar.Name = "btnEjecutar";
+            this.btnEjecutar.Size = new System.Drawing.Size(164, 40);
+            this.btnEjecutar.TabIndex = 12;
+            this.btnEjecutar.Text = "<EJECUTAR>";
+            this.btnEjecutar.UseVisualStyleBackColor = true;
+            this.btnEjecutar.Click += new System.EventHandler(this.btnEjecutar_Click);
+            // 
             // txtDI_ID
             // 
             this.txtDI_ID.Location = new System.Drawing.Point(573, 22);
-            this.txtDI_ID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtDI_ID.Margin = new System.Windows.Forms.Padding(2);
             this.txtDI_ID.MaxLength = 5;
             this.txtDI_ID.Name = "txtDI_ID";
             this.txtDI_ID.Size = new System.Drawing.Size(115, 20);
             this.txtDI_ID.TabIndex = 11;
+            this.txtDI_ID.Text = "3751";
             this.txtDI_ID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDI_ID_KeyPress);
             // 
             // label2
@@ -250,11 +262,12 @@ namespace Lantik.Pasarela.Pasarela
             // txtDiagramModelName
             // 
             this.txtDiagramModelName.Location = new System.Drawing.Point(363, 22);
-            this.txtDiagramModelName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtDiagramModelName.Margin = new System.Windows.Forms.Padding(2);
             this.txtDiagramModelName.MaxLength = 100;
             this.txtDiagramModelName.Name = "txtDiagramModelName";
             this.txtDiagramModelName.Size = new System.Drawing.Size(115, 20);
             this.txtDiagramModelName.TabIndex = 9;
+            this.txtDiagramModelName.Text = "ARTEZELI";
             // 
             // label1
             // 
@@ -270,7 +283,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvDiagram.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDiagram.Location = new System.Drawing.Point(5, 64);
-            this.dgvDiagram.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvDiagram.Margin = new System.Windows.Forms.Padding(2);
             this.dgvDiagram.Name = "dgvDiagram";
             this.dgvDiagram.RowHeadersWidth = 62;
             this.dgvDiagram.RowTemplate.Height = 28;
@@ -280,7 +293,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarDiagram
             // 
             this.btnListarDiagram.Location = new System.Drawing.Point(5, 5);
-            this.btnListarDiagram.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarDiagram.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarDiagram.Name = "btnListarDiagram";
             this.btnListarDiagram.Size = new System.Drawing.Size(164, 40);
             this.btnListarDiagram.TabIndex = 4;
@@ -293,7 +306,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage4.Controls.Add(this.dgvJoiner);
             this.tabPage4.Controls.Add(this.btnListarJoiner);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(1565, 540);
             this.tabPage4.TabIndex = 3;
@@ -304,7 +317,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvJoiner.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvJoiner.Location = new System.Drawing.Point(5, 64);
-            this.dgvJoiner.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvJoiner.Margin = new System.Windows.Forms.Padding(2);
             this.dgvJoiner.Name = "dgvJoiner";
             this.dgvJoiner.RowHeadersWidth = 62;
             this.dgvJoiner.RowTemplate.Height = 28;
@@ -314,7 +327,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarJoiner
             // 
             this.btnListarJoiner.Location = new System.Drawing.Point(5, 5);
-            this.btnListarJoiner.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarJoiner.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarJoiner.Name = "btnListarJoiner";
             this.btnListarJoiner.Size = new System.Drawing.Size(164, 40);
             this.btnListarJoiner.TabIndex = 4;
@@ -327,7 +340,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage5.Controls.Add(this.dgvConnector);
             this.tabPage5.Controls.Add(this.btnListarConnector);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(1565, 540);
             this.tabPage5.TabIndex = 4;
@@ -338,7 +351,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvConnector.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvConnector.Location = new System.Drawing.Point(5, 64);
-            this.dgvConnector.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvConnector.Margin = new System.Windows.Forms.Padding(2);
             this.dgvConnector.Name = "dgvConnector";
             this.dgvConnector.RowHeadersWidth = 62;
             this.dgvConnector.RowTemplate.Height = 28;
@@ -348,7 +361,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarConnector
             // 
             this.btnListarConnector.Location = new System.Drawing.Point(5, 5);
-            this.btnListarConnector.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarConnector.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarConnector.Name = "btnListarConnector";
             this.btnListarConnector.Size = new System.Drawing.Size(164, 40);
             this.btnListarConnector.TabIndex = 4;
@@ -361,7 +374,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage6.Controls.Add(this.dgvEvent);
             this.tabPage6.Controls.Add(this.btnListarEvent);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage6.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Size = new System.Drawing.Size(1565, 540);
             this.tabPage6.TabIndex = 5;
@@ -372,7 +385,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvEvent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEvent.Location = new System.Drawing.Point(5, 64);
-            this.dgvEvent.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvEvent.Margin = new System.Windows.Forms.Padding(2);
             this.dgvEvent.Name = "dgvEvent";
             this.dgvEvent.RowHeadersWidth = 62;
             this.dgvEvent.RowTemplate.Height = 28;
@@ -382,7 +395,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarEvent
             // 
             this.btnListarEvent.Location = new System.Drawing.Point(5, 5);
-            this.btnListarEvent.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarEvent.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarEvent.Name = "btnListarEvent";
             this.btnListarEvent.Size = new System.Drawing.Size(164, 40);
             this.btnListarEvent.TabIndex = 4;
@@ -395,7 +408,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage7.Controls.Add(this.dgvAttribute);
             this.tabPage7.Controls.Add(this.btnListarAttribute);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage7.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(1565, 540);
             this.tabPage7.TabIndex = 6;
@@ -406,7 +419,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvAttribute.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAttribute.Location = new System.Drawing.Point(5, 64);
-            this.dgvAttribute.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvAttribute.Margin = new System.Windows.Forms.Padding(2);
             this.dgvAttribute.Name = "dgvAttribute";
             this.dgvAttribute.RowHeadersWidth = 62;
             this.dgvAttribute.RowTemplate.Height = 28;
@@ -416,7 +429,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarAttribute
             // 
             this.btnListarAttribute.Location = new System.Drawing.Point(5, 5);
-            this.btnListarAttribute.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarAttribute.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarAttribute.Name = "btnListarAttribute";
             this.btnListarAttribute.Size = new System.Drawing.Size(164, 40);
             this.btnListarAttribute.TabIndex = 4;
@@ -429,7 +442,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage8.Controls.Add(this.dgvEntity);
             this.tabPage8.Controls.Add(this.btnListarEntity);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage8.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Size = new System.Drawing.Size(1565, 540);
             this.tabPage8.TabIndex = 7;
@@ -440,7 +453,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvEntity.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEntity.Location = new System.Drawing.Point(5, 64);
-            this.dgvEntity.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvEntity.Margin = new System.Windows.Forms.Padding(2);
             this.dgvEntity.Name = "dgvEntity";
             this.dgvEntity.RowHeadersWidth = 62;
             this.dgvEntity.RowTemplate.Height = 28;
@@ -450,7 +463,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarEntity
             // 
             this.btnListarEntity.Location = new System.Drawing.Point(5, 5);
-            this.btnListarEntity.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarEntity.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarEntity.Name = "btnListarEntity";
             this.btnListarEntity.Size = new System.Drawing.Size(164, 40);
             this.btnListarEntity.TabIndex = 4;
@@ -463,7 +476,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage9.Controls.Add(this.dgvOrganization);
             this.tabPage9.Controls.Add(this.btnListarOrganization);
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
-            this.tabPage9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage9.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Size = new System.Drawing.Size(1565, 540);
             this.tabPage9.TabIndex = 8;
@@ -474,7 +487,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvOrganization.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvOrganization.Location = new System.Drawing.Point(5, 64);
-            this.dgvOrganization.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvOrganization.Margin = new System.Windows.Forms.Padding(2);
             this.dgvOrganization.Name = "dgvOrganization";
             this.dgvOrganization.RowHeadersWidth = 62;
             this.dgvOrganization.RowTemplate.Height = 28;
@@ -484,7 +497,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarOrganization
             // 
             this.btnListarOrganization.Location = new System.Drawing.Point(5, 5);
-            this.btnListarOrganization.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarOrganization.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarOrganization.Name = "btnListarOrganization";
             this.btnListarOrganization.Size = new System.Drawing.Size(164, 40);
             this.btnListarOrganization.TabIndex = 4;
@@ -497,7 +510,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage10.Controls.Add(this.dgvCW_PROP_TYPE);
             this.tabPage10.Controls.Add(this.btnListarW_PROP_TYPE);
             this.tabPage10.Location = new System.Drawing.Point(4, 22);
-            this.tabPage10.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage10.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Size = new System.Drawing.Size(1565, 540);
             this.tabPage10.TabIndex = 9;
@@ -508,7 +521,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvCW_PROP_TYPE.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCW_PROP_TYPE.Location = new System.Drawing.Point(5, 64);
-            this.dgvCW_PROP_TYPE.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvCW_PROP_TYPE.Margin = new System.Windows.Forms.Padding(2);
             this.dgvCW_PROP_TYPE.Name = "dgvCW_PROP_TYPE";
             this.dgvCW_PROP_TYPE.RowHeadersWidth = 62;
             this.dgvCW_PROP_TYPE.RowTemplate.Height = 28;
@@ -518,7 +531,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarW_PROP_TYPE
             // 
             this.btnListarW_PROP_TYPE.Location = new System.Drawing.Point(5, 5);
-            this.btnListarW_PROP_TYPE.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarW_PROP_TYPE.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarW_PROP_TYPE.Name = "btnListarW_PROP_TYPE";
             this.btnListarW_PROP_TYPE.Size = new System.Drawing.Size(164, 40);
             this.btnListarW_PROP_TYPE.TabIndex = 4;
@@ -533,7 +546,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage11.Controls.Add(this.dgvCW_Lookup);
             this.tabPage11.Controls.Add(this.btnListarCW_Lookup);
             this.tabPage11.Location = new System.Drawing.Point(4, 22);
-            this.tabPage11.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage11.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Size = new System.Drawing.Size(1565, 540);
             this.tabPage11.TabIndex = 10;
@@ -543,7 +556,7 @@ namespace Lantik.Pasarela.Pasarela
             // txtModelName
             // 
             this.txtModelName.Location = new System.Drawing.Point(363, 22);
-            this.txtModelName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtModelName.Margin = new System.Windows.Forms.Padding(2);
             this.txtModelName.MaxLength = 100;
             this.txtModelName.Name = "txtModelName";
             this.txtModelName.Size = new System.Drawing.Size(115, 20);
@@ -563,7 +576,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvCW_Lookup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCW_Lookup.Location = new System.Drawing.Point(5, 64);
-            this.dgvCW_Lookup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvCW_Lookup.Margin = new System.Windows.Forms.Padding(2);
             this.dgvCW_Lookup.Name = "dgvCW_Lookup";
             this.dgvCW_Lookup.RowHeadersWidth = 62;
             this.dgvCW_Lookup.RowTemplate.Height = 28;
@@ -573,7 +586,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarCW_Lookup
             // 
             this.btnListarCW_Lookup.Location = new System.Drawing.Point(5, 5);
-            this.btnListarCW_Lookup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarCW_Lookup.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarCW_Lookup.Name = "btnListarCW_Lookup";
             this.btnListarCW_Lookup.Size = new System.Drawing.Size(164, 40);
             this.btnListarCW_Lookup.TabIndex = 4;
@@ -586,7 +599,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage12.Controls.Add(this.dgvCW_Data_Usage);
             this.tabPage12.Controls.Add(this.btnListarCW_Data_Usage);
             this.tabPage12.Location = new System.Drawing.Point(4, 22);
-            this.tabPage12.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage12.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Size = new System.Drawing.Size(1565, 540);
             this.tabPage12.TabIndex = 11;
@@ -597,7 +610,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvCW_Data_Usage.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCW_Data_Usage.Location = new System.Drawing.Point(5, 64);
-            this.dgvCW_Data_Usage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvCW_Data_Usage.Margin = new System.Windows.Forms.Padding(2);
             this.dgvCW_Data_Usage.Name = "dgvCW_Data_Usage";
             this.dgvCW_Data_Usage.RowHeadersWidth = 62;
             this.dgvCW_Data_Usage.RowTemplate.Height = 28;
@@ -607,7 +620,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarCW_Data_Usage
             // 
             this.btnListarCW_Data_Usage.Location = new System.Drawing.Point(5, 5);
-            this.btnListarCW_Data_Usage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarCW_Data_Usage.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarCW_Data_Usage.Name = "btnListarCW_Data_Usage";
             this.btnListarCW_Data_Usage.Size = new System.Drawing.Size(164, 40);
             this.btnListarCW_Data_Usage.TabIndex = 4;
@@ -620,7 +633,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage13.Controls.Add(this.dgvCW_Object_Type);
             this.tabPage13.Controls.Add(this.btnListarCW_Object_Type);
             this.tabPage13.Location = new System.Drawing.Point(4, 22);
-            this.tabPage13.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage13.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Size = new System.Drawing.Size(1565, 540);
             this.tabPage13.TabIndex = 12;
@@ -631,7 +644,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvCW_Object_Type.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCW_Object_Type.Location = new System.Drawing.Point(5, 64);
-            this.dgvCW_Object_Type.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvCW_Object_Type.Margin = new System.Windows.Forms.Padding(2);
             this.dgvCW_Object_Type.Name = "dgvCW_Object_Type";
             this.dgvCW_Object_Type.RowHeadersWidth = 62;
             this.dgvCW_Object_Type.RowTemplate.Height = 28;
@@ -641,7 +654,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarCW_Object_Type
             // 
             this.btnListarCW_Object_Type.Location = new System.Drawing.Point(5, 5);
-            this.btnListarCW_Object_Type.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarCW_Object_Type.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarCW_Object_Type.Name = "btnListarCW_Object_Type";
             this.btnListarCW_Object_Type.Size = new System.Drawing.Size(164, 40);
             this.btnListarCW_Object_Type.TabIndex = 4;
@@ -654,7 +667,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage14.Controls.Add(this.dgvCW_Object);
             this.tabPage14.Controls.Add(this.btnListarCW_Object);
             this.tabPage14.Location = new System.Drawing.Point(4, 22);
-            this.tabPage14.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage14.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage14.Name = "tabPage14";
             this.tabPage14.Size = new System.Drawing.Size(1565, 540);
             this.tabPage14.TabIndex = 13;
@@ -665,7 +678,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvCW_Object.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCW_Object.Location = new System.Drawing.Point(5, 64);
-            this.dgvCW_Object.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvCW_Object.Margin = new System.Windows.Forms.Padding(2);
             this.dgvCW_Object.Name = "dgvCW_Object";
             this.dgvCW_Object.RowHeadersWidth = 62;
             this.dgvCW_Object.RowTemplate.Height = 28;
@@ -675,7 +688,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarCW_Object
             // 
             this.btnListarCW_Object.Location = new System.Drawing.Point(5, 5);
-            this.btnListarCW_Object.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarCW_Object.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarCW_Object.Name = "btnListarCW_Object";
             this.btnListarCW_Object.Size = new System.Drawing.Size(164, 40);
             this.btnListarCW_Object.TabIndex = 4;
@@ -688,7 +701,7 @@ namespace Lantik.Pasarela.Pasarela
             this.tabPage15.Controls.Add(this.dgvCw_Inter_Object);
             this.tabPage15.Controls.Add(this.btnListarCw_Inter_Object);
             this.tabPage15.Location = new System.Drawing.Point(4, 22);
-            this.tabPage15.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage15.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage15.Name = "tabPage15";
             this.tabPage15.Size = new System.Drawing.Size(1565, 540);
             this.tabPage15.TabIndex = 14;
@@ -699,7 +712,7 @@ namespace Lantik.Pasarela.Pasarela
             // 
             this.dgvCw_Inter_Object.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCw_Inter_Object.Location = new System.Drawing.Point(5, 64);
-            this.dgvCw_Inter_Object.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvCw_Inter_Object.Margin = new System.Windows.Forms.Padding(2);
             this.dgvCw_Inter_Object.Name = "dgvCw_Inter_Object";
             this.dgvCw_Inter_Object.RowHeadersWidth = 62;
             this.dgvCw_Inter_Object.RowTemplate.Height = 28;
@@ -709,7 +722,7 @@ namespace Lantik.Pasarela.Pasarela
             // btnListarCw_Inter_Object
             // 
             this.btnListarCw_Inter_Object.Location = new System.Drawing.Point(5, 5);
-            this.btnListarCw_Inter_Object.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnListarCw_Inter_Object.Margin = new System.Windows.Forms.Padding(2);
             this.btnListarCw_Inter_Object.Name = "btnListarCw_Inter_Object";
             this.btnListarCw_Inter_Object.Size = new System.Drawing.Size(164, 40);
             this.btnListarCw_Inter_Object.TabIndex = 4;
@@ -717,24 +730,13 @@ namespace Lantik.Pasarela.Pasarela
             this.btnListarCw_Inter_Object.UseVisualStyleBackColor = true;
             this.btnListarCw_Inter_Object.Click += new System.EventHandler(this.btnListarCw_Inter_Object_Click);
             // 
-            // btnEjecutar
-            // 
-            this.btnEjecutar.Location = new System.Drawing.Point(709, 11);
-            this.btnEjecutar.Margin = new System.Windows.Forms.Padding(2);
-            this.btnEjecutar.Name = "btnEjecutar";
-            this.btnEjecutar.Size = new System.Drawing.Size(164, 40);
-            this.btnEjecutar.TabIndex = 12;
-            this.btnEjecutar.Text = "<EJECUTAR>";
-            this.btnEjecutar.UseVisualStyleBackColor = true;
-            this.btnEjecutar.Click += new System.EventHandler(this.btnEjecutar_Click);
-            // 
             // frmPruebas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1203, 658);
             this.Controls.Add(this.TabControl);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmPruebas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form Pruebas";
