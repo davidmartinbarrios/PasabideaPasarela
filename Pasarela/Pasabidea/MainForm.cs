@@ -8,6 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+<<<<<<< HEAD
+=======
+using System.Data.SqlClient;
+>>>>>>> 098effc ([N8MUGIPASARELA-1] Ok)
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -201,16 +205,146 @@ namespace Pasabidea
 
                 //await CargarProcedimientosEnWebViewAsync();
 
-                
+
             }
             catch (Exception ex)
             {
+<<<<<<< HEAD
                 throw ex;
+=======
+                MessageBox.Show(CheckException(ex));
+                //throw ex;
+>>>>>>> 098effc ([N8MUGIPASARELA-1] Ok)
                 //MessageBox.Show(ex.Message, "Error WebView2");
             }
         }
+        
 
-        private void CargarProcedimientosEnCombo()
+    private static string CheckException(Exception ex, string connectionString = null)
+    {
+        string strMsgError;
+
+        string servidor = string.Empty;
+        string baseDatos = string.Empty;
+
+        if (!string.IsNullOrWhiteSpace(connectionString))
+        {
+            try
+            {
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
+                servidor = builder.DataSource;
+                baseDatos = builder.InitialCatalog;
+            }
+            catch
+            {
+                // No hacemos nada. La cadena podría no ser válida.
+            }
+        }
+
+        SqlException sqlEx = ex as SqlException;
+
+        if (sqlEx == null)
+        {
+            return
+                "Error general de la aplicación.\n\n" +
+                "Detalle técnico:\n" + ex.Message;
+        }
+
+        switch (sqlEx.Number)
+        {
+            case -2:
+                strMsgError =
+                    "Tiempo de espera agotado al conectar con SQL Server.\n\n" +
+                    "Posibles causas:\n" +
+                    "- Servidor saturado o no accesible.\n" +
+                    "- Red/VPN caída.\n" +
+                    "- Firewall o puerto bloqueado.";
+                break;
+
+            case -1:
+                if (sqlEx.Message.Contains("error: 26"))
+                {
+                    strMsgError =
+                        "No se encuentra el servidor o la instancia de SQL Server.\n\n" +
+                        "Posibles causas:\n" +
+                        "- No estás conectado a la red/VPN.\n" +
+                        "- El nombre del servidor o instancia es incorrecto.\n" +
+                        "- SQL Server Browser no responde.\n" +
+                        "- Firewall o puerto bloqueado.";
+                }
+                else if (sqlEx.Message.Contains("error: 40"))
+                {
+                    strMsgError =
+                        "No se pudo abrir conexión con SQL Server.\n\n" +
+                        "Posibles causas:\n" +
+                        "- Servidor SQL apagado o inaccesible.\n" +
+                        "- Puerto SQL bloqueado.\n" +
+                        "- Problema de red.";
+                }
+                else
+                {
+                    strMsgError =
+                        "Error de red o conexión con SQL Server.";
+                }
+                break;
+
+            case 53:
+                strMsgError =
+                    "No se encuentra la ruta de red hacia el servidor SQL.\n\n" +
+                    "Comprueba conexión de red/VPN y nombre del servidor.";
+                break;
+
+            case 18456:
+                strMsgError =
+                    "El servidor SQL responde, pero el usuario no tiene acceso.\n\n" +
+                    "Posibles causas:\n" +
+                    "- Usuario/contraseña incorrectos.\n" +
+                    "- Usuario sin permisos en SQL Server.\n" +
+                    "- Problema con autenticación integrada.";
+                break;
+
+            case 4060:
+                strMsgError =
+                    "El servidor SQL responde, pero no se puede abrir la base de datos indicada.\n\n" +
+                    "Posibles causas:\n" +
+                    "- La base de datos no existe.\n" +
+                    "- El usuario no tiene permisos sobre esa base de datos.";
+                break;
+
+            case 547:
+                strMsgError =
+                    "Error de integridad referencial en base de datos.\n\n" +
+                    "Se está intentando insertar, actualizar o borrar un dato relacionado.";
+                break;
+
+            case 2627:
+            case 2601:
+                strMsgError =
+                    "Registro duplicado.\n\n" +
+                    "Ya existe un registro con la misma clave o índice único.";
+                break;
+
+            default:
+                strMsgError =
+                    "Error SQL no controlado.\n\n" +
+                    "Código SQL: " + sqlEx.Number;
+                break;
+        }
+
+        if (!string.IsNullOrWhiteSpace(servidor) || !string.IsNullOrWhiteSpace(baseDatos))
+        {
+            strMsgError +=
+                "\n\nServidor: " + servidor +
+                "\nBase de datos: " + baseDatos;
+        }
+
+        strMsgError +=
+            "\n\nDetalle técnico:\n" + sqlEx.Message;
+
+        return strMsgError;
+    }
+
+    private void CargarProcedimientosEnCombo()
         {
             var app = new ErwinDiagramApplication();
             var result = app.ObtenerPorModelo(txtDiagramModelName.Text);
@@ -577,6 +711,8 @@ namespace Pasabidea
                 .Replace("\n", "\\n") + "'";
         }
 
+
+        private int? _diIdProcedimientoActual;
 
         //--
         #region Archivo
@@ -1180,7 +1316,21 @@ namespace Pasabidea
 
         private void tvwProcs_AfterSelect(object sender, TreeViewEventArgs e)
         {
+<<<<<<< HEAD
 
+=======
+            NodoProcedimientoInfo info = e.Node.Tag as NodoProcedimientoInfo;
+
+            if (info == null || !info.EsProcedimiento)
+            {
+                _diIdProcedimientoActual = null;
+                txtDI_ID.Text = string.Empty;
+                return;
+            }
+
+            _diIdProcedimientoActual = info.DiId;
+            txtDI_ID.Text = info.DiId.ToString();
+>>>>>>> 098effc ([N8MUGIPASARELA-1] Ok)
         }
     }
 
