@@ -1,0 +1,695 @@
+﻿<?xml version="1.0"?>
+<Procedimiento xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<DatosGenerales>
+		<IdentificadorFlujo>ARTEZ-000-0000200281</IdentificadorFlujo>
+		<NombreFlujo>ARTEZ-000-0000200281</NombreFlujo>
+		<Version>1</Version>
+		<Descripcion><![CDATA[PO000010 EMON Convocatoria Concurrencia Competitiva (Desarrollo)]]></Descripcion>
+	</DatosGenerales>
+	
+	<PasosIniciarTramitacion>
+		<!-- *************************************************************** -->
+		<!-- Debería desaparecer cuando se desarrolle la Conversión en ARTEZ -->
+		<!-- *************************************************************** -->
+		<Paso>
+			<Tipo>ACCION</Tipo>
+			<NombrePaso>Obtener Datos de la Tramitación (Grupo Administrativos, Grupo Técnicos, Plantilla y Circuito de FK)</NombrePaso>
+			<NombreAccion>Obtener Datos de la Tramitación Convocatoria Concurrencia Competitiva DS</NombreAccion>
+			<ParametrosEntrada>
+				<Parametro>@CONCEPTO</Parametro>
+			</ParametrosEntrada>
+			<ParametrosSalida>
+				<Parametro>ADMINISTRATIVOS_SIST_FUN</Parametro>
+				<Parametro>ADMINISTRATIVOS_GRUPO_US</Parametro>
+				<Parametro>TECNICOS_SIST_FUN</Parametro>
+				<Parametro>TECNICOS_GRUPO_US</Parametro>
+				<Parametro>COD_DOC_INF_TEC_CON</Parametro> <!-- Infrome Valoración y Técnico Concesión -->
+				<Parametro>COD_DOC_ACTA_TRIBUNA</Parametro> <!-- Infrome Acta de Comisión del Tribunal Calificador -->
+				<Parametro>COD_DOC_PROP_RESO_PROV</Parametro> <!-- Propuesta Resolución Provisional -->
+				<Parametro>TIPO_FIRMA_PROP_RES</Parametro> <!-- Tipo de Firma para la Firma de la Propuesta Resolución Provisional -->
+				<Parametro>FIRMA_PROP_RESO_PROV</Parametro> <!-- ID de Firma para la Firma de la Propuesta Resolución Provisional -->
+				<Parametro>COD_DOC_ANUNCIO_RESO</Parametro> <!-- Anuncia Resolución de Concesión BOB -->
+				<Parametro>COD_DOC_RESOLUCION_CONCE</Parametro> <!-- Orden Foral de Resolución de Concesión -->
+				<Parametro>ASUNTO_RA_RESO_CONC</Parametro> <!-- Asunto de RA para la Firma de la Orden Foral de Resolución de Concesión -->
+				<Parametro>TIPO_ACUE_RESO_CONC</Parametro> <!-- Tipo Acuerdo para la Firma de la Orden Foral de Resolución de Concesión -->
+				<Parametro>FIRMA_RESO_CONCESION</Parametro> <!-- Identificador del Circuito de Firma para la Firma de la Orden Foral de Resolución de Concesión -->
+			</ParametrosSalida>
+		</Paso>
+		<!-- *************************************************************** -->
+		<!-- *************************************************************** -->
+		<Paso>
+			<Tipo>ACCION</Tipo>
+			<NombreAccion>Obtener Indicador Tipo Baremación</NombreAccion>
+			<ParametrosEntrada>
+				<Parametro>@VALINFTECINDEBAN_AYS</Parametro>
+				<Parametro>@VALINFTECINDEXC_AYS</Parametro>
+				<Parametro>@VALINFTECIND_AYS</Parametro>
+			</ParametrosEntrada>
+			<ParametrosSalida>
+				<Parametro>TIPOBAREMACION</Parametro>
+			</ParametrosSalida>
+		</Paso>
+	</PasosIniciarTramitacion>
+	
+	<Tramites>
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Inicio Publicación Convocatoria</Nombre>
+				<Tipo>MANUAL</Tipo>
+				<NombreEnFlujo>INI_PUBLI_CONVOCATOR</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_1</Idnt_Elemento>
+				<DatosReponsableTramite>
+					<SistemaFuncional>@ADMINISTRATIVOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@ADMINISTRATIVOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramite>
+			</DatosARTEZ>
+			<Salidas>
+				<Salida>
+					<Descripcion>Tipo Baremación EBAM/Excel (Conjunto)</Descripcion>
+					<TramiteDestino>Baremación y Elaboración Informe Técnico Conjunto</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1>@TIPOBAREMACION</Operando1>
+							<Operador>=</Operador>
+							<Operando2>C</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+				<Salida>
+					<Descripcion>Tipo Baremación Individual</Descripcion>
+					<TramiteDestino>Revisión Resultado Adjudicación Provisional</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1>@TIPOBAREMACION</Operando1>
+							<Operando2>I</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Baremación y Elaboración Informe Técnico Conjunto</Nombre>
+				<Tipo>MANUAL</Tipo>
+				<NombreEnFlujo>BAR_ELAB_INF_TEC_C</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_2</Idnt_Elemento>
+				<DatosReponsableTramite>
+					<SistemaFuncional>@TECNICOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@TECNICOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramite>
+				<DatosElaboracionDocumento>
+					<CodigoDocumento>@COD_DOC_INF_TEC_CON</CodigoDocumento> <!-- COD_DOC_INFORME_CONJUNTO -> COD_DOC_INF_TEC_CON -->
+					<VariableDocumentoElaborado>DOCUMENTO_INF_TEC_CON</VariableDocumentoElaborado> <!-- DOCUMENTO_INF_CONJUNTO -> DOCUMENTO_INF_TEC_CON -->
+					<VariableSolicitudFirma>SOL_FIR_INF_TEC_CON</VariableSolicitudFirma> <!-- SOL_FIR_INF_CONJUNTO -> SOL_FIR_INF_TEC_CON -->
+				</DatosElaboracionDocumento>
+			</DatosARTEZ>
+			<Salidas>
+				<Salida>
+					<Descripcion>Firma Informe Técnico Conjunto con Sello</Descripcion>
+					<TramiteDestino>Firma de Informe Técnico Conjunto</TramiteDestino>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Firma de Informe Técnico Conjunto</Nombre>
+				<BloqueTramitacionComun>S</BloqueTramitacionComun>
+				<Tipo>FIRMA</Tipo>
+				<NombreEnFlujo>FIR_INF_TEC_CONJUNTO</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZBloqueTramitacionComunFirma>
+				<TipoFirma>PROPIA</TipoFirma>
+				<DocumentoAFirmar>@DOCUMENTO_INF_TEC_CON</DocumentoAFirmar>
+				<SolicitudFirmaARTEZ>@SOL_FIR_INF_TEC_CON</SolicitudFirmaARTEZ>
+				<DatosReponsableTramitesManuales>
+					<SistemaFuncional>@TECNICOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@TECNICOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramitesManuales>
+				<DatosFirmaPropia>
+					<Idnt_TramiteFirmaPropia>TRAMITE_3</Idnt_TramiteFirmaPropia>
+				</DatosFirmaPropia>
+				<VariableRespuestaFK>RDO_FIRMA_INF_CONJUNTO</VariableRespuestaFK>
+			</DatosARTEZBloqueTramitacionComunFirma>
+			<Salidas>
+				<Salida>
+					<Descripcion></Descripcion>
+					<TramiteDestino>Revisión Resultado Adjudicación Provisional</TramiteDestino>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Revisión Resultado Adjudicación Provisional</Nombre>
+				<Tipo>MANUAL</Tipo>
+				<NombreEnFlujo>REVI_RDO_ADJ_PROV</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_4</Idnt_Elemento>
+				<DatosReponsableTramite>
+					<SistemaFuncional>@TECNICOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@TECNICOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramite>
+			</DatosARTEZ>
+			<Pasos>
+				<Paso>
+					<Tipo>ACCION</Tipo>
+					<NombrePaso>Reactivar Solicitudes En espera de Informe Adjudicación provisional</NombrePaso>
+					<NombreAccion>Reactivar Solicitudes</NombreAccion>
+					<ParametrosEntrada>						
+						<Parametro>PO000020</Parametro>
+						<Parametro>TRAMITE_11</Parametro>
+						<Parametro></Parametro> <!-- Datos Relevantes en Formato Nombre1=Valor1¬Nombre2=Valor2... -->
+					</ParametrosEntrada>
+					<ParametrosSalida></ParametrosSalida>
+				</Paso>
+			</Pasos>
+			<Salidas>
+				<Salida>
+					<Descripcion></Descripcion>
+					<TramiteDestino>Comprobación de Cumplimiento de Obligaciones Tributarias y Seguridad Social</TramiteDestino>					
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Comprobación de Cumplimiento de Obligaciones Tributarias y Seguridad Social</Nombre>
+				<Tipo>MANUAL</Tipo>
+				<NombreEnFlujo>COMP_OBLI_TRIB_SS</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_5</Idnt_Elemento>
+				<DatosReponsableTramite>
+					<SistemaFuncional>@ADMINISTRATIVOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@ADMINISTRATIVOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramite>
+			</DatosARTEZ>
+			<Salidas>
+				<Salida>
+					<Descripcion>Requiere Comisión Evaluadora</Descripcion>
+					<TramiteDestino>Elaboración de Acta de Comisión</TramiteDestino>
+					<Condiciones>
+						<Condicion>				
+							<Operando1>@COMISION</Operando1>
+							<Operador>=</Operador>
+							<Operando2>true</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+				<Salida>
+					<Descripcion>NO Requiere Comisión Evaluadora y hay Trámite de Audiencia</Descripcion>
+					<TramiteDestino>Elaboración Propuesta Resolución Provisional</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1>@COMISION</Operando1>
+							<Operador>=</Operador>
+							<Operando2>false</Operando2>
+						</Condicion>
+						<Condicion>
+							<Operando1>@TRAMITEAUDIENCIA</Operando1>
+							<Operador>=</Operador>
+							<Operando2>true</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+				<Salida>
+					<Descripcion>NO Requiere Comisión Evaluadora y NO hay Trámite de Audiencia</Descripcion>
+					<TramiteDestino>Elaboración Resolución de la Concesión</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1>@COMISION</Operando1>
+							<Operador>=</Operador>
+							<Operando2>false</Operando2>
+						</Condicion>
+						<Condicion>
+							<Operando1>@TRAMITEAUDIENCIA</Operando1>
+							<Operador>=</Operador>
+							<Operando2>false</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Elaboración de Acta de Comisión</Nombre>
+				<Tipo>MANUAL</Tipo>
+				<NombreEnFlujo>ELAB_ACTA_COMISION</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_6</Idnt_Elemento>
+				<DatosReponsableTramite>
+					<SistemaFuncional>@ADMINISTRATIVOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@ADMINISTRATIVOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramite>
+				<DatosElaboracionDocumento>
+					<CodigoDocumento>@COD_DOC_ACTA_TRIBUNA</CodigoDocumento> <!-- COD_DOC_ACTA -> COD_DOC_ACTA_TRIBUNA -->
+					<VariableDocumentoElaborado>DOCUMENTO_ACTA_TRIBUNA</VariableDocumentoElaborado> <!-- DOCUMENTO_ACTA -> DOCUMENTO_ACTA_TRIBUNA -->
+					<VariableSolicitudFirma>SOL_FIR_ACTA_TRIBUNA</VariableSolicitudFirma> <!-- SOL_FIR_ACTA -> SOL_FIR_ACTA_TRIBUNA -->
+				</DatosElaboracionDocumento>
+			</DatosARTEZ>
+			<Salidas>
+				<Salida>
+					<Descripcion></Descripcion>
+					<TramiteDestino>Firma Acta de Comisión</TramiteDestino>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Firma Acta de Comisión</Nombre>
+				<BloqueTramitacionComun>S</BloqueTramitacionComun>
+				<Tipo>FIRMA</Tipo>
+				<NombreEnFlujo>FIRMA_ACTA_COMISION</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZBloqueTramitacionComunFirma>
+				<TipoFirma>ADHOCK</TipoFirma>
+				<DocumentoAFirmar>@DOCUMENTO_ACTA_TRIBUNA</DocumentoAFirmar>
+				<SolicitudFirmaARTEZ>@SOL_FIR_ACTA_TRIBUNA</SolicitudFirmaARTEZ>
+				<DatosReponsableTramitesManuales>
+					<SistemaFuncional>@ADMINISTRATIVOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@ADMINISTRATIVOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramitesManuales>
+				<DatosFirmaFlujoAdHock>
+					<Idnt_TramiteSeleccionFirmantes>TRAMITE_21</Idnt_TramiteSeleccionFirmantes>
+					<Idnt_TramiteFirma>TRAMITE_7</Idnt_TramiteFirma>
+					<Idnt_TramiteRevisionRechazoFirma>TRAMITE_8</Idnt_TramiteRevisionRechazoFirma>
+				</DatosFirmaFlujoAdHock>
+				<VariableRespuestaFK>RDO_FIRMA_ACTA</VariableRespuestaFK>
+			</DatosARTEZBloqueTramitacionComunFirma>
+			<Salidas>
+				<Salida>
+					<Descripcion>Firmado y hay Trámite de Audiencia</Descripcion> 
+					<TramiteDestino>Elaboración Propuesta Resolución Provisional</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1>@RDO_FIRMA_ACTA</Operando1>
+							<Operador>=</Operador>
+							<Operando2>F</Operando2>
+						</Condicion>
+						<Condicion>
+							<Operando1>@TRAMITEAUDIENCIA</Operando1>
+							<Operador>=</Operador>
+							<Operando2>true</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+				<Salida>
+					<Descripcion>Firmado y NO hay Trámite de Audiencia</Descripcion> 
+					<TramiteDestino>Elaboración Resolución de la Concesión</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1>@RDO_FIRMA_ACTA</Operando1>
+							<Operador>=</Operador>
+							<Operando2>F</Operando2>
+						</Condicion>
+						<Condicion>
+							<Operando1>@TRAMITEAUDIENCIA</Operando1>
+							<Operador>=</Operador>
+							<Operando2>false</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+				<Salida>
+					<Descripcion>Rechazado</Descripcion>
+					<TramiteDestino>Elaboración de Acta de Comisión</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1>@RDO_FIRMA_ACTA</Operando1>
+							<Operador>=</Operador>
+							<Operando2>R</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Elaboración Propuesta Resolución Provisional</Nombre>
+				<Tipo>MANUAL</Tipo>
+				<NombreEnFlujo>ELAB_PROP_RESO_PROV</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_9</Idnt_Elemento>
+				<DatosReponsableTramite>
+					<SistemaFuncional>@ADMINISTRATIVOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@ADMINISTRATIVOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramite>
+				<DatosElaboracionDocumento>
+					<CodigoDocumento>@COD_DOC_PROP_RESO_PROV</CodigoDocumento>
+					<VariableDocumentoElaborado>DOCUMENTO_PROP_RESO_PROV</VariableDocumentoElaborado>
+					<VariableSolicitudFirma>SOL_FIR_PROP_RESO_PROV</VariableSolicitudFirma>
+				</DatosElaboracionDocumento>
+			</DatosARTEZ>
+			<Salidas>
+				<Salida>
+					<Descripcion></Descripcion>
+					<TramiteDestino>Firma Propuesta Resolución Provisional</TramiteDestino>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Firma Propuesta Resolución Provisional</Nombre>
+				<BloqueTramitacionComun>S</BloqueTramitacionComun>
+				<Tipo>FIRMA</Tipo>
+				<NombreEnFlujo>FIRMA_PROP_RESO_PROV</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZBloqueTramitacionComunFirma>
+				<TipoFirma>NIVELES</TipoFirma>
+				<DocumentoAFirmar>@DOCUMENTO_PROP_RESO_PROV</DocumentoAFirmar>
+				<DatosReponsableTramitesManuales>
+					<SistemaFuncional>@ADMINISTRATIVOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@ADMINISTRATIVOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramitesManuales>
+				<DatosFirmaFlujoNiveles>
+					<Idnt_TramiteFirma>TRAMITE_10</Idnt_TramiteFirma>
+					<Idnt_TramiteRevisionRechazoFirma>TRAMITE_11</Idnt_TramiteRevisionRechazoFirma>
+					<FlujoFK>@FIRMA_PROP_RESO_PROV</FlujoFK>
+				</DatosFirmaFlujoNiveles>
+				<VariableRespuestaFK>RDO_FIRMA_PROP_RESO_PROV</VariableRespuestaFK>
+			</DatosARTEZBloqueTramitacionComunFirma>
+			<Salidas>
+				<Salida>
+					<Descripcion>Firmado</Descripcion> 
+					<TramiteDestino>Registrar Notificación mediante Publicación en Diario Oficial BOB</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1>@RDO_FIRMA_PROP_RESO_PROV</Operando1>
+							<Operador>=</Operador>
+							<Operando2>F</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+				<Salida>
+					<Descripcion>Rechazado</Descripcion>
+					<TramiteDestino>Elaboración Propuesta Resolución Provisional</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1>@RDO_FIRMA_PROP_RESO_PROV</Operando1>
+							<Operador>=</Operador>
+							<Operando2>R</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Registrar Notificación mediante Publicación en Diario Oficial BOB</Nombre>
+				<Tipo>MANUAL</Tipo>
+				<NombreEnFlujo>REG_NOT_PUB_BOB</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_12</Idnt_Elemento>
+				<DatosReponsableTramite>
+					<SistemaFuncional>@ADMINISTRATIVOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@ADMINISTRATIVOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramite>
+			</DatosARTEZ>
+			<Pasos>
+				<Paso>
+					<Tipo>INICIALIZACION_VARIABLES</Tipo>
+					<VariablesGenerales>S</VariablesGenerales>
+					<InicializacionesVariables>
+						<InicializacionVariable>
+							<VariableInicializar>FEC_PUB_BOB</VariableInicializar>
+							<OrigenVariableValor>FORMULARIO_TRAMITE</OrigenVariableValor>
+							<VariableValor>FECPUBBOB</VariableValor>
+						</InicializacionVariable>
+					</InicializacionesVariables>
+				</Paso>
+				<Paso>
+					<Tipo>ACCION</Tipo>
+					<NombrePaso>Reactivar las Solicitudes en Espera Elaboración Propuesta Resolución</NombrePaso>
+					<NombreAccion>Reactivar Solicitudes</NombreAccion>
+					<ParametrosEntrada>
+						<Parametro>PO000020</Parametro>
+						<Parametro>TRAMITE_26</Parametro>
+						<Parametro></Parametro> <!-- Datos Relevantes en Formato Nombre1=Valor1¬Nombre2=Valor2... -->
+					</ParametrosEntrada>
+					<ParametrosSalida></ParametrosSalida>
+				</Paso>
+			</Pasos>
+			<Salidas>
+				<Salida>
+					<Descripcion></Descripcion>
+					<TramiteDestino>En Espera Finalización Plazo Alegaciones</TramiteDestino>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>En Espera Finalización Plazo Alegaciones</Nombre>
+				<Tipo>AUTOMATICO</Tipo>
+				<NombreEnFlujo>ESPERA_FIN_PLAZ_ALEG</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_14</Idnt_Elemento>
+			</DatosARTEZ>
+			<Plazo>
+				<TipoAlerta>1</TipoAlerta>
+				<FechaReferencia>FEC_PUB_BOB</FechaReferencia>
+				<CodigoPlazo>PLAZO6M</CodigoPlazo>
+				<TipoIntervaloALERT></TipoIntervaloALERT>
+				<IntervaloALERT></IntervaloALERT>
+				<TramiteDestino>Comprobar Resultado de Alegaciones</TramiteDestino>
+			</Plazo>
+			<Salidas>
+				<Salida>
+					<Descripcion></Descripcion>
+					<TramiteDestino>Comprobar Resultado de Alegaciones</TramiteDestino>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Comprobar Resultado de Alegaciones</Nombre>
+				<Tipo>MANUAL</Tipo>
+				<NombreEnFlujo>COMPRO_RESUL_ALE</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_15</Idnt_Elemento>
+				<DatosReponsableTramite>
+					<SistemaFuncional>@ADMINISTRATIVOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@ADMINISTRATIVOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramite>
+			</DatosARTEZ>
+			<Salidas>
+				<Salida>
+					<Descripcion>Si se han aceptado alegaciones hay que volver a baremación con todas las solicitudes</Descripcion>
+					<TramiteDestino>Baremación y Elaboración Informe Técnico Conjunto</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1></Operando1>
+							<Operador></Operador>
+							<Operando2>S</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+			</Salidas>
+			<Salidas>
+				<Salida>
+					<Descripcion>Si NO se han presentado alegaciones o no se han aceptado</Descripcion>
+					<TramiteDestino>Elaboración Resolución de la Concesión</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1></Operando1>
+							<Operador></Operador>
+							<Operando2>N</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Elaboración Resolución de la Concesión</Nombre>
+				<Tipo>MANUAL</Tipo>
+				<NombreEnFlujo>ELAB_RESO_CONCESION</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_16</Idnt_Elemento>
+				<DatosReponsableTramite>
+					<SistemaFuncional>@ADMINISTRATIVOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@ADMINISTRATIVOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramite>
+				<DatosElaboracionDocumento>
+					<CodigoDocumento>@COD_DOC_RESOLUCION_CONCE</CodigoDocumento>
+					<VariableDocumentoElaborado>DOCUMENTO_RESO_CONCE</VariableDocumentoElaborado>
+					<VariableSolicitudFirma>SOL_FIR_RESO_CONCE</VariableSolicitudFirma>
+				</DatosElaboracionDocumento>
+			</DatosARTEZ>
+			<Salidas>
+				<Salida>
+					<Descripcion></Descripcion>
+					<TramiteDestino>Firma Resolución de la Concesión</TramiteDestino>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Firma Resolución de la Concesión</Nombre>
+				<BloqueTramitacionComun>S</BloqueTramitacionComun>
+				<Tipo>FIRMA</Tipo>
+				<NombreEnFlujo>FIRMA_RESO_CONCESION</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZBloqueTramitacionComunFirma>
+				<TipoFirma>NIVELES</TipoFirma>
+				<DocumentoAFirmar>@DOCUMENTO_RESO_CONCE</DocumentoAFirmar>
+				<DatosReponsableTramitesManuales>
+					<SistemaFuncional>@ADMINISTRATIVOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@ADMINISTRATIVOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramitesManuales>
+				<DatosFirmaFlujoNiveles>
+					<Idnt_TramiteFirma>TRAMITE_17</Idnt_TramiteFirma>
+					<Idnt_TramiteRevisionRechazoFirma>TRAMITE_18</Idnt_TramiteRevisionRechazoFirma>
+					<FlujoFK>@FIRMA_RESO_CONCESION</FlujoFK>
+				</DatosFirmaFlujoNiveles>
+				<DatosRA>
+					<TipoAcuerdo>@TIPO_ACUE_RESO_CONC</TipoAcuerdo>
+					<CodigoAsunto>@ASUNTO_RA_RESO_CONC</CodigoAsunto>
+				</DatosRA>
+				<VariableRespuestaFK>RDO_FIRMA_RESO_CONCESION</VariableRespuestaFK>
+				<VariableFechaAcuerdo>FECHA_ACUERDO_RESO_CONCE</VariableFechaAcuerdo>
+				<VariableAnioAcuerdo>ANIO_ACUERDO_RESO_CONCE</VariableAnioAcuerdo>
+				<VariableNumeroAcuerdo>NUM_ACUERDO_RESO_CONCE</VariableNumeroAcuerdo>
+			</DatosARTEZBloqueTramitacionComunFirma>
+			<Salidas>
+				<Salida>
+					<Descripcion>Firmado</Descripcion> 
+					<TramiteDestino>Registrar Notificación mediante Publicación en Diario Oficial BOB tras Concesión</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1>@RDO_FIRMA_RESO_CONCESION</Operando1>
+							<Operador>=</Operador>
+							<Operando2>F</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+				<Salida>
+					<Descripcion>Rechazado</Descripcion>
+					<TramiteDestino>Elaboración Resolución de la Concesión</TramiteDestino>
+					<Condiciones>
+						<Condicion>
+							<Operando1>@RDO_FIRMA_RESO_CONCESION</Operando1>
+							<Operador>=</Operador>
+							<Operando2>R</Operando2>
+						</Condicion>
+					</Condiciones>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Registrar Notificación mediante Publicación en Diario Oficial BOB tras Concesión</Nombre>
+				<Tipo>MANUAL</Tipo>
+				<NombreEnFlujo>REG_NOTIF_CONJUNTA</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_19</Idnt_Elemento>
+				<DatosReponsableTramite>
+					<SistemaFuncional>@ADMINISTRATIVOS_SIST_FUN</SistemaFuncional>
+					<GrupoUsuarios>@ADMINISTRATIVOS_GRUPO_US</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosReponsableTramite>
+			</DatosARTEZ>
+			<Pasos>
+				<Paso>
+					<Tipo>INICIALIZACION_VARIABLES</Tipo>
+					<NombrePaso>Inicializar la Variable FECHA_PUBLICACION_BOB con la Fecha Recuperada de la Finalziación del Trámite Manual</NombrePaso>
+					<VariablesGenerales>S</VariablesGenerales>
+					<InicializacionesVariables>
+						<InicializacionVariable>
+							<VariableInicializar>FECHA_PUBLICACION_BOB</VariableInicializar>
+							<OrigenVariableValor>FORMULARIO_TRAMITE</OrigenVariableValor>
+							<VariableValor>FECPUBBOB</VariableValor>
+						</InicializacionVariable>
+					</InicializacionesVariables>
+				</Paso>
+				<Paso>
+					<Tipo>INICIALIZACION_VARIABLES</Tipo>
+					<NombrePaso>Preparar las Variables para poder realizar la Reactivación</NombrePaso>
+					<VariablesGenerales>S</VariablesGenerales>
+					<InicializacionesVariables>
+						<InicializacionVariable>
+							<VariableInicializar>PARAMETRO_FECHA_ACUERDO</VariableInicializar>
+							<ValorFijo>=$CONCAT([FECHA_ACUERDO=];[@INICIO!FECHA_ACUERDO_RESO_CONCE])/$</ValorFijo>
+						</InicializacionVariable>						
+						<InicializacionVariable>
+							<VariableInicializar>PARAMETRO_ANIO_ACUERDO</VariableInicializar>
+							<ValorFijo>=$CONCAT([ANIO_ACUERDO=];[@INICIO!ANIO_ACUERDO_RESO_CONCE])/$</ValorFijo>
+						</InicializacionVariable>						
+						<InicializacionVariable>
+							<VariableInicializar>PARAMETRO_NUM_ACUERDO</VariableInicializar>
+							<ValorFijo>=$CONCAT([NUMERO_ACUERDO=];[@INICIO!NUM_ACUERDO_RESO_CONCE])/$</ValorFijo>
+						</InicializacionVariable>
+						<InicializacionVariable>
+							<VariableInicializar>PARAMETRO_FEC_PUBLI_BOB</VariableInicializar>
+							<ValorFijo>=$CONCAT([FECHABOB=];[@INICIO!FECHA_PUBLICACION_BOB])/$</ValorFijo>
+						</InicializacionVariable>
+					</InicializacionesVariables>
+				</Paso>
+				<Paso>
+					<Tipo>ACCION</Tipo>
+					<NombrePaso>Reactivar las Solicitudes en Espera de Resolución</NombrePaso>
+					<NombreAccion>Reactivar Solicitudes</NombreAccion>
+					<ParametrosEntrada>
+						<Parametro>PO000020</Parametro>
+						<Parametro>TRAMITE_14</Parametro>
+						<Parametro>=$CONCAT([@INICIO!PARAMETRO_FECHA_ACUERDO];[¬];[@INICIO!PARAMETRO_ANIO_ACUERDO];[¬];[@INICIO!PARAMETRO_NUM_ACUERDO];[¬];[@INICIO!PARAMETRO_FEC_PUBLI_BOB])/$</Parametro> <!-- Datos Relevantes en Formato Nombre1=Valor1¬Nombre2=Valor2... -->
+					</ParametrosEntrada>
+					<ParametrosSalida></ParametrosSalida>
+				</Paso>
+			</Pasos>
+			<Salidas>
+				<Salida>
+					<Descripcion></Descripcion>
+					<TRamiteDestino>Finalizar Tramitación</TRamiteDestino>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Finalizar Tramitación</Nombre>
+				<Tipo>AUTOMATICO</Tipo>
+				<NombreEnFlujo>FIN_TRAMITACION</NombreEnFlujo>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_20</Idnt_Elemento>
+			</DatosARTEZ>
+			<Salidas></Salidas>
+		</Tramite>
+	</Tramites>
+</Procedimiento>

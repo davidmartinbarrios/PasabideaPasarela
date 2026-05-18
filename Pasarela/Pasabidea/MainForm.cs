@@ -8,10 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-<<<<<<< HEAD
-=======
 using System.Data.SqlClient;
->>>>>>> 098effc ([N8MUGIPASARELA-1] Ok)
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -209,12 +206,8 @@ namespace Pasabidea
             }
             catch (Exception ex)
             {
-<<<<<<< HEAD
-                throw ex;
-=======
                 MessageBox.Show(CheckException(ex));
                 //throw ex;
->>>>>>> 098effc ([N8MUGIPASARELA-1] Ok)
                 //MessageBox.Show(ex.Message, "Error WebView2");
             }
         }
@@ -579,7 +572,7 @@ namespace Pasabidea
             await webView21.CoreWebView2.ExecuteScriptAsync(script);
         }
 
-        private void btnVerBpmn_Click(object sender, EventArgs e)
+        private async void btnVerBpmn_Click(object sender, EventArgs e)
         {
 
             //ErwinDiagramApplication erwinDiagramApplication = new ErwinDiagramApplication();
@@ -1316,9 +1309,6 @@ namespace Pasabidea
 
         private void tvwProcs_AfterSelect(object sender, TreeViewEventArgs e)
         {
-<<<<<<< HEAD
-
-=======
             NodoProcedimientoInfo info = e.Node.Tag as NodoProcedimientoInfo;
 
             if (info == null || !info.EsProcedimiento)
@@ -1330,7 +1320,6 @@ namespace Pasabidea
 
             _diIdProcedimientoActual = info.DiId;
             txtDI_ID.Text = info.DiId.ToString();
->>>>>>> 098effc ([N8MUGIPASARELA-1] Ok)
         }
     }
 

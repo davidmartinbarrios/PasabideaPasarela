@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<Procedimiento xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<DatosGenerales>
+		<IdentificadorFlujo>ARTEZ-000-0000200416 </IdentificadorFlujo>
+		<NombreFlujo>ARTEZ-000-0000200416</NombreFlujo>
+		<Version>1</Version>
+		<Descripcion><![CDATA[POC BKON (Pruebas)]]></Descripcion>
+	</DatosGenerales>
+	
+	<Tramites>
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Llamada a Negocio</Nombre>
+				<Tipo>AUTOMATICO</Tipo>
+				<NombreEnFlujo>LLAMADA_NEGOCIO</NombreEnFlujo>
+				<SalidasExcluyentes>N</SalidasExcluyentes>
+			</DatosGenerales>
+			<DatosARTEZ>
+				<Idnt_Elemento>TRAMITE_7</Idnt_Elemento>
+			</DatosARTEZ>			
+			<Salidas>
+				<Salida>
+					<Descripcion></Descripcion>
+					<TramiteDestino>Bloque BKON</TramiteDestino>
+				</Salida>			
+			</Salidas>
+		</Tramite>
+		
+		<Tramite>
+			<DatosGenerales>
+				<Nombre>Bloque BKON</Nombre>
+				<BloqueTramitacionComun>S</BloqueTramitacionComun>
+				<Tipo>BKON</Tipo>
+				<NombreEnFlujo>BLOQUE_BKON</NombreEnFlujo>
+				<SalidasExcluyentes>N</SalidasExcluyentes>
+			</DatosGenerales>
+			<DatosARTEZBloqueTramitacionComunBKON>
+				<Idnt_TramiteObtenerInformacion>TRAMITE_1</Idnt_TramiteObtenerInformacion>
+				<Idnt_TramiteValidacionCarga>TRAMITE_2</Idnt_TramiteValidacionCarga>
+				<Idnt_TramiteCarga>TRAMITE_3</Idnt_TramiteCarga>
+				<Idnt_TramiteRevisionValidacionCarga>TRAMITE_4</Idnt_TramiteRevisionValidacionCarga>
+				<Idnt_TramitePendiente>TRAMITE_5</Idnt_TramitePendiente>
+				<DatosResponsableTramitesManuales>
+					<SistemaFuncional>DS</SistemaFuncional>
+					<GrupoUsuarios>P_ADM_SERV_DESA_RURAL_AYUDAS_EXPLOT_AGRARIAS</GrupoUsuarios>
+					<Usuario></Usuario>
+				</DatosResponsableTramitesManuales>
+			</DatosARTEZBloqueTramitacionComunBKON>
+			<Salidas>
+				<Salida>
+					<Descripcion></Descripcion>
+					<TramiteDestino></TramiteDestino>
+				</Salida>
+			</Salidas>
+		</Tramite>
+		
+		<!-- <Tramite> -->
+			<!-- <DatosGenerales> -->
+				<!-- <Nombre>Obtención de información a enviar a BKON</Nombre> -->
+				<!-- <Tipo>MANUAL</Tipo> -->
+				<!-- <NombreEnFlujo>OBTE_INF_ENVIAR_BKON</NombreEnFlujo> -->
+				<!-- <SalidasExcluyentes>N</SalidasExcluyentes> -->
+			<!-- </DatosGenerales> -->
+			<!-- <DatosARTEZ> -->
+				<!-- <Idnt_Elemento>TRAMITE_1</Idnt_Elemento> -->
+			<!-- </DatosARTEZ> -->
+			<!-- <Salidas> -->
+				<!-- <Salida> -->
+					<!-- <Descripcion></Descripcion> -->
+					<!-- <TramiteDestino>Validación de carga de expediente en BKON</TramiteDestino>					 -->
+				<!-- </Salida>				 -->
+			<!-- </Salidas> -->
+		<!-- </Tramite> -->
+		
+		<!-- <Tramite> -->
+			<!-- <DatosGenerales> -->
+				<!-- <Nombre>Validación de carga de expediente en BKON</Nombre> -->
+				<!-- <Tipo>AUTOMATICO</Tipo> -->
+				<!-- <NombreEnFlujo>VALIDACION_CARGA_BKON</NombreEnFlujo> -->
+				<!-- <SalidasExcluyentes>S</SalidasExcluyentes> -->
+			<!-- </DatosGenerales> -->
+			<!-- <DatosARTEZ> -->
+				<!-- <Idnt_Elemento>TRAMITE_2</Idnt_Elemento>				 -->
+			<!-- </DatosARTEZ> -->
+			<!-- <Salidas> -->
+				<!-- <Salida> -->
+					<!-- <Descripcion>Si respuesta correcta</Descripcion> -->
+					<!-- <TramiteDestino>Carga en Bkon</TramiteDestino> -->
+					<!-- <Condiciones> -->
+						<!-- <Condicion> -->
+							<!-- <Operando1></Operando1> -->
+							<!-- <Operador>=</Operador> -->
+							<!-- <Operando2>correcto</Operando2> -->
+						<!-- </Condicion> -->
+					<!-- </Condiciones>	 -->
+				<!-- </Salida> -->
+				<!-- <Salida> -->
+					<!-- <Descripcion>Si respuesta error</Descripcion> -->
+					<!-- <TramiteDestino>Revisión de error de validación BKON</TramiteDestino> -->
+					<!-- <Condiciones> -->
+						<!-- <Condicion> -->
+							<!-- <Operando1></Operando1> -->
+							<!-- <Operador>=</Operador> -->
+							<!-- <Operando2>error</Operando2> -->
+						<!-- </Condicion> -->
+					<!-- </Condiciones>	 -->
+				<!-- </Salida> -->
+			<!-- </Salidas> -->
+		<!-- </Tramite> -->
+		
+		<!-- <Tramite> -->
+			<!-- <DatosGenerales> -->
+				<!-- <Nombre>Carga en BKON</Nombre> -->
+				<!-- <Tipo>AUTOMATICO</Tipo> -->
+				<!-- <NombreEnFlujo>CARGA_BKON</NombreEnFlujo> -->
+				<!-- <SalidasExcluyentes>N</SalidasExcluyentes> -->
+			<!-- </DatosGenerales> -->
+			<!-- <DatosARTEZ> -->
+				<!-- <Idnt_Elemento>TRAMITE_3</Idnt_Elemento>				 -->
+			<!-- </DatosARTEZ> -->
+			<!-- <Salidas> -->
+				<!-- <Salida> -->
+					<!-- <Descripcion></Descripcion> -->
+					<!-- <TramiteDestino></TramiteDestino>					 -->
+				<!-- </Salida> -->
+			<!-- </Salidas> -->
+		<!-- </Tramite> -->
+		
+		<!-- <Tramite> -->
+			<!-- <DatosGenerales> -->
+				<!-- <Nombre>Revisión de error de validación BKON</Nombre> -->
+				<!-- <Tipo>MANUAL</Tipo> -->
+				<!-- <NombreEnFlujo>REVI_ERROR_VALI_BKON</NombreEnFlujo> -->
+				<!-- <SalidasExcluyentes>S</SalidasExcluyentes> -->
+			<!-- </DatosGenerales> -->
+			<!-- <DatosARTEZ> -->
+				<!-- <Idnt_Elemento>TRAMITE_4</Idnt_Elemento>				 -->
+			<!-- </DatosARTEZ> -->
+				<!-- <Salidas> -->
+				<!-- <Salida> -->
+					<!-- <Descripcion>Datos corregidos volver a validar</Descripcion> -->
+					<!-- <TramiteDestino>Carga en Bkon</TramiteDestino> -->
+					<!-- <Condiciones> -->
+						<!-- <Condicion> -->
+							<!-- <Operando1>Validación de carga de expediente en BKON</Operando1> -->
+							<!-- <Operador>=</Operador> -->
+							<!-- <Operando2>volver</Operando2> -->
+						<!-- </Condicion> -->
+					<!-- </Condiciones>	 -->
+				<!-- </Salida> -->
+				<!-- <Salida> -->
+					<!-- <Descripcion>Si respuesta error</Descripcion> -->
+					<!-- <TramiteDestino>Pendiente</TramiteDestino> -->
+					<!-- <Condiciones> -->
+						<!-- <Condicion> -->
+							<!-- <Operando1></Operando1> -->
+							<!-- <Operador>!=</Operador> -->
+							<!-- <Operando2>volver</Operando2> -->
+						<!-- </Condicion> -->
+					<!-- </Condiciones>	 -->
+				<!-- </Salida> -->
+			<!-- </Salidas> -->
+		<!-- </Tramite> -->
+		
+		<!-- <Tramite> -->
+			<!-- <DatosGenerales> -->
+				<!-- <Nombre>Pendiente</Nombre> -->
+				<!-- <Tipo>AUTOMATICO</Tipo> -->
+				<!-- <NombreEnFlujo>Pendiente</NombreEnFlujo> -->
+				<!-- <SalidasExcluyentes>N</SalidasExcluyentes> -->
+			<!-- </DatosGenerales> -->
+			<!-- <DatosARTEZ> -->
+				<!-- <Idnt_Elemento>TRAMITE_5</Idnt_Elemento>				 -->
+			<!-- </DatosARTEZ>			 -->
+		<!-- </Tramite> -->
+	</Tramites>	
+</Procedimiento>

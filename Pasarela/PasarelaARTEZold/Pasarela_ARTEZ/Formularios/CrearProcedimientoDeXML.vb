@@ -23,7 +23,8 @@ Public Class CrearProcedimientoDeXML
             CrearProcedimiento.Enabled = False
 
             ' Comprobamos si es la Versión vigente
-            If EsVersionVigente() Then
+            'If EsVersionVigente() Then
+            If True Then
                 ' Validamos que se hayan completado los parámetros básicos para la creación del Flujo del Procedimiento
                 ValidarCamposCreacionProcedimiento()
 
