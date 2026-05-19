@@ -291,16 +291,18 @@ Namespace Bizkaia.Pasarela
             contadorPasosInicializacion = Me.ContadorPasosInicializacion
         End Sub
 
+        Friend Sub ObtenerUltimosValoresContadoresTramiteTecnico(ByRef contadorReferencias As Integer, ByRef contadorJUMPs As Integer, ByRef contadorPasosInicializacion As Integer)
+            contadorReferencias = Me.ContadorReferencias
+            contadorJUMPs = Me.ContadorJUMPs
+            contadorPasosInicializacion = Me.ContadorPasosInicializacion
+        End Sub
+
         Friend Function ObtenerUltimoValorContadorUNIONs() As Integer
             Return ContadorUNIONs
         End Function
 
         Friend Function ObtenerUltimoValorFlowOrder() As Integer
             Return FlowOrder
-        End Function
-
-        Friend Function ObtenerUltimoValorJUMPs() As Integer
-            Return ContadorJUMPs
         End Function
 
         Friend Sub GenerarLineasDetalleCreacionTramite(ByRef resumenTramitesNombreEnFlujo As Dictionary(Of String, String), ByRef catalogoAcciones As CatalogoAcciones)
@@ -434,9 +436,6 @@ Namespace Bizkaia.Pasarela
 
             ' Insertamos en las Sentencias la Creación de la Finalización de la Tarea
             AddLineasDetalleFinalizacionTareaTramite(resumenTramitesNombreEnFlujo)
-
-            ' Insertamos en las Sentencias la Creación de la Cancelación de la Alerta (si es necesario)
-            AddLineasDetalleCancelarAlertaTramite(resumenTramitesNombreEnFlujo)
 
             ' Insertamos en las Sentencias la Creación del Tratamiento de la/s Salida/s del Trámite (si es necesario)
             AddLineasDetalleTratamientoSalidasTramite(resumenTramitesNombreEnFlujo)
@@ -835,11 +834,16 @@ Namespace Bizkaia.Pasarela
                 If DatosGenerales.TipoTramite.Equals(TipoTramite.Automatico) OrElse DatosGenerales.TipoTramite.Equals(TipoTramite.FirmaSello) OrElse DatosGenerales.TipoTramite.Equals(TipoTramite.PortaFirmas) OrElse DatosGenerales.TipoTramite.Equals(TipoTramite.OrdenNotificacion) OrElse
                        DatosGenerales.TipoTramite.Equals(TipoTramite.ProcesarNotificacion) OrElse DatosGenerales.TipoTramite.Equals(TipoTramite.Planificado) OrElse DatosGenerales.TipoTramite.Equals(TipoTramite.ProcesoPlanificado) OrElse
                        DatosGenerales.TipoTramite.Equals(TipoTramite.RecepcionAcuseRecibo) Then
-                    ' Si estamos en un Trámite Automático y tenemos Plazo, hay que obtener las Sentencias para incluir el paso FORM
+                    ' Si estamos en un Trámite Automático y tenemos Plazo, hay que obtener las Sentencias para incluir el paso FORM y el paso CANCEL para la Alerta
                     If DatosGenerales.TipoTramite.Equals(TipoTramite.Automatico) AndAlso TienePlazo Then
+                        ' Creación del Paso de Motor FORM para paralizar la Tramitación a la Espera del Plazo
                         FlowOrder += 100
                         _lineasDetalle.AddRange(UtilidadesCreacionLineasDetalleFlujo.ObtenerLineasDetalle_Accion_FORM(FlowOrder, path:=DatosGenerales.ObtenerNombrePathFROM, level:=2, idnt_Elemento:=DatosARTEZ.Idnt_Elemento, tipoEjecucion:="M",
                                                                                                                           listadoParamtrosEspecificos:=ObtenerParametrosEspecificosParadaTramite()))
+
+                        ' Creación del Paso de Motor CANCEL para eliminar la Alerta que pudiera existir
+                        FlowOrder += 100
+                        _lineasDetalle.AddRange(UtilidadesCreacionLineasDetalleFlujo.ObtenerLineasDetalle_Accion_CANCEL(FlowOrder, path:=DatosGenerales.ObtenerNombrePathCANCEL_ALERT, valorPasoCancelar:=DatosGenerales.ObtenerNombrePathALERT, level:=2))
                     End If
 
                     ' Si estamos en un Trámite Automático y tenemos Pasos, hay que obtener las Sentencias para incluir los Pasos
@@ -996,6 +1000,13 @@ Namespace Bizkaia.Pasarela
                     _lineasDetalle.AddRange(UtilidadesCreacionLineasDetalleFlujo.ObtenerLineasDetalle_Accion_FORM(FlowOrder, path:=DatosGenerales.ObtenerNombrePathFROM, level:=2, idnt_Elemento:=DatosARTEZ.Idnt_Elemento, tipoEjecucion:="M",
                                                                                                                   listadoParamtrosEspecificos:=ObtenerParametrosEspecificosParadaTramite()))
 
+                    ' Comprobamos si estamos tratando un Trámite con Plazo
+                    If TienePlazo Then
+                        ' Creación del Paso de Motor CANCEL para eliminar la Alerta que pudiera existir
+                        FlowOrder += 100
+                        _lineasDetalle.AddRange(UtilidadesCreacionLineasDetalleFlujo.ObtenerLineasDetalle_Accion_CANCEL(FlowOrder, path:=DatosGenerales.ObtenerNombrePathCANCEL_ALERT, valorPasoCancelar:=DatosGenerales.ObtenerNombrePathALERT, level:=2))
+                    End If
+
                     ' Comprobamos si estamos tratando un Trámite Planificado
                     If DatosGenerales.TipoTramite.Equals(TipoTramite.Planificado) Then
                         ' Insertamos la Evaluación de la Respuesta del Formulario de Espera
@@ -1141,15 +1152,8 @@ Namespace Bizkaia.Pasarela
         End Function
 
         Private Sub ObtenerDatosPathRetornoFinalizacionTarea(ByRef resumenTramitesNombreEnFlujo As Dictionary(Of String, String), ByRef puntoSalidaFinalizacionTarea As String, ByRef saltoDirecto As Boolean)
-            If TienePlazo Then
-                ' El trámite tiene un Plazo asociado, así que el punto de salida para la Acción de Gestión Finalizar Tarea será el tratamiento para cancelar la Alerta, y marcamos que es una salida directa
-                puntoSalidaFinalizacionTarea = DatosGenerales.ObtenerNombrePathCANCEL_ALERT
-                saltoDirecto = False
-
-            Else
-                ' Obtenemos los datos de la manera en la que se va a saltar al siguiente trámite
-                ObtenerDatosSaltoSiguienteTramite(resumenTramitesNombreEnFlujo, saltoDirecto, puntoSalidaFinalizacionTarea)
-            End If
+            ' Obtenemos los datos de la manera en la que se va a saltar al siguiente trámite
+            ObtenerDatosSaltoSiguienteTramite(resumenTramitesNombreEnFlujo, saltoDirecto, puntoSalidaFinalizacionTarea)
         End Sub
 
         Private Sub ObtenerDatosSaltoSiguienteTramite(ByRef resumenTramitesNombreEnFlujo As Dictionary(Of String, String), ByRef saltoDirecto As Boolean, ByRef siguienteTramite As String)
@@ -1179,24 +1183,6 @@ Namespace Bizkaia.Pasarela
                     siguienteTramite = String.Format("SALIDA_T_{0:000}_1", DatosGenerales.OrdenTramite)
                     saltoDirecto = False
             End Select
-        End Sub
-
-        Private Sub AddLineasDetalleCancelarAlertaTramite(ByRef resumenTramitesNombreEnFlujo As Dictionary(Of String, String))
-            If TienePlazo Then
-                ' Creación del Paso de Motor CANCEL para eliminar la Alerta que pudiera existir
-                FlowOrder += 100
-                _lineasDetalle.AddRange(UtilidadesCreacionLineasDetalleFlujo.ObtenerLineasDetalle_Accion_CANCEL(FlowOrder, path:=DatosGenerales.ObtenerNombrePathCANCEL_ALERT, valorPasoCancelar:=DatosGenerales.ObtenerNombrePathALERT, level:=2))
-
-                ' Insertamos el salto al siguiente Trámite cuando estemos tratando un salto directo
-                Dim siguienteTramite As String = String.Empty
-                Dim saltoDirecto As Boolean = False
-                ObtenerDatosSaltoSiguienteTramite(resumenTramitesNombreEnFlujo, saltoDirecto, siguienteTramite)
-                If saltoDirecto Then
-                    FlowOrder += 100
-                    ContadorJUMPs += 1
-                    _lineasDetalle.AddRange(UtilidadesCreacionLineasDetalleFlujo.ObtenerLineasDetalle_Accion_JUMP(FlowOrder, path:=String.Format("JUMP_{0:0000}", ContadorJUMPs), puntoSalto:=siguienteTramite, level:=2, comentario:=String.Empty))
-                End If
-            End If
         End Sub
 
         Private Sub AddLineasDetalleUnionRamasParalelas()

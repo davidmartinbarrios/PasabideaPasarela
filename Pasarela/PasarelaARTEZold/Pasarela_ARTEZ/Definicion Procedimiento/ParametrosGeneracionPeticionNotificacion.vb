@@ -27,5 +27,8 @@ Namespace Bizkaia.Pasarela
 
         <XmlElement("TipoNotificacion", IsNullable:=True)>
         Public Property TipoNotificacion As String
+
+        <XmlElement("TipoConsultaDestinatarioPreferente", IsNullable:=True)>
+        Public Property TipoConsultaDestinatarioPreferente As String
     End Class
 End Namespace

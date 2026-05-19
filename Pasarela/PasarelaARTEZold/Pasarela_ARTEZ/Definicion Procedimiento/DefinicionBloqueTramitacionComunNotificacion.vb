@@ -20,6 +20,9 @@ Namespace Bizkaia.Pasarela
         <XmlElement("CodigoActuacion", IsNullable:=True)>
         Public Property CodigoActuacion As String
 
+        <XmlElement("IdentificadorActuacion", IsNullable:=True)>
+        Public Property IdentificadorActuacion As String
+
         <XmlElement("ParametrosGneracionPeticonNotificacion", IsNullable:=True)>
         Public Property ParametrosGeneracionPeticionNotificacion As ParametrosGeneracionPeticionNotificacion
 
@@ -31,6 +34,9 @@ Namespace Bizkaia.Pasarela
 
         <XmlElement("VariableFechaNotificacion")>
         Public Property VariableFechaNotificacion As String
+
+        <XmlElement("VariableIdentificadorActuacion")>
+        Public Property VariableIdentificadorActuacion As String
 
         '******************************************************************************************************************************
         '******************************************************************************************************************************
@@ -105,6 +111,7 @@ Namespace Bizkaia.Pasarela
                 {"@IDNT_NOTIFICACION_NT_IN", ObtenerValorParaParametro(IdentificadorNotificacionNT)},
                 {"@DOCUMENTO_NOTIFICAR_IN", ObtenerValorParaParametro(DocumentoANotificar)},
                 {"@CODIGO_ACTUACION_IN", ObtenerValorParaParametro(CodigoActuacion)},
+                {"@IDNT_ACTUACION_IN", ObtenerValorParaParametro(IdentificadorActuacion)},
                 {"@MODO_EMISION_IN", ObtenerValorParametroModoEmision()},
                 {"@TIPO_EMISION_IN", ObtenerValorParametroTipoEmision()},
                 {"@TIENE_ACUSE_IN", ObtenerValorParametroTieneAcuse()},
@@ -113,6 +120,7 @@ Namespace Bizkaia.Pasarela
                 {"@INDICADOR_BOLETIN_IN", ObtenerValorParametroIndicadorBoletin()},
                 {"@TIPO_DESTINATARIO_IN", ObtenerValorParametroTipoDestinatario()},
                 {"@TIPO_NOTIFICACION_IN", ObtenerValorParametroTipoNotificacion()},
+                {"@TIPO_CONS_DEST_PREFE_IN", ObtenerValorParametroTipoConsultaDestinatarioPreferente()},
                 {"@TRAM_OBT_DATOS_NOTI_IN", ObtenerValorParametroTramiteObtenerDatosNotificacion()},
                 {"@TRAM_ESPERA_EMISION_IN", ObtenerValorParametroTramiteEsperaEmisionNotificacion()},
                 {"@TRAM_ESPERA_ACUSE_IN", ObtenerValorParametroTramiteEsperaAcuseRecibo()},
@@ -141,8 +149,9 @@ Namespace Bizkaia.Pasarela
                 parametrosBloqueNotificacion.Add("@TRAM_DESTINO_FIN_TELE_IN", String.Empty)
             End If
 
-            ' Incluimos el Parámetro de Salida
+            ' Incluimos los Parámetros de Salida
             parametrosBloqueNotificacion.Add("@FECHA_NOTIFICACION_OUT", VariableFechaNotificacion)
+            parametrosBloqueNotificacion.Add("@IDNT_ACTUACION_OUT", If(IsNothing(VariableIdentificadorActuacion), String.Empty, VariableIdentificadorActuacion))
 
             ' Devolvemos los Parámetros del Bloque de Notificación
             Return parametrosBloqueNotificacion
@@ -178,13 +187,18 @@ Namespace Bizkaia.Pasarela
                         Throw New Exception(String.Format("El Bloque de Tramitación Común de Notificación '{0}' no tiene informado correctamente el Trámite 'Revisión Errores Emisión/Recepción de Notificación'.", nombreBloque))
                     End If
 
+                    If Not IsNothing(.TramiteEsperaAcuseRecibo) AndAlso Not .TramiteEsperaAcuseRecibo.DatosBasicosInformados Then
+                        Throw New Exception(String.Format("El Bloque de Tramitación Común de Notificación '{0}' no tiene informado correctamente el Trámite 'Espera Acuse Recibo'.", nombreBloque))
+                    End If
+
                     If String.IsNullOrEmpty(VariableFechaNotificacion) Then
                         Throw New Exception(String.Format("El Bloque de Tramitación Común de Notificación '{0}' no tiene informado el Nombre de la Variable para la Fecha de Acuse/Notificación.", nombreBloque))
                     End If
-                End If
 
-                If IsNothing(.TramiteEsperaAcuseRecibo) OrElse Not .TramiteEsperaAcuseRecibo.DatosBasicosInformados Then
-                    Throw New Exception(String.Format("El Bloque de Tramitación Común de Notificación '{0}' no tiene informado correctamente el Trámite 'Espera Acuse Recibo'.", nombreBloque))
+                Else
+                    If IsNothing(.TramiteEsperaAcuseRecibo) OrElse Not .TramiteEsperaAcuseRecibo.DatosBasicosInformados Then
+                        Throw New Exception(String.Format("El Bloque de Tramitación Común de Notificación '{0}' no tiene informado correctamente el Trámite 'Espera Acuse Recibo'.", nombreBloque))
+                    End If
                 End If
 
                 ' Comprobamos si tenemos creado el Parámetro IdentificadorNotificacionNT
@@ -222,35 +236,39 @@ Namespace Bizkaia.Pasarela
         End Sub
 
         Private Function ObtenerValorParametroModoEmision() As String
-            Return If(EsDefinicionAntigua(), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.ModoEmision))
+            Return If(EsDefinicionAntigua() OrElse IsNothing(ParametrosGeneracionPeticionNotificacion), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.ModoEmision))
         End Function
 
         Private Function ObtenerValorParametroTipoEmision() As String
-            Return If(EsDefinicionAntigua(), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.TipoEmision))
+            Return If(EsDefinicionAntigua() OrElse IsNothing(ParametrosGeneracionPeticionNotificacion), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.TipoEmision))
         End Function
 
         Private Function ObtenerValorParametroTieneAcuse() As String
-            Return If(EsDefinicionAntigua(), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.TieneAcuseRecibo))
+            Return If(EsDefinicionAntigua() OrElse IsNothing(ParametrosGeneracionPeticionNotificacion), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.TieneAcuseRecibo))
         End Function
 
         Private Function ObtenerValorParametroEmisor() As String
-            Return If(EsDefinicionAntigua(), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.Emisor))
+            Return If(EsDefinicionAntigua() OrElse IsNothing(ParametrosGeneracionPeticionNotificacion), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.Emisor))
         End Function
 
         Private Function ObtenerValorParametroAsunto() As String
-            Return If(EsDefinicionAntigua(), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.Asunto))
+            Return If(EsDefinicionAntigua() OrElse IsNothing(ParametrosGeneracionPeticionNotificacion), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.Asunto))
         End Function
 
         Private Function ObtenerValorParametroIndicadorBoletin() As String
-            Return If(EsDefinicionAntigua(), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.IndicadorBoletin))
+            Return If(EsDefinicionAntigua() OrElse IsNothing(ParametrosGeneracionPeticionNotificacion), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.IndicadorBoletin))
         End Function
 
         Private Function ObtenerValorParametroTipoDestinatario() As String
-            Return If(EsDefinicionAntigua(), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.TipoDestinatario))
+            Return If(EsDefinicionAntigua() OrElse IsNothing(ParametrosGeneracionPeticionNotificacion), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.TipoDestinatario))
         End Function
 
         Private Function ObtenerValorParametroTipoNotificacion() As String
-            Return If(EsDefinicionAntigua(), ObtenerValorParaParametro(TipoNotificacion), ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.TipoNotificacion))
+            Return If(EsDefinicionAntigua() OrElse IsNothing(ParametrosGeneracionPeticionNotificacion), ObtenerValorParaParametro(TipoNotificacion), ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.TipoNotificacion))
+        End Function
+
+        Private Function ObtenerValorParametroTipoConsultaDestinatarioPreferente() As String
+            Return If(EsDefinicionAntigua() OrElse IsNothing(ParametrosGeneracionPeticionNotificacion), String.Empty, ObtenerValorParaParametro(ParametrosGeneracionPeticionNotificacion.TipoConsultaDestinatarioPreferente))
         End Function
 
         Private Function ObtenerValorParametroTramiteObtenerDatosNotificacion() As String

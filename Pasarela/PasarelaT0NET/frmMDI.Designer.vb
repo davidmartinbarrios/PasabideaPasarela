@@ -18,21 +18,21 @@
 	Private components As System.ComponentModel.IContainer
 	Public ToolTip1 As System.Windows.Forms.ToolTip
 	Public WithEvents ImageList1 As System.Windows.Forms.PictureBox
-	Public WithEvents SysTray As AxSysTrayCtl.AxcSysTray
-	'NOTE: The following procedure is required by the Windows Form Designer
-	'It can be modified using the Windows Form Designer.
-	'Do not modify it using the code editor.
-	<System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+    'Public WithEvents SysTray As AxSysTrayCtl.AxcSysTray
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
 		Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(frmMDI))
 		Me.IsMDIContainer = True
 		Me.components = New System.ComponentModel.Container()
 		Me.ToolTip1 = New System.Windows.Forms.ToolTip(components)
 		Me.ImageList1 = New System.Windows.Forms.PictureBox
-		Me.SysTray = New AxSysTrayCtl.AxcSysTray
-		Me.SuspendLayout()
+        'Me.SysTray = New AxSysTrayCtl.AxcSysTray
+        Me.SuspendLayout()
 		Me.ToolTip1.Active = True
-		CType(Me.SysTray, System.ComponentModel.ISupportInitialize).BeginInit()
-		Me.BackColor = System.Drawing.SystemColors.AppWorkspace
+        'CType(Me.SysTray, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.BackColor = System.Drawing.SystemColors.AppWorkspace
 		Me.Text = "MDIForm1"
 		Me.ClientSize = New System.Drawing.Size(317, 213)
 		Me.Location = New System.Drawing.Point(4, 23)
@@ -58,13 +58,13 @@
 		Me.ImageList1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal
 		Me.ImageList1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
 		Me.ImageList1.Name = "ImageList1"
-		SysTray.OcxState = CType(resources.GetObject("SysTray.OcxState"), System.Windows.Forms.AxHost.State)
-		Me.SysTray.Location = New System.Drawing.Point(176, 48)
-		Me.SysTray.Name = "SysTray"
-		Me.Controls.Add(ImageList1)
-		Me.Controls.Add(SysTray)
-		CType(Me.SysTray, System.ComponentModel.ISupportInitialize).EndInit()
-		Me.ResumeLayout(False)
+        'SysTray.OcxState = CType(resources.GetObject("SysTray.OcxState"), System.Windows.Forms.AxHost.State)
+        'Me.SysTray.Location = New System.Drawing.Point(176, 48)
+        'Me.SysTray.Name = "SysTray"
+        Me.Controls.Add(ImageList1)
+        'Me.Controls.Add(SysTray)
+        'CType(Me.SysTray, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
 		Me.PerformLayout()
 	End Sub
 #End Region 

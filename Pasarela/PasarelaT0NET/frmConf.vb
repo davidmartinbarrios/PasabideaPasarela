@@ -153,8 +153,8 @@ procFin:
 		Me.Top = 0
 		Me.Left = 0
 		msCargarDatos()
-		frmMDI.SysTray.set_TrayTip("Configuración procedimientos")
-		lstProc_Click(lstProc, New System.EventArgs())
+        'frmMDI.SysTray.set_TrayTip("Configuración procedimientos")
+        lstProc_Click(lstProc, New System.EventArgs())
 		
 	End Sub
 	

@@ -20,6 +20,9 @@ Namespace Bizkaia.Pasarela
         <XmlElement("NivelOrganico", IsNullable:=True)>
         Public Property NivelOrganico As String
 
+        <XmlElement("CircuitoARTEZ", IsNullable:=True)>
+        Public Property CircuitoARTEZ As String
+
         <XmlElement("FlujoFKNiveles", IsNullable:=True)>
         Public Property FlujoFK_Niveles As String
 

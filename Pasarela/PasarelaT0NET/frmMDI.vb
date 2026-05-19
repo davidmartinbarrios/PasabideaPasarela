@@ -2,9 +2,9 @@ Option Strict Off
 Option Explicit On
 Friend Class frmMDI
 	Inherits System.Windows.Forms.Form
-	Dim blnSystray As Boolean
-	
-	Private Sub frmMDI_Load(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Load
+    'Dim blnSystray As Boolean
+
+    Private Sub frmMDI_Load(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Load
 		
 		
 		Dim hWnd As Object
@@ -28,11 +28,11 @@ Friend Class frmMDI
 		'UPGRADE_WARNING: Couldn't resolve default property of object hMenu. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 		'UPGRADE_WARNING: Couldn't resolve default property of object Success. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
 		Success = DeleteMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND)
-		Me.SysTray.set_InTray(True)
-		'UPGRADE_WARNING: Couldn't resolve default property of object Me.ImageList1.ListImages. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+        'Me.SysTray.set_InTray(True)
+        'UPGRADE_WARNING: Couldn't resolve default property of object Me.ImageList1.ListImages. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
         'Me.SysTray.set_TrayIcon(Me.ImageList1.ListImages(2).Picture)
-        Me.SysTray.set_TrayIcon(Me.ImageList1.Image)
-	End Sub
+        'Me.SysTray.set_TrayIcon(Me.ImageList1.Image)
+    End Sub
 	
 	'UPGRADE_WARNING: Event frmMDI.Resize may fire when form is initialized. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="88B12AE1-6DE0-48A0-86F1-60C0686C026A"'
 	Private Sub frmMDI_Resize(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Resize
@@ -51,39 +51,39 @@ Friend Class frmMDI
 			Me.Top = VB6.TwipsToPixelsY((VB6.PixelsToTwipsY(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height) - VB6.PixelsToTwipsY(Me.Height)) / 2)
 		Else
 			If Me.Visible = True Then
-				If blnSystray = False Then
-					Me.Visible = False
-					Me.SysTray.set_InTray(True)
-				Else
-					Me.WindowState = System.Windows.Forms.FormWindowState.Normal
-					Me.Visible = True
-					blnSystray = False
-				End If
-			Else
+                'If blnSystray = False Then
+                '	Me.Visible = False
+                '	Me.SysTray.set_InTray(True)
+                'Else
+                '	Me.WindowState = System.Windows.Forms.FormWindowState.Normal
+                '	Me.Visible = True
+                '	blnSystray = False
+                'End If
+            Else
 				Me.WindowState = System.Windows.Forms.FormWindowState.Normal
 				Me.Visible = True
-				Me.SysTray.set_InTray(True)
-			End If
+                'Me.SysTray.set_InTray(True)
+            End If
 			
 			
 		End If
 	End Sub
-	
-	Private Sub SysTray_MouseDblClick(ByVal eventSender As System.Object, ByVal eventArgs As AxSysTrayCtl.__cSysTray_MouseDblClickEvent) Handles SysTray.MouseDblClick
-		'/*** REV 610 ***/
-		'FrmVisor.Show
-		On Error Resume Next
-		''    frmMDI.Show
-		''    frmMDI.ZOrder 0
-		''    frmMDI.WindowState = 0
-		'/*** REV 610 FIN ***/
-	End Sub
-	
-	Private Sub SysTray_MouseDownEvent(ByVal eventSender As System.Object, ByVal eventArgs As AxSysTrayCtl.__cSysTray_MouseDownEvent) Handles SysTray.MouseDownEvent
-		
-		'PopupMenu mnuAcciones
-		blnSystray = True
-		Me.Visible = True
-		
-	End Sub
+
+    'Private Sub SysTray_MouseDblClick(ByVal eventSender As System.Object, ByVal eventArgs As AxSysTrayCtl.__cSysTray_MouseDblClickEvent) Handles SysTray.MouseDblClick
+    '	'/*** REV 610 ***/
+    '	'FrmVisor.Show
+    '	On Error Resume Next
+    '	''    frmMDI.Show
+    '	''    frmMDI.ZOrder 0
+    '	''    frmMDI.WindowState = 0
+    '	'/*** REV 610 FIN ***/
+    'End Sub
+
+    '   Private Sub SysTray_MouseDownEvent(ByVal eventSender As System.Object, ByVal eventArgs As AxSysTrayCtl.__cSysTray_MouseDownEvent) Handles SysTray.MouseDownEvent
+
+    '	'PopupMenu mnuAcciones
+    '	blnSystray = True
+    '	Me.Visible = True
+
+    'End Sub
 End Class

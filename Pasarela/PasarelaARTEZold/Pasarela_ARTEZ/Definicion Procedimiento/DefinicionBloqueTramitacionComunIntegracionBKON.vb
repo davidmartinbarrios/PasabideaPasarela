@@ -11,8 +11,14 @@ Namespace Bizkaia.Pasarela
         <XmlElement("Idnt_TramiteValidacionCarga")>
         Public Property Idnt_TramiteValidacionCarga As String
 
-        <XmlElement("Idnt_TramiteCarga")>
-        Public Property Idnt_TramiteCarga As String
+        <XmlElement("Idnt_TramiteCargaExpediente")>
+        Public Property Idnt_TramiteCargaExpediente As String
+
+        <XmlElement("Idnt_TramiteCargaDocumentos")>
+        Public Property Idnt_TramiteCargaDocumentos As String
+
+        <XmlElement("Idnt_TramiteEsperaDatosResolucion")>
+        Public Property Idnt_TramiteEsperaDatosResolucion As String
 
         <XmlElement("Idnt_TramiteRevisionValidacionCarga")>
         Public Property Idnt_TramiteRevisionValidacionCarga As String
@@ -35,6 +41,9 @@ Namespace Bizkaia.Pasarela
         <XmlElement("TipoOperacion")>
         Public Property TipoOperacion As String
 
+        <XmlElement("ARTEZEnviaDatosResolucion")>
+        Public Property ARTEZEnviaDatosResolucion As String
+
         <XmlElement("DatosResolucion", IsNullable:=True)>
         Public Property DatosResolucion As DatosResolucion
 
@@ -43,6 +52,9 @@ Namespace Bizkaia.Pasarela
 
         <XmlElement("DocumentosCargar")>
         Public Property DocumentosCargar As String
+
+        <XmlElement("DatosTramitacionOrigen", IsNullable:=True)>
+        Public Property DatosTramitacionOrigen As DatosTramitacionOrigen
 
 #Region "Métodos Publicos y Friend"
         Friend Sub Verificar(nombreBloque As String)
@@ -56,9 +68,14 @@ Namespace Bizkaia.Pasarela
                 Throw New Exception(String.Format("El Bloque de Tramitación Común de BKON '{0}' no tiene informado el Identificador del Trámite para la Validación de la Carga en BKON.", nombreBloque))
             End If
 
-            ' Verificamos que se ha informado el Identificador del Trámite de Carga en BKON
-            If String.IsNullOrEmpty(Idnt_TramiteCarga) Then
-                Throw New Exception(String.Format("El Bloque de Tramitación Común de BKON '{0}' no tiene informado el Identificador del Trámite de Carga en BKON.", nombreBloque))
+            ' Verificamos que se ha informado el Identificador del Trámite de Carga Expediente en BKON
+            If String.IsNullOrEmpty(Idnt_TramiteCargaExpediente) Then
+                Throw New Exception(String.Format("El Bloque de Tramitación Común de BKON '{0}' no tiene informado el Identificador del Trámite de Carga de Expediente en BKON.", nombreBloque))
+            End If
+
+            ' Verificamos que se ha informado el Identificador del Trámite de Carga Documentos en BKON
+            If String.IsNullOrEmpty(Idnt_TramiteCargaDocumentos) Then
+                Throw New Exception(String.Format("El Bloque de Tramitación Común de BKON '{0}' no tiene informado el Identificador del Trámite de Carga de Documentos en BKON.", nombreBloque))
             End If
 
             ' Verificamos que se ha informado el Identificador del Trámite para Revisar la Validación de la Carga en BKON
@@ -102,7 +119,9 @@ Namespace Bizkaia.Pasarela
             Return New Dictionary(Of String, String) From {
                 {"@TRAM_OBT_INFO_BKON_IN", Idnt_TramiteObtenerInformacion},
                 {"@TRAM_VAL_CARG_BKON_IN", Idnt_TramiteValidacionCarga},
-                {"@TRAM_CARG_BKON_IN", Idnt_TramiteCarga},
+                {"@TRAM_CARG_BKON_IN", Idnt_TramiteCargaExpediente},
+                {"@TRAM_CARG_DOCS_BKON_IN", Idnt_TramiteCargaDocumentos},
+                {"@TRAM_ESPERA_DAT_RESO_IN", Idnt_TramiteEsperaDatosResolucion},
                 {"@TRAM_REVI_VALI_CARGA_IN", Idnt_TramiteRevisionValidacionCarga},
                 {"@TRAM_PENDIENTE_IN", Idnt_TramitePendiente},
                 {"@MODO_CREACION_TRAM_MA_IN", ObtenerValorParaParametro(ModoCreacionTramitesManuales)},
@@ -112,11 +131,17 @@ Namespace Bizkaia.Pasarela
                 {"@US_TRAMITES_MANUALES_IN", DatosResponsableTramitesManuales.Usuario},
                 {"@DESCRIPTOR_SERVICIO_IN", ObtenerValorParaParametro(DescriptorServicio)},
                 {"@TIPO_OPERACION_IN", ObtenerValorParaParametro(TipoOperacion)},
+                {"@ARTEZ_ENVIA_OF_IN", ObtenerValorParaParametro(ARTEZEnviaDatosResolucion)},
+                {"@TIPO_RESOLUCION_IN", If(Not IsNothing(DatosResolucion), ObtenerValorParaParametro(DatosResolucion.TipoAcuerdo), String.Empty)},
                 {"@FECHA_RESOLUCION_IN", If(Not IsNothing(DatosResolucion), ObtenerValorParaParametro(DatosResolucion.FechaAcuerdo), String.Empty)},
                 {"@ANIO_RESOLUCION_IN", If(Not IsNothing(DatosResolucion), ObtenerValorParaParametro(DatosResolucion.AnioAcuerdo), String.Empty)},
                 {"@NUMERO_RESOLUCION_IN", If(Not IsNothing(DatosResolucion), ObtenerValorParaParametro(DatosResolucion.NumeroAcuerdo), String.Empty)},
                 {"@ORGANO_GESTOR_IN", ObtenerValorParaParametro(OrganoGestor)},
-                {"@DOCUMENTOS_CARGAR_IN", ObtenerValorParaParametro(DocumentosCargar)}
+                {"@DOCUMENTOS_CARGAR_IN", ObtenerValorParaParametro(DocumentosCargar)},
+                {"@IDNT_PROC_NEGOCIO_IN", If(Not IsNothing(DatosTramitacionOrigen), ObtenerValorParaParametro(DatosTramitacionOrigen.Idnt_Procedimiento), String.Empty)},
+                {"@DESCRIP_PROC_NEGOCIO_IN", If(Not IsNothing(DatosTramitacionOrigen), ObtenerValorParaParametro(DatosTramitacionOrigen.DescriptorProcedimiento), String.Empty)},
+                {"@INSTANCIA_NEGOCIO_IN", If(Not IsNothing(DatosTramitacionOrigen), ObtenerValorParaParametro(DatosTramitacionOrigen.Instancia), String.Empty)},
+                {"@IDNT_ESP_CREAR_EXPTE_IN", If(Not IsNothing(DatosTramitacionOrigen), ObtenerValorParaParametro(DatosTramitacionOrigen.Idnt_Elemento), String.Empty)}
             }
         End Function
 #End Region

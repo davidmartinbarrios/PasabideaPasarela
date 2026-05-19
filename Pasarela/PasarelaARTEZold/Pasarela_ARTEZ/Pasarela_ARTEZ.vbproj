@@ -132,6 +132,7 @@
     <Compile Include="Definicion Procedimiento\AccionAislada.vb" />
     <Compile Include="Definicion Procedimiento\Condicion.vb" />
     <Compile Include="Definicion Procedimiento\DatosElaboracionDocumento.vb" />
+    <Compile Include="Definicion Procedimiento\DatosFirmaCircuitoARTEZ.vb" />
     <Compile Include="Definicion Procedimiento\DatosFirmaCSVOrganico.vb" />
     <Compile Include="Definicion Procedimiento\DatosFirmaDeducidaEjecucion.vb" />
     <Compile Include="Definicion Procedimiento\DatosFirmaFlujoPorNiveles.vb" />
@@ -144,6 +145,7 @@
     <Compile Include="Definicion Procedimiento\DatosRA.vb" />
     <Compile Include="Definicion Procedimiento\DatosResolucion.vb" />
     <Compile Include="Definicion Procedimiento\DatosResponsableTarea.vb" />
+    <Compile Include="Definicion Procedimiento\DatosTramitacionOrigen.vb" />
     <Compile Include="Definicion Procedimiento\DatosTramiteAutomatico.vb" />
     <Compile Include="Definicion Procedimiento\DatosTramiteManual.vb" />
     <Compile Include="Definicion Procedimiento\DatosTramiteRecepcionAcuseRecibo.vb" />

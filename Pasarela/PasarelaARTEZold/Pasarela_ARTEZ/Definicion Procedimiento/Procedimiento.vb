@@ -331,7 +331,7 @@ Namespace Bizkaia.Pasarela
                 ' Obtenemos las Líneas de Detalle de creación del Trámite ARTEZ
                 .GenerarLineasDetalleCreacionTramite(_resumenTramitesNombreEnFlujo, _catalogoAcciones)
 
-                ' Recuperamos los últimos valores de Contadores para los siguientes Trámites ARTEZ a tratar
+                ' Recuperamos los últimos valores de Contadores para los siguientes Trámites a tratar
                 .ObtenerUltimosValoresContadores(ContadorReferencias, ContadorJUMPs, ContadorProcesosFirmaPortaFirmas, ContadorProcesosNotificacionesNT, ContadorPasosInicializacion)
             End With
         End Sub
@@ -349,7 +349,8 @@ Namespace Bizkaia.Pasarela
                     ContadorUNIONs = .ObtenerUltimoValorContadorUNIONs()
                 End If
 
-                ContadorJUMPs = .ObtenerUltimoValorJUMPs
+                ' Recuperamos los últimos valores de Contadores para los siguientes Trámites a Tratar
+                .ObtenerUltimosValoresContadoresTramiteTecnico(ContadorReferencias, ContadorJUMPs, ContadorPasosInicializacion)
             End With
         End Sub
 

@@ -81,10 +81,13 @@
         ' Tipo de Firma
         Friend Const TIPO_FIRMA_PROPIA As String = "PROPIA"
         Friend Const TIPO_FIRMA_PROPIA_Y_NIVELES As String = "PROPIA+NIVELES"
+        Friend Const TIPO_FIRMA_PROPIA_Y_PREDEFINIDA As String = "PROPIA+PREDEFINIDA"
+        Friend Const TIPO_FIRMA_PROPIA_Y_CIRCUITO_ARTEZ As String = "PROPIA+CIRCUITO-ARTEZ"
         Friend Const TIPO_FIRMA_PREDEFINIDA As String = "PREDEFINIDA"
         Friend Const TIPO_FIRMA_NIVELES As String = "NIVELES"
         Friend Const TIPO_FIRMA_CSV_ORGANICO As String = "CSVORGANICO"
         Friend Const TIPO_FIRMA_ADHOCK As String = "ADHOCK"
+        Friend Const TIPO_FIRMA_CIRCUITO_ARTEZ As String = "CIRCUITO-ARTEZ"
         Friend Const TIPO_FIRMA_DEDUCIDA_EJECUCION As String = "DEDUCIDA EN EJECUCION"
 
         ' Condiciones para la Acción de Motor IF

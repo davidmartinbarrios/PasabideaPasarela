@@ -312,8 +312,8 @@ procFin:
 		'UPGRADE_ISSUE: Screen property Screen.MousePointer does not support custom mousepointers. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="45116EAB-7060-405E-8ABE-9DBB40DC2E86"'
 		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 		System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
-		frmMDI.SysTray.set_TrayTip("Selección de procedimiento")
-		Me.Tree.Visible = True
+        'frmMDI.SysTray.set_TrayTip("Selección de procedimiento")
+        Me.Tree.Visible = True
 		Me.lstProcP.Visible = False
 		InitTree()
 		bTree = True

@@ -174,8 +174,17 @@ Namespace Bizkaia.Pasarela
         <XmlEnum("PROPIA")>
         Propia
 
+        <XmlEnum("CIRCUITO-ARTEZ")>
+        Circuito_ARTEZ
+
         <XmlEnum("PROPIA+NIVELES")>
         Propia_Y_Niveles
+
+        <XmlEnum("PROPIA+PREDEFINIDA")>
+        Propia_Y_Predefinida
+
+        <XmlEnum("PROPIA+CIRCUITO-ARTEZ")>
+        Propia_Y_Circuito_ARTEZ
 
         <XmlEnum("DEDUCIDA-EJECUCION")>
         Deducida_Ejecucion

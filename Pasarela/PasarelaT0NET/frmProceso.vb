@@ -25284,10 +25284,10 @@ Err_Renamed:
 		conGene = Nothing
 		conGene = New ADODB.Connection
 		ComprobarConexion(conGene, ReadIniFile(INIFile, "GENERALES" & strFamil, "Connection"))
-		'UPGRADE_WARNING: Couldn't resolve default property of object frmMDI.ImageList1.ListImages. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
-        frmMDI.SysTray.set_TrayIcon(frmMDI.ImageList1.Image) '.ListImages(1).Picture)
-		
-		sSQL = "SELECT * FROM PROCESOS_PENDIENTES WHERE USERID='" & strUserId & "' and (FINALIZADO <>'S' and FINALIZADO <> 'C') order by NOMBRE_CM"
+        'UPGRADE_WARNING: Couldn't resolve default property of object frmMDI.ImageList1.ListImages. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6A50421D-15FE-4896-8A1B-2EC21E9037B2"'
+        'frmMDI.SysTray.set_TrayIcon(frmMDI.ImageList1.Image) '.ListImages(1).Picture)
+
+        sSQL = "SELECT * FROM PROCESOS_PENDIENTES WHERE USERID='" & strUserId & "' and (FINALIZADO <>'S' and FINALIZADO <> 'C') order by NOMBRE_CM"
 		'************************
 		rstProcPend = mfRecordset(conPasarela, sSQL)
 		While Not rstProcPend.EOF

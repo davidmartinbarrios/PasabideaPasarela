@@ -2,6 +2,9 @@
 
 Namespace Bizkaia.Pasarela
     Public NotInheritable Class DatosResolucion
+        <XmlElement("Tipo")>
+        Public Property TipoAcuerdo As String
+
         <XmlElement("FechaAcuerdo")>
         Public Property FechaAcuerdo As String
 

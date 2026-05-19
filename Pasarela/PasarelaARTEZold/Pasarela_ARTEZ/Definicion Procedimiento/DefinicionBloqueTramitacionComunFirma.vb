@@ -44,6 +44,9 @@ Namespace Bizkaia.Pasarela
         <XmlElement("DatosFirmaFlujoAdHock", IsNullable:=True)>
         Public Property DatosFirmaFlujoAdHock As DatosFirmaFlujoAdHock
 
+        <XmlElement("DatosFirmaCircuitoARTEZ", IsNullable:=True)>
+        Public Property DatosFirmaCircuitoARTEZ As DatosFirmaCircuitoARTEZ
+
         <XmlElement("DatosFirmaDeducidaEjecucion", IsNullable:=True)>
         Public Property DatosFirmaDeducidaEjecucion As DatosFirmaDeducidaEjecucion
 
@@ -85,6 +88,20 @@ Namespace Bizkaia.Pasarela
                     ' Validamos los Datos Báscios para la Firma por Niveles
                     ValidarDatosBasicosFirmaFlujoNiveles(nombreBloque)
 
+                Case TipoFirma.Propia_Y_Predefinida
+                    ' Validamos los Datos Básicos para la Firma Propia
+                    ValidarDatosBasicosFirmaPropia(nombreBloque)
+
+                    ' Validamos los Datos Básicos para la Firma Predefinida
+                    ValidarDatosBasicosFirmaFlujoPredefinido(nombreBloque)
+
+                Case TipoFirma.Propia_Y_Circuito_ARTEZ
+                    ' Validamos los Datos Básicos para la Firma Propia
+                    ValidarDatosBasicosFirmaPropia(nombreBloque)
+
+                    ' Validamos los Datos Básicos para la Firma con Circuito de ARTEZ
+                    ValidarDatosBasicosFirmaCircuitoARTEZ(nombreBloque)
+
                 Case TipoFirma.Predefinida
                     ' Validamos los Datos Básicos para la Firma Predefinida
                     ValidarDatosBasicosFirmaFlujoPredefinido(nombreBloque)
@@ -100,6 +117,10 @@ Namespace Bizkaia.Pasarela
                 Case TipoFirma.AdHock
                     ' Validamos los Datos Báscios para la Firma Ad-Hock
                     ValidarDatosBasicosFirmaFlujoAdHock(nombreBloque)
+
+                Case TipoFirma.Circuito_ARTEZ
+                    ' Validamos los Datos Básicos para la Firma con Circuito de ARTEZ
+                    ValidarDatosBasicosFirmaCircuitoARTEZ(nombreBloque)
 
                 Case TipoFirma.Deducida_Ejecucion
                     ' Validamos los Datos Báscios para la Firma Deducida en Ejecución
@@ -198,8 +219,8 @@ Namespace Bizkaia.Pasarela
             ElseIf String.IsNullOrEmpty(DatosFirmaCSVOrganico.Idnt_TramiteFirma) Then
                 Throw New Exception(String.Format("El Bloque de Tramitación Común de Firma '{0}' de Tipo '{1}' no tiene informado el Identificador del Trámite de Firma.", nombrebloque, ObtenerDescripcionTipoFirma()))
 
-            ElseIf String.IsNullOrEmpty(DatosFirmaCSVOrganico.NivelOrganico) AndAlso String.IsNullOrEmpty(DatosFirmaCSVOrganico.Politica) Then
-                Throw New Exception(String.Format("El Bloque de Tramitación Común de Firma '{0}' de Tipo '{1}' no tiene informado el Nivel de Firma o la Política de Firma.", nombrebloque, ObtenerDescripcionTipoFirma()))
+                'ElseIf String.IsNullOrEmpty(DatosFirmaCSVOrganico.NivelOrganico) AndAlso String.IsNullOrEmpty(DatosFirmaCSVOrganico.Politica) Then
+                '    Throw New Exception(String.Format("El Bloque de Tramitación Común de Firma '{0}' de Tipo '{1}' no tiene informado el Nivel de Firma o la Política de Firma.", nombrebloque, ObtenerDescripcionTipoFirma()))
             End If
         End Sub
 
@@ -218,6 +239,28 @@ Namespace Bizkaia.Pasarela
             Else
                 If String.IsNullOrEmpty(SolicitudFirmaARTEZ) AndAlso String.IsNullOrEmpty(DatosFirmaFlujoAdHock.Idnt_TramiteSeleccionFirmantes) Then
                     Throw New Exception(String.Format("El Bloque de Tramitación Común de Firma '{0}' de Tipo '{1}' no tiene informado el Identificador del Trámite de Selección de Firmantes.", nombrebloque, ObtenerDescripcionTipoFirma()))
+                End If
+            End If
+
+            ' Validamos si tenemos informado el grupo con los datos para la Asignación de Trámites Manuales
+            ValidarDatosBasicosResponsablesTramitesManuales(nombrebloque)
+        End Sub
+
+        Private Sub ValidarDatosBasicosFirmaCircuitoARTEZ(nombrebloque As String)
+            If IsNothing(DatosFirmaCircuitoARTEZ) Then
+                Throw New Exception(String.Format("El Bloque de Tramitación Común de Firma '{0}' de Tipo '{1}' no tiene informado el Bloque 'DatosFirmaCircuitoARTEZ' con los datos para la Firma con un Circuito de ARTEZ.",
+                                                  nombrebloque,
+                                                  ObtenerDescripcionTipoFirma()))
+
+            ElseIf String.IsNullOrEmpty(DatosFirmaCircuitoARTEZ.Idnt_TramiteFirma) Then
+                Throw New Exception(String.Format("El Bloque de Tramitación Común de Firma '{0}' de Tipo '{1}' no tiene informado el Identificador del Trámite de Firma.", nombrebloque, ObtenerDescripcionTipoFirma()))
+
+            ElseIf String.IsNullOrEmpty(DatosFirmaCircuitoARTEZ.Idnt_TramiteRevisionRechazoFirma) Then
+                Throw New Exception(String.Format("El Bloque de Tramitación Común de Firma '{0}' de Tipo '{1}' no tiene informado el Identificador del Trámite de Rechazo de Firma.", nombrebloque, ObtenerDescripcionTipoFirma()))
+
+            Else
+                If String.IsNullOrEmpty(DatosFirmaCircuitoARTEZ.CircuitoARTEZ) Then
+                    Throw New Exception(String.Format("El Bloque de Tramitación Común de Firma '{0}' de Tipo '{1}' no tiene informado el Identificador del Circuito de Firma de ARTEZ.", nombrebloque, ObtenerDescripcionTipoFirma()))
                 End If
             End If
 
@@ -276,6 +319,12 @@ Namespace Bizkaia.Pasarela
                 Case TipoFirma.Propia_Y_Niveles
                     descripcionTipoFirma = Constantes.TIPO_FIRMA_PROPIA_Y_NIVELES
 
+                Case TipoFirma.Propia_Y_Predefinida
+                    descripcionTipoFirma = Constantes.TIPO_FIRMA_PROPIA_Y_PREDEFINIDA
+
+                Case TipoFirma.Propia_Y_Circuito_ARTEZ
+                    descripcionTipoFirma = Constantes.TIPO_FIRMA_PROPIA_Y_CIRCUITO_ARTEZ
+
                 Case TipoFirma.Predefinida
                     descripcionTipoFirma = Constantes.TIPO_FIRMA_PREDEFINIDA
 
@@ -287,6 +336,9 @@ Namespace Bizkaia.Pasarela
 
                 Case TipoFirma.AdHock
                     descripcionTipoFirma = Constantes.TIPO_FIRMA_ADHOCK
+
+                Case TipoFirma.Circuito_ARTEZ
+                    descripcionTipoFirma = Constantes.TIPO_FIRMA_CIRCUITO_ARTEZ
 
                 Case TipoFirma.Deducida_Ejecucion
                     descripcionTipoFirma = Constantes.TIPO_FIRMA_DEDUCIDA_EJECUCION
@@ -309,77 +361,6 @@ Namespace Bizkaia.Pasarela
 
         Private Function ObtenerValorParametroSolicitudFirmaARTEZ() As String
             Return ObtenerValorParaParametro(SolicitudFirmaARTEZ)
-        End Function
-
-        Private Function ObtenerIdentificadorTramiteFirma() As String
-            Dim identificadorTramiteFirma As String = String.Empty
-
-            Select Case TipoFirma
-                Case TipoFirma.Predefinida
-                    identificadorTramiteFirma = DatosFirmaFlujoPredefinida.Idnt_TramiteFirma
-
-                Case TipoFirma.Niveles, TipoFirma.Propia_Y_Niveles
-                    identificadorTramiteFirma = DatosFirmaFlujoNiveles.Idnt_TramiteFirma
-
-                Case TipoFirma.CSVOrganico
-                    identificadorTramiteFirma = DatosFirmaCSVOrganico.Idnt_TramiteFirma
-
-                Case TipoFirma.AdHock
-                    identificadorTramiteFirma = DatosFirmaFlujoAdHock.Idnt_TramiteFirma
-
-                Case Else
-                    identificadorTramiteFirma = String.Empty
-            End Select
-
-            Return identificadorTramiteFirma
-        End Function
-
-        Private Function ObtenerIdentificadorTramiteRechazoFirma() As String
-            Dim identificadorTramiteRechazoFirma As String = String.Empty
-
-            Select Case TipoFirma
-                Case TipoFirma.Predefinida
-                    identificadorTramiteRechazoFirma = DatosFirmaFlujoPredefinida.Idnt_TramiteRevisionRechazoFirma
-
-                Case TipoFirma.Niveles, TipoFirma.Propia_Y_Niveles
-                    identificadorTramiteRechazoFirma = DatosFirmaFlujoNiveles.Idnt_TramiteRevisionRechazoFirma
-
-                Case TipoFirma.AdHock
-                    identificadorTramiteRechazoFirma = DatosFirmaFlujoAdHock.Idnt_TramiteRevisionRechazoFirma
-
-                Case Else
-                    identificadorTramiteRechazoFirma = String.Empty
-            End Select
-
-            Return identificadorTramiteRechazoFirma
-        End Function
-
-        Private Function ObtenerIdentificadorTramiteFirmaPropia() As String
-            Dim identificadorTramiteFirmaPropia As String = String.Empty
-
-            Select Case TipoFirma
-                Case TipoFirma.Propia, TipoFirma.Propia_Y_Niveles
-                    identificadorTramiteFirmaPropia = If(IsNothing(DatosFirmaPropia), String.Empty, DatosFirmaPropia.Idnt_TramiteFirmaPropia)
-
-                Case Else
-                    identificadorTramiteFirmaPropia = String.Empty
-            End Select
-
-            Return identificadorTramiteFirmaPropia
-        End Function
-
-        Private Function ObtenerIdentificadorTramiteSeleccionFirmantes() As String
-            Dim identificadorTramiteSeleccionFirmantes As String = String.Empty
-
-            Select Case TipoFirma
-                Case TipoFirma.AdHock
-                    identificadorTramiteSeleccionFirmantes = If(IsNothing(DatosFirmaFlujoAdHock), String.Empty, DatosFirmaFlujoAdHock.Idnt_TramiteSeleccionFirmantes)
-
-                Case Else
-                    identificadorTramiteSeleccionFirmantes = String.Empty
-            End Select
-
-            Return identificadorTramiteSeleccionFirmantes
         End Function
 
         Private Function ObtenerValorVariableFechaFirma() As String
@@ -457,6 +438,7 @@ Namespace Bizkaia.Pasarela
                             {"@DOCUMENTO_IN", documento},
                             {"@TIPO_DOCUMENTO_IN", tipoDocumento},
                             {"@SOLICITUD_FIRMA_ARTEZ_IN", String.Empty},
+                            {"@IDNT_CIRCUITO_ARTEZ_IN", String.Empty},
                             {"@IDNT_FLUJO_FK_IN", ObtenerValorParaParametro(.FlujoFK)},
                             {"@IDNT_FLUJO_NIVELES_FK_IN", String.Empty},
                             {"@ORGANICO_FIRMA_IN", String.Empty},
@@ -491,6 +473,7 @@ Namespace Bizkaia.Pasarela
                             {"@DOCUMENTO_IN", documento},
                             {"@TIPO_DOCUMENTO_IN", tipoDocumento},
                             {"@SOLICITUD_FIRMA_ARTEZ_IN", ObtenerValorParametroSolicitudFirmaARTEZ()},
+                            {"@IDNT_CIRCUITO_ARTEZ_IN", String.Empty},
                             {"@IDNT_FLUJO_FK_IN", String.Empty},
                             {"@IDNT_FLUJO_NIVELES_FK_IN", String.Empty},
                             {"@ORGANICO_FIRMA_IN", ObtenerValorParaParametro(.Organico)},
@@ -525,10 +508,81 @@ Namespace Bizkaia.Pasarela
                             {"@DOCUMENTO_IN", documento},
                             {"@TIPO_DOCUMENTO_IN", tipoDocumento},
                             {"@SOLICITUD_FIRMA_ARTEZ_IN", String.Empty},
+                            {"@IDNT_CIRCUITO_ARTEZ_IN", String.Empty},
                             {"@IDNT_FLUJO_FK_IN", String.Empty},
                             {"@IDNT_FLUJO_NIVELES_FK_IN", ObtenerValorParaParametro(.FlujoFK)},
                             {"@ORGANICO_FIRMA_IN", ObtenerValorParaParametro(.Organico)},
                             {"@TIPO_SELLO_IN", ObtenerValorParaParametro(.TipoSello)},
+                            {"@NIVEL_ORGANICO_IN", String.Empty},
+                            {"@POLITICA_IN", String.Empty},
+                            {"@TIPO_ACUERDO_RA_IN", tipoAcuerdoRA},
+                            {"@CODIGO_ASUNTO_RA_IN", codigoAsuntoRA},
+                            {"@RESPUESTA_FK_OUT", VariableRespuestaFK},
+                            {"@FECHA_FIRMA_OUT", ObtenerValorVariableFechaFirma()},
+                            {"@DOCUMENTO_FIRMADO_OUT", nombreVariableDocumentoFirmado},
+                            {"@FECHA_ACUERDO_OUT", ObtenerValorVariableFechaAcuerdo()},
+                            {"@ANIO_ACUERDO_OUT", ObtenerValorVariableAnioAcuerdo()},
+                            {"@NUMERO_ACUERDO_OUT", ObtenerValorVariableNumeroAcuerdo()}
+                        }
+                    End With
+
+                Case TipoFirma.Circuito_ARTEZ
+                    With DatosFirmaCircuitoARTEZ
+                        parametrosLlamada = New Dictionary(Of String, String) From {
+                            {"@DOC_FIR_FUERA_ARTEZ_IN", ObtenerValorParaParametro(DocumentoFirmadoFueraARTEZ)},
+                            {"@TIPO_FIRMA_IN", Constantes.TIPO_FIRMA_CIRCUITO_ARTEZ},
+                            {"@TRAM_FIRMA_IN", .Idnt_TramiteFirma},
+                            {"@TRAM_REV_RECHAZO_IN", .Idnt_TramiteRevisionRechazoFirma},
+                            {"@TRAM_FIRMA_PROPIA_IN", String.Empty},
+                            {"@TRAM_SEL_FIRMANTES_IN", String.Empty},
+                            {"@MODO_CREACION_TRAM_MA_IN", modoCreacion},
+                            {"@OBSERVACIONES_TRAM_MA_IN", observaciones},
+                            {"@SF_TRAM_MANUALES_IN", sistemaFuncionalTramiteRevisionRechazoFirma},
+                            {"@GU_TRAM_MANUALES_IN", grupoUsuariosTramiteRevisionRechazoFirma},
+                            {"@US_TRAM_MANUALES_IN", usuarioTramiteRevisionRechazoFirma},
+                            {"@DOCUMENTO_IN", documento},
+                            {"@TIPO_DOCUMENTO_IN", tipoDocumento},
+                            {"@SOLICITUD_FIRMA_ARTEZ_IN", String.Empty},
+                            {"@IDNT_CIRCUITO_ARTEZ_IN", ObtenerValorParaParametro(.CircuitoARTEZ)},
+                            {"@IDNT_FLUJO_FK_IN", String.Empty},
+                            {"@IDNT_FLUJO_NIVELES_FK_IN", String.Empty},
+                            {"@ORGANICO_FIRMA_IN", String.Empty},
+                            {"@TIPO_SELLO_IN", String.Empty},
+                            {"@NIVEL_ORGANICO_IN", String.Empty},
+                            {"@POLITICA_IN", String.Empty},
+                            {"@TIPO_ACUERDO_RA_IN", tipoAcuerdoRA},
+                            {"@CODIGO_ASUNTO_RA_IN", codigoAsuntoRA},
+                            {"@RESPUESTA_FK_OUT", VariableRespuestaFK},
+                            {"@FECHA_FIRMA_OUT", ObtenerValorVariableFechaFirma()},
+                            {"@DOCUMENTO_FIRMADO_OUT", nombreVariableDocumentoFirmado},
+                            {"@FECHA_ACUERDO_OUT", ObtenerValorVariableFechaAcuerdo()},
+                            {"@ANIO_ACUERDO_OUT", ObtenerValorVariableAnioAcuerdo()},
+                            {"@NUMERO_ACUERDO_OUT", ObtenerValorVariableNumeroAcuerdo()}
+                        }
+                    End With
+
+                Case TipoFirma.AdHock
+                    With DatosFirmaFlujoAdHock
+                        parametrosLlamada = New Dictionary(Of String, String) From {
+                            {"@DOC_FIR_FUERA_ARTEZ_IN", ObtenerValorParaParametro(DocumentoFirmadoFueraARTEZ)},
+                            {"@TIPO_FIRMA_IN", Constantes.TIPO_FIRMA_ADHOCK},
+                            {"@TRAM_FIRMA_IN", .Idnt_TramiteFirma},
+                            {"@TRAM_REV_RECHAZO_IN", .Idnt_TramiteRevisionRechazoFirma},
+                            {"@TRAM_FIRMA_PROPIA_IN", String.Empty},
+                            {"@TRAM_SEL_FIRMANTES_IN", .Idnt_TramiteSeleccionFirmantes},
+                            {"@MODO_CREACION_TRAM_MA_IN", modoCreacion},
+                            {"@OBSERVACIONES_TRAM_MA_IN", observaciones},
+                            {"@SF_TRAM_MANUALES_IN", sistemaFuncionalTramiteRevisionRechazoFirma},
+                            {"@GU_TRAM_MANUALES_IN", grupoUsuariosTramiteRevisionRechazoFirma},
+                            {"@US_TRAM_MANUALES_IN", usuarioTramiteRevisionRechazoFirma},
+                            {"@DOCUMENTO_IN", documento},
+                            {"@TIPO_DOCUMENTO_IN", tipoDocumento},
+                            {"@SOLICITUD_FIRMA_ARTEZ_IN", ObtenerValorParametroSolicitudFirmaARTEZ()},
+                            {"@IDNT_CIRCUITO_ARTEZ_IN", String.Empty},
+                            {"@IDNT_FLUJO_FK_IN", String.Empty},
+                            {"@IDNT_FLUJO_NIVELES_FK_IN", String.Empty},
+                            {"@ORGANICO_FIRMA_IN", String.Empty},
+                            {"@TIPO_SELLO_IN", String.Empty},
                             {"@NIVEL_ORGANICO_IN", String.Empty},
                             {"@POLITICA_IN", String.Empty},
                             {"@TIPO_ACUERDO_RA_IN", tipoAcuerdoRA},
@@ -559,6 +613,7 @@ Namespace Bizkaia.Pasarela
                             {"@DOCUMENTO_IN", documento},
                             {"@TIPO_DOCUMENTO_IN", tipoDocumento},
                             {"@SOLICITUD_FIRMA_ARTEZ_IN", ObtenerValorParametroSolicitudFirmaARTEZ()},
+                            {"@IDNT_CIRCUITO_ARTEZ_IN", String.Empty},
                             {"@IDNT_FLUJO_FK_IN", String.Empty},
                             {"@IDNT_FLUJO_NIVELES_FK_IN", String.Empty},
                             {"@ORGANICO_FIRMA_IN", String.Empty},
@@ -592,6 +647,7 @@ Namespace Bizkaia.Pasarela
                         {"@DOCUMENTO_IN", documento},
                         {"@TIPO_DOCUMENTO_IN", tipoDocumento},
                         {"@SOLICITUD_FIRMA_ARTEZ_IN", ObtenerValorParametroSolicitudFirmaARTEZ()},
+                        {"@IDNT_CIRCUITO_ARTEZ_IN", String.Empty},
                         {"@IDNT_FLUJO_FK_IN", String.Empty},
                         {"@IDNT_FLUJO_NIVELES_FK_IN", ObtenerValorParaParametro(DatosFirmaFlujoNiveles.FlujoFK)},
                         {"@ORGANICO_FIRMA_IN", ObtenerValorParaParametro(DatosFirmaFlujoNiveles.Organico)},
@@ -608,15 +664,15 @@ Namespace Bizkaia.Pasarela
                         {"@NUMERO_ACUERDO_OUT", ObtenerValorVariableNumeroAcuerdo()}
                     }
 
-                Case TipoFirma.AdHock
-                    With DatosFirmaFlujoAdHock
+                Case TipoFirma.Propia_Y_Predefinida
+                    With DatosFirmaFlujoPredefinida
                         parametrosLlamada = New Dictionary(Of String, String) From {
                             {"@DOC_FIR_FUERA_ARTEZ_IN", ObtenerValorParaParametro(DocumentoFirmadoFueraARTEZ)},
-                            {"@TIPO_FIRMA_IN", Constantes.TIPO_FIRMA_ADHOCK},
+                            {"@TIPO_FIRMA_IN", Constantes.TIPO_FIRMA_PROPIA_Y_PREDEFINIDA},
                             {"@TRAM_FIRMA_IN", .Idnt_TramiteFirma},
                             {"@TRAM_REV_RECHAZO_IN", .Idnt_TramiteRevisionRechazoFirma},
-                            {"@TRAM_FIRMA_PROPIA_IN", String.Empty},
-                            {"@TRAM_SEL_FIRMANTES_IN", .Idnt_TramiteSeleccionFirmantes},
+                            {"@TRAM_FIRMA_PROPIA_IN", DatosFirmaPropia.Idnt_TramiteFirmaPropia},
+                            {"@TRAM_SEL_FIRMANTES_IN", String.Empty},
                             {"@MODO_CREACION_TRAM_MA_IN", modoCreacion},
                             {"@OBSERVACIONES_TRAM_MA_IN", observaciones},
                             {"@SF_TRAM_MANUALES_IN", sistemaFuncionalTramiteRevisionRechazoFirma},
@@ -625,6 +681,42 @@ Namespace Bizkaia.Pasarela
                             {"@DOCUMENTO_IN", documento},
                             {"@TIPO_DOCUMENTO_IN", tipoDocumento},
                             {"@SOLICITUD_FIRMA_ARTEZ_IN", ObtenerValorParametroSolicitudFirmaARTEZ()},
+                            {"@IDNT_CIRCUITO_ARTEZ_IN", String.Empty},
+                            {"@IDNT_FLUJO_FK_IN", ObtenerValorParaParametro(.FlujoFK)},
+                            {"@IDNT_FLUJO_NIVELES_FK_IN", String.Empty},
+                            {"@ORGANICO_FIRMA_IN", String.Empty},
+                            {"@TIPO_SELLO_IN", String.Empty},
+                            {"@NIVEL_ORGANICO_IN", String.Empty},
+                            {"@POLITICA_IN", String.Empty},
+                            {"@TIPO_ACUERDO_RA_IN", tipoAcuerdoRA},
+                            {"@CODIGO_ASUNTO_RA_IN", codigoAsuntoRA},
+                            {"@RESPUESTA_FK_OUT", VariableRespuestaFK},
+                            {"@FECHA_FIRMA_OUT", ObtenerValorVariableFechaFirma()},
+                            {"@DOCUMENTO_FIRMADO_OUT", nombreVariableDocumentoFirmado},
+                            {"@FECHA_ACUERDO_OUT", ObtenerValorVariableFechaAcuerdo()},
+                            {"@ANIO_ACUERDO_OUT", ObtenerValorVariableAnioAcuerdo()},
+                            {"@NUMERO_ACUERDO_OUT", ObtenerValorVariableNumeroAcuerdo()}
+                        }
+                    End With
+
+                Case TipoFirma.Propia_Y_Circuito_ARTEZ
+                    With DatosFirmaCircuitoARTEZ
+                        parametrosLlamada = New Dictionary(Of String, String) From {
+                            {"@DOC_FIR_FUERA_ARTEZ_IN", ObtenerValorParaParametro(DocumentoFirmadoFueraARTEZ)},
+                            {"@TIPO_FIRMA_IN", Constantes.TIPO_FIRMA_CIRCUITO_ARTEZ},
+                            {"@TRAM_FIRMA_IN", .Idnt_TramiteFirma},
+                            {"@TRAM_REV_RECHAZO_IN", .Idnt_TramiteRevisionRechazoFirma},
+                            {"@TRAM_FIRMA_PROPIA_IN", DatosFirmaPropia.Idnt_TramiteFirmaPropia},
+                            {"@TRAM_SEL_FIRMANTES_IN", String.Empty},
+                            {"@MODO_CREACION_TRAM_MA_IN", modoCreacion},
+                            {"@OBSERVACIONES_TRAM_MA_IN", observaciones},
+                            {"@SF_TRAM_MANUALES_IN", sistemaFuncionalTramiteRevisionRechazoFirma},
+                            {"@GU_TRAM_MANUALES_IN", grupoUsuariosTramiteRevisionRechazoFirma},
+                            {"@US_TRAM_MANUALES_IN", usuarioTramiteRevisionRechazoFirma},
+                            {"@DOCUMENTO_IN", documento},
+                            {"@TIPO_DOCUMENTO_IN", tipoDocumento},
+                            {"@SOLICITUD_FIRMA_ARTEZ_IN", String.Empty},
+                            {"@IDNT_CIRCUITO_ARTEZ_IN", ObtenerValorParaParametro(.CircuitoARTEZ)},
                             {"@IDNT_FLUJO_FK_IN", String.Empty},
                             {"@IDNT_FLUJO_NIVELES_FK_IN", String.Empty},
                             {"@ORGANICO_FIRMA_IN", String.Empty},
@@ -659,6 +751,7 @@ Namespace Bizkaia.Pasarela
                             {"@DOCUMENTO_IN", documento},
                             {"@TIPO_DOCUMENTO_IN", tipoDocumento},
                             {"@SOLICITUD_FIRMA_ARTEZ_IN", ObtenerValorParametroSolicitudFirmaARTEZ()},
+                            {"@IDNT_CIRCUITO_ARTEZ_IN", ObtenerValorParaParametro(.CircuitoARTEZ)},
                             {"@IDNT_FLUJO_FK_IN", ObtenerValorParaParametro(.FlujoFK_Predefinido)},
                             {"@IDNT_FLUJO_NIVELES_FK_IN", ObtenerValorParaParametro(.FlujoFK_Niveles)},
                             {"@ORGANICO_FIRMA_IN", ObtenerValorParaParametro(.Organico)},

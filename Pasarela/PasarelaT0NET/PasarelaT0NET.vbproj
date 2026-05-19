@@ -187,13 +187,6 @@
       <VersionMinor>0</VersionMinor>
       <WrapperTool>primary</WrapperTool>
     </COMReference>
-    <COMReference Include="SysTrayCtl">
-      <Guid>{9E7C1E18-807C-11D2-8745-00C04F844793}</Guid>
-      <Lcid>0</Lcid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <WrapperTool>tlbimp</WrapperTool>
-    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -310,6 +303,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMDI.resX">
       <DependentUpon>frmMDI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMigrar.resX">
       <DependentUpon>frmMigrar.vb</DependentUpon>

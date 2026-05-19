@@ -80,9 +80,9 @@ procFin:
 		bMinimizado = True
 		frmMDI.Icon = Me.Icon
 		frmMDI.Text = Me.Text
-		frmMDI.SysTray.set_TrayTip("Programar")
-		
-	End Sub
+        'frmMDI.SysTray.set_TrayTip("Programar")
+
+    End Sub
 	
 	'UPGRADE_WARNING: Event optProg.CheckedChanged may fire when form is initialized. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="88B12AE1-6DE0-48A0-86F1-60C0686C026A"'
 	Private Sub optProg_CheckedChanged(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles optProg.CheckedChanged
