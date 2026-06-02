@@ -1,5 +1,5 @@
 ﻿using Lantik.Pasabidea.Core.Data;
-using Lantik.Pasabidea.Core.Entities.DTOs;
+using Lantik.Pasabidea.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;

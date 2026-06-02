@@ -57,14 +57,29 @@ Friend Class frmConf
 	
 	
 	Private Sub cmdCancelar_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdCancelar.Click
-		
-		Dim sSQL As String
-		sSQL = "DELETE PROCESOS_PENDIENTES WHERE USERID='" & strUserId & "'"
-		'****************************
-		mfExecute(conPasarela, sSQL)
+
+		'Dim sSQL As String
+		'sSQL = "DELETE PROCESOS_PENDIENTES WHERE USERID='" & strUserId & "'"
+		''****************************
+		'mfExecute(conPasarela, sSQL)
+		'Me.Close()
+		'frmSelProc.Show()
+
+
+		'Dim sSQL As String
+		'sSQL = "DELETE PROCESOS_PENDIENTES WHERE USERID='" & strUserId & "'"
+		'mfExecute(conPasarela, sSQL)
+		Dim padre = Me.MdiParent
+		Dim frm As New frmSelProc()
+		frm.MdiParent = padre
+		frm.StartPosition = FormStartPosition.Manual
+		frm.Location = New Point(0, 0)
+		frm.WindowState = FormWindowState.Maximized
+		frm.Show()
+		frm.BringToFront()
 		Me.Close()
-		frmSelProc.Show()
-		
+
+
 	End Sub
 	
 	Private Sub cmdComenzar_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdComenzar.Click

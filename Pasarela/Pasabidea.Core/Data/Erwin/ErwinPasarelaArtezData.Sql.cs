@@ -7,7 +7,48 @@ namespace Lantik.Pasabidea.Core.Data
     {
         private static class Sql
         {
-            public const string PropiedadObjetoDiagrama = @"
+            /// <summary>
+            /// @MODEL_NAME
+            /// @DI_ID
+            /// </summary>
+            public const string LeerPropiedadDescripcionProcedimiento = @"
+SELECT
+    D.DI_NAME AS Procedimiento,
+    D.DI_ID,
+    N'Descripción' AS Propiedad,
+    D..DI_DESCRIPTION AS Valor
+FROM DIAGRAM D
+WHERE D.MODEL_NAME = @MODEL_NAME
+  AND D.DI_ID = @DI_ID;";
+
+
+            /// <summary>
+            /// @MODEL_NAME
+            /// @DI_ID
+            /// @PROPIEDAD ej. "Descripción Euskera"
+            /// </summary>
+            public const string LeerPropiedadMemoProcedimiento = @"
+SELECT
+    D.DI_NAME AS Procedimiento,
+    D.DI_ID,
+    PT.PPT_NAME AS Propiedad,
+    UDM.UDM_TEXT AS Valor
+FROM USERDEFINED_MEMO UDM
+JOIN DIAGRAM D
+    ON D.MODEL_NAME = UDM.MODEL_NAME
+   AND D.DI_ID      = UDM.ANO_ID
+JOIN CW_PROP_TYPE PT
+    ON PT.MODEL_NAME = UDM.MODEL_NAME
+   AND PT.PPT_ID     = UDM.PPT_ID
+   AND PT.OT_ID      = UDM.ANO_TABNR
+WHERE UDM.MODEL_NAME = @MODEL_NAME
+  AND UDM.ANO_ID     = @DI_ID
+  AND PT.PPT_NAME    = @PROPIEDAD;";
+        
+
+
+
+        public const string PropiedadObjetoDiagrama = @"
 SELECT TOP (1)
     LTRIM(RTRIM(
         COALESCE(

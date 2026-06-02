@@ -1,9 +1,12 @@
 ﻿using Lantik.Pasabidea;
+using Lantik.Pasabidea.Core.Business;
 using Lantik.Pasarela.Application.AOs;
 using Lantik.Pasarela.Application.DTOs;
 using Lantik.Pasarela.Helpers;
 using Lantik.Pasarela.Pasabidea.VO;
 using Microsoft.Web.WebView2.Core;
+using Pasabidea.Core.Entities.POCOs;
+using Pasabidea.Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -31,6 +34,8 @@ namespace Pasabidea
         {
             return new JavaScriptSerializer { MaxJsonLength = int.MaxValue };
         }
+
+        private NodoProcedimientoInfo _procedimientoSeleccionado;
 
         public MainForm()
         {
@@ -1097,7 +1102,6 @@ namespace Pasabidea
 
 
 
-
             int diId = Convert.ToInt32(txtDI_ID.Text);
 
             /// TODO: Es necesario integrar el desarrollo de Lantik.Pasarela.sqlRepository.ErwinPasarelaArtezTransformer 
@@ -1121,11 +1125,18 @@ namespace Pasabidea
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
-            
+
             // 2) A partir de esas tablas, generar el código SQL para crear la nueva versión del procedimiento almacenado en destino (DBN8POCARTEZ) y ejecutarlo allí.
 
-            var generator = new WfActionsGenerator();
 
+
+            Pasabidea.Core.Business.MugiBusiness.Generar();
+
+
+
+
+
+            /* var generator = new WfActionsGenerator();
             var result2 = await generator.GenerarWfActionsAsync(new WfActionsGenerationRequest
             {
                 Procedimiento = cmbProc.Text, //"TA999900",
@@ -1154,7 +1165,7 @@ namespace Pasabidea
                 DbInfra = "DBT0INFR",
 
 
-            });
+            });*/
         }
 
         private void cmbProc_SelectedIndexChanged(object sender, EventArgs e)
@@ -1309,17 +1320,122 @@ namespace Pasabidea
 
         private void tvwProcs_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            NodoProcedimientoInfo info = e.Node.Tag as NodoProcedimientoInfo;
+            //NodoProcedimientoInfo info = e.Node.Tag as NodoProcedimientoInfo;
+            //
+            //if (info == null || !info.EsProcedimiento)
+            //{
+            //    _diIdProcedimientoActual = null;
+            //    txtDI_ID.Text = string.Empty;
+            //    return;
+            //}
+            //
+            //_diIdProcedimientoActual = info.DiId;
+            //txtDI_ID.Text = info.DiId.ToString();
+            _procedimientoSeleccionado = e.Node.Tag as NodoProcedimientoInfo;
 
-            if (info == null || !info.EsProcedimiento)
+            if (_procedimientoSeleccionado == null || !_procedimientoSeleccionado.EsProcedimiento)
             {
+                _procedimientoSeleccionado = null;
                 _diIdProcedimientoActual = null;
                 txtDI_ID.Text = string.Empty;
                 return;
             }
 
-            _diIdProcedimientoActual = info.DiId;
-            txtDI_ID.Text = info.DiId.ToString();
+            _diIdProcedimientoActual = _procedimientoSeleccionado.DiId;
+            txtDI_ID.Text = _procedimientoSeleccionado.DiId.ToString();
+        }
+
+        private void generarXMLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (_procedimientoSeleccionado == null)
+            {
+                MessageBox.Show("Seleccione un procedimiento primero");
+                return;
+            }
+
+            //TODO:IGOR
+            var repo = new Core.Data.XML.ProcedimientoRepository();
+            var service = new Core.Business.XML.BorradorService.ProcedimientoService(repo);
+            string DescriptorProcedimientoBLT = _procedimientoSeleccionado.DiName.Substring(0, Math.Min(8, _procedimientoSeleccionado.DiName.Length));
+            string DescripcionProcedimientoBLTES = _procedimientoSeleccionado.DiName;
+            int DiID = _procedimientoSeleccionado.DiId;
+
+            var xml = service.GenerarXml();
+            
+            int resultado = service.GrabarConfiguracionBorrador(xml.ToString());
+
+            var settings = new System.Xml.XmlWriterSettings
+            {
+                OmitXmlDeclaration = true, // ✅ clave
+                Indent = true
+            };
+            string ruta = ConfigurationManager.AppSettings["RutaSalidaXml"] + DescriptorProcedimientoBLT + ".xml";
+
+            using (var writer = System.Xml.XmlWriter.Create(ruta, settings))
+            {
+                xml.Save(writer);
+            }
+
+
+            Console.WriteLine(xml);
+        }
+
+        private void generarXMLToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            if (_procedimientoSeleccionado == null)
+            {
+                MessageBox.Show("Seleccione un procedimiento primero");
+                return;
+            }
+
+            //TODO:IGOR
+            var repo = new Core.Data.XML.ProcedimientoRepository();
+            var service = new Core.Business.XML.BorradorService.ProcedimientoService(repo);
+            string DescriptorProcedimientoBLT = _procedimientoSeleccionado.DiName.Substring(0, Math.Min(8, _procedimientoSeleccionado.DiName.Length));
+            string DescripcionProcedimientoBLTES = _procedimientoSeleccionado.DiName;
+            int DiID = _procedimientoSeleccionado.DiId;
+
+            var xml = service.GenerarXml();
+
+            
+
+            var settings = new System.Xml.XmlWriterSettings
+            {
+                OmitXmlDeclaration = true, // ✅ clave
+                Indent = true
+            };
+            string ruta = ConfigurationManager.AppSettings["RutaSalidaXml"] + DescriptorProcedimientoBLT + ".xml";
+
+            using (var writer = System.Xml.XmlWriter.Create(ruta, settings))
+            {
+                xml.Save(writer);
+            }
+
+
+            Console.WriteLine(xml);
+
+
+        }
+
+        private void lanzarXMLAPAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_procedimientoSeleccionado == null)
+            {
+                MessageBox.Show("Seleccione un procedimiento primero");
+                return;
+            }
+
+            //TODO:IGOR
+            var repo = new Core.Data.XML.ProcedimientoRepository();
+            var service = new Core.Business.XML.BorradorService.ProcedimientoService(repo);
+            var xml = service.GenerarXml();
+
+            if (service.GrabarConfiguracionBorrador(xml.ToString()) == 0)
+                MessageBox.Show("XML grabado correctamente");
+            else
+                MessageBox.Show("Error al grabar el XML");
+
         }
     }
 

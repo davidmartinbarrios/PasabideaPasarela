@@ -19,21 +19,26 @@ Friend Class frmConexion
     Dim blnSalir As Boolean = False
 
 	Public Sub cmdAceptar_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdAceptar.Click
-		
-        'gsComprobarConexion(False)
-		
+
+		'gsComprobarConexion(False)
+
+
+
+
+
 	End Sub
-	
+
 	Private Sub cmdCancelar_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles cmdCancelar.Click
-		
-		Dim strSQL As String
-		strSQL = "UPDATE USUARIOS SET ACTIVO=0 WHERE USERID='" & strUserId & "'"
-		mfExecute(conPasarela, strSQL)
-		
-		End
-		
+
+		'Dim strSQL As String
+		'strSQL = "UPDATE USUARIOS SET ACTIVO=0 WHERE USERID='" & strUserId & "'"
+		'mfExecute(conPasarela, strSQL)
+		'End
+
+
+
 	End Sub
-	
+
 	Private Sub CmdSqlStringDocu_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles CmdSqlStringDocu.Click
 		On Error Resume Next
 		
@@ -117,18 +122,24 @@ Friend Class frmConexion
 		txtMsj.Text = DataLinkMsj.PromptNew
 		
 	End Sub
-	
+
 	Private Sub CmdSqlStringWord_Click(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles CmdSqlStringWord.Click
-		
+
 		On Error Resume Next
-		
+
 		Dim Cnx As String
-		
+
 		Cnx = txtConexionHid.Text
 		txtWord.Text = DataLinkWor.PromptNew
-		
+
 	End Sub
-	
+
+
+	Private Sub frmConexion_Shown()
+
+	End Sub
+
+
 	Private Sub frmConexion_Load(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Load
 
         Dim externo As Boolean = False
@@ -143,41 +154,34 @@ Friend Class frmConexion
 		DataLinkMsj = New MSDASC.DataLinks
 		DataLinkGene = New MSDASC.DataLinks
 		ConexionesBBDD()
-		mdiAncho = VB6.PixelsToTwipsX(Me.Width) + 100
-		mdiAlto = VB6.PixelsToTwipsY(Me.Height) + 400
-		bMinimizado = False
-		frmMDI.Width = VB6.TwipsToPixelsX(mdiAncho)
-		frmMDI.Height = VB6.TwipsToPixelsY(mdiAlto)
-		bMinimizado = True
+		'mdiAncho = VB6.PixelsToTwipsX(Me.Width) + 100
+		'mdiAlto = VB6.PixelsToTwipsY(Me.Height) + 400
+		'bMinimizado = False
+		'frmMDI.Width = VB6.TwipsToPixelsX(mdiAncho)
+		'frmMDI.Height = VB6.TwipsToPixelsY(mdiAlto)
+		'bMinimizado = True
+
+		'TODO ARTEZ
+		Me.Size = New Size(1200, 800)
+		Me.Location = New Point(0, 0)
+		If Me.MdiParent IsNot Nothing Then
+			Me.MdiParent.ClientSize = New Size(1250, 880)
+		End If
+
 		frmMDI.Icon = Me.Icon
 		frmMDI.Text = Me.Text
 		'UPGRADE_WARNING: App property App.EXEName has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
 		INIFile = My.Application.Info.DirectoryPath & "\" & My.Application.Info.AssemblyName & ".ini"
 		Me.Top = 0
 		Me.Left = 0
-			'UPGRADE_ISSUE: Unable to determine which constant to upgrade System.Windows.Forms.Cursors.Default to. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="B3B44E51-B5F1-4FD7-AA29-CAD31B71F487"'
-			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
-			'UPGRADE_ISSUE: Unable to determine which constant to upgrade System.Windows.Forms.Cursors.Default to. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="B3B44E51-B5F1-4FD7-AA29-CAD31B71F487"'
-			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
-			'UPGRADE_ISSUE: Unable to determine which constant to upgrade System.Windows.Forms.Cursors.Default to. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="B3B44E51-B5F1-4FD7-AA29-CAD31B71F487"'
-			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
-			'UPGRADE_ISSUE: Unable to determine which constant to upgrade System.Windows.Forms.Cursors.Default to. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="B3B44E51-B5F1-4FD7-AA29-CAD31B71F487"'
-			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
-			'UPGRADE_ISSUE: Unable to determine which constant to upgrade System.Windows.Forms.Cursors.Default to. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="B3B44E51-B5F1-4FD7-AA29-CAD31B71F487"'
-			System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default
-		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
-		System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor
 		Me.Enabled = False
+
 		blnSalir = False
 		conPasarela = New ADODB.Connection
 		If ComprobarConexion(conPasarela, ReadIniFile(INIFile, "PASARELA", "Connection")) = False Then
 			MsgBox("La cadena de conexión a Pasarela no es correcta o el servidor no se encuentra disponible. Revise el fichero INI")
 			blnSalir = True
 			Me.Enabled = True
-			'UPGRADE_ISSUE: Unable to determine which constant to upgrade vbNormal to. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="B3B44E51-B5F1-4FD7-AA29-CAD31B71F487"'
-			'UPGRADE_ISSUE: Screen property Screen.MousePointer does not support custom mousepointers. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="45116EAB-7060-405E-8ABE-9DBB40DC2E86"'
-			'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
-            System.Windows.Forms.Cursor.Current = Cursors.Arrow 'vbNormal()
 			GoTo procFin
 		End If
 		conDB2 = New ADODB.Connection
@@ -288,11 +292,27 @@ Friend Class frmConexion
 		'UPGRADE_WARNING: Screen property Screen.MousePointer has a new behavior. Click for more: 'ms-help://MS.VSCC.v90/dv_commoner/local/redirect.htm?keyword="6BA9B8D2-2A32-4B6E-8D36-44949974A5B4"'
         System.Windows.Forms.Cursor.Current = Cursors.Arrow
 		blnCon1 = True
-		Me.Close()
+		'TODO ARTEZ, ERROR: Me.Close()
 		'Inicio Jonathan Prieto 10/06/2011
 		'frmSelProc.Show 1
-		frmSelProc.Show()
+		'frmSelProc.Show()
 		'Fin Jonathan Prieto 10/06/2011
+
+		blnCon1 = True
+		Dim padre As Form = Me.MdiParent
+		Dim siguiente As New frmSelProc()
+		If padre IsNot Nothing Then
+			siguiente.MdiParent = padre
+			siguiente.StartPosition = FormStartPosition.Manual
+			siguiente.Location = New Point(0, 0)
+			siguiente.WindowState = FormWindowState.Maximized
+		End If
+		siguiente.Show()
+		siguiente.BringToFront()
+		Me.Hide()
+
+		GoTo procFin
+
 		GoTo procFin
 		
 procErr: 
@@ -333,4 +353,5 @@ procFin:
 		'Fin Jonathan Prieto 10/06/2011
 		
 	End Sub
+
 End Class

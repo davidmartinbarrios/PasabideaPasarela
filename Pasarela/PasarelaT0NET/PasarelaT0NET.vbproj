@@ -9,7 +9,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <AssemblyName>PasarelaT0NET</AssemblyName>
     <OutputType>WinExe</OutputType>
-    <StartupObject>PasarelaT0NET.frmLogin</StartupObject>
+    <StartupObject>PasarelaT0NET.TestProcesoLauncher</StartupObject>
     <AssemblyMajorVersion>6</AssemblyMajorVersion>
     <AssemblyMinorVersion>14</AssemblyMinorVersion>
     <AssemblyRevisionNumber>0</AssemblyRevisionNumber>
@@ -66,7 +66,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="adodb, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.Compatibility">
       <Name>Microsoft.VisualBasic.Compatibility</Name>
@@ -219,20 +219,6 @@
     <Compile Include="frmCalendar.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmConexion.Designer.vb">
-      <SubType>Code</SubType>
-      <DependentUpon>frmConexion.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmConexion.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmConf.Designer.vb">
-      <SubType>Code</SubType>
-      <DependentUpon>frmConf.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmConf.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="frmErrores.Designer.vb">
       <SubType>Code</SubType>
       <DependentUpon>frmErrores.vb</DependentUpon>
@@ -254,20 +240,6 @@
     <Compile Include="frmLogin.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMDI.Designer.vb">
-      <SubType>Code</SubType>
-      <DependentUpon>frmMDI.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmMDI.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmMigrar.Designer.vb">
-      <SubType>Code</SubType>
-      <DependentUpon>frmMigrar.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmMigrar.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="frmProceso.Designer.vb">
       <SubType>Code</SubType>
       <DependentUpon>frmProceso.vb</DependentUpon>
@@ -282,15 +254,29 @@
     <Compile Include="frmSelProc.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmConexion.Designer.vb">
+      <DependentUpon>frmConexion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmConf.Designer.vb">
+      <DependentUpon>frmConf.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMDI.Designer.vb">
+      <DependentUpon>frmMDI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMigrar.Designer.vb">
+      <DependentUpon>frmMigrar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TestProcesoLauncher.Designer.vb">
+      <DependentUpon>TestProcesoLauncher.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TestProcesoLauncher.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Content Include="mermaid_llamadas_tree.py" />
+    <Content Include="vb_llamadas_jerarquia.py" />
     <Content Include="WfActionsGenerator.cs" />
     <EmbeddedResource Include="frmCalendar.resX">
       <DependentUpon>frmCalendar.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmConexion.resX">
-      <DependentUpon>frmConexion.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmConf.resX">
-      <DependentUpon>frmConf.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmErrores.resX">
       <DependentUpon>frmErrores.vb</DependentUpon>
@@ -301,13 +287,6 @@
     <EmbeddedResource Include="frmLogin.resX">
       <DependentUpon>frmLogin.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMDI.resX">
-      <DependentUpon>frmMDI.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmMigrar.resX">
-      <DependentUpon>frmMigrar.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmProceso.resX">
       <DependentUpon>frmProceso.vb</DependentUpon>
     </EmbeddedResource>
@@ -316,7 +295,35 @@
     </EmbeddedResource>
     <Content Include="diagrama-precedencia-frm-Pasarela.PNG" />
     <Content Include="Pasarela.ico" />
+    <EmbeddedResource Include="frmConexion.resX">
+      <DependentUpon>frmConexion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmConf.resX">
+      <DependentUpon>frmConf.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMDI.resX">
+      <DependentUpon>frmMDI.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMigrar.resX">
+      <DependentUpon>frmMigrar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestProcesoLauncher.resx">
+      <DependentUpon>TestProcesoLauncher.vb</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
+    <Compile Include="frmConexion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConf.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMDI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMigrar.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <None Include="PasarelaT0NET.ini">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -327,6 +334,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="My Project\" />
+    <Folder Include="old\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

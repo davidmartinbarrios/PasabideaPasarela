@@ -912,4 +912,8 @@ procErr:
 procFin: 
 		
 	End Sub
+
+	Private Sub frmSelProc_Shown()
+
+	End Sub
 End Class

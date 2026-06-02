@@ -48,10 +48,27 @@
   <ItemGroup>
     <Compile Include="Business\ErwinPasarelaArtezBusiness.cs" />
     <Compile Include="Business\ModelosBusiness.cs" />
+    <Compile Include="Business\MugiBusiness.cs" />
+    <Compile Include="Business\MugiWfFlowActionBuilder.cs" />
+    <Compile Include="Business\PasarelaArtezWfFlowActionsBuilder.cs" />
+    <Compile Include="Business\PasarelaMugiBusiness.cs" />
     <Compile Include="Business\ProcedimientosBusiness.cs" />
+    <Compile Include="Business\UtilidadesCreacionMugiWfFlowActions.cs" />
+    <Compile Include="Business\XML\BorradorService.cs" />
     <Compile Include="Data\Erwin\ModelosData.cs" />
     <Compile Include="Data\Erwin\ProcedimientosData.cs" />
+    <Compile Include="Data\Mugi\MugiWfFlowActionData.cs" />
+    <Compile Include="Data\Mugi\MugiWfFlowActionsData.cs" />
+    <Compile Include="Data\Mugi\MugiWfFlowData.cs" />
+    <Compile Include="Entities\DTOs\MugiTramiteDTO.cs" />
+    <Compile Include="Entities\DTOs\MugiWfFlow.cs" />
+    <Compile Include="Entities\DTOs\MugiWfFlowAction.cs" />
+    <Compile Include="Data\sqlRepository\XMLsqlRepository.cs" />
+    <Compile Include="Data\XML\ProcedimientoRepository.cs" />
+    <Compile Include="Data\XML\XMLRepository.cs" />
     <Compile Include="Entities\DTOs\ProcedimientoDTO.cs" />
+    <Compile Include="Entities\POCOs\SP_Response.cs" />
+    <Compile Include="Entities\XML\Borrador.cs" />
     <Compile Include="Helpers\DbContext.cs" />
     <Compile Include="Helpers\DbReaderHelper.cs" />
     <Compile Include="Data\Erwin\ErwinPasarelaArtezData.cs" />
@@ -66,6 +83,7 @@
     <Compile Include="Helpers\SafeExecutor.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\TraceHelper.cs" />
+    <Compile Include="Helpers\XmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

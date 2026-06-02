@@ -23,49 +23,42 @@
     'It can be modified using the Windows Form Designer.
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-		Dim resources As System.Resources.ResourceManager = New System.Resources.ResourceManager(GetType(frmMDI))
-		Me.IsMDIContainer = True
-		Me.components = New System.ComponentModel.Container()
-		Me.ToolTip1 = New System.Windows.Forms.ToolTip(components)
-		Me.ImageList1 = New System.Windows.Forms.PictureBox
-        'Me.SysTray = New AxSysTrayCtl.AxcSysTray
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMDI))
+        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ImageList1 = New System.Windows.Forms.PictureBox()
+        CType(Me.ImageList1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-		Me.ToolTip1.Active = True
-        'CType(Me.SysTray, System.ComponentModel.ISupportInitialize).BeginInit()
+        '
+        'ImageList1
+        '
+        Me.ImageList1.BackColor = System.Drawing.SystemColors.Window
+        Me.ImageList1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.ImageList1.Cursor = System.Windows.Forms.Cursors.Default
+        Me.ImageList1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.ImageList1.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.ImageList1.Location = New System.Drawing.Point(0, 0)
+        Me.ImageList1.Name = "ImageList1"
+        Me.ImageList1.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.ImageList1.Size = New System.Drawing.Size(747, 32)
+        Me.ImageList1.TabIndex = 0
+        '
+        'frmMDI
+        '
         Me.BackColor = System.Drawing.SystemColors.AppWorkspace
-		Me.Text = "MDIForm1"
-		Me.ClientSize = New System.Drawing.Size(317, 213)
-		Me.Location = New System.Drawing.Point(4, 23)
-		Me.Icon = CType(resources.GetObject("frmMDI.Icon"), System.Drawing.Icon)
-		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-		Me.Enabled = True
-		Me.Cursor = System.Windows.Forms.Cursors.Default
-		Me.RightToLeft = System.Windows.Forms.RightToLeft.No
-		Me.WindowState = System.Windows.Forms.FormWindowState.Normal
-		Me.Name = "frmMDI"
-		Me.ImageList1.Dock = System.Windows.Forms.DockStyle.Top
-		Me.ImageList1.BackColor = System.Drawing.SystemColors.Window
-		Me.ImageList1.Size = New System.Drawing.Size(317, 32)
-		Me.ImageList1.Location = New System.Drawing.Point(0, 0)
-		Me.ImageList1.TabIndex = 0
-		Me.ImageList1.CausesValidation = True
-		Me.ImageList1.Enabled = True
-		Me.ImageList1.ForeColor = System.Drawing.SystemColors.ControlText
-		Me.ImageList1.Cursor = System.Windows.Forms.Cursors.Default
-		Me.ImageList1.RightToLeft = System.Windows.Forms.RightToLeft.No
-		Me.ImageList1.TabStop = True
-		Me.ImageList1.Visible = True
-		Me.ImageList1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Normal
-		Me.ImageList1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-		Me.ImageList1.Name = "ImageList1"
-        'SysTray.OcxState = CType(resources.GetObject("SysTray.OcxState"), System.Windows.Forms.AxHost.State)
-        'Me.SysTray.Location = New System.Drawing.Point(176, 48)
-        'Me.SysTray.Name = "SysTray"
-        Me.Controls.Add(ImageList1)
-        'Me.Controls.Add(SysTray)
-        'CType(Me.SysTray, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ClientSize = New System.Drawing.Size(747, 389)
+        Me.Controls.Add(Me.ImageList1)
+        Me.Cursor = System.Windows.Forms.Cursors.Default
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.IsMdiContainer = True
+        Me.Location = New System.Drawing.Point(4, 23)
+        Me.Name = "frmMDI"
+        Me.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "MDIForm1"
+        CType(Me.ImageList1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-		Me.PerformLayout()
-	End Sub
-#End Region 
+
+    End Sub
+#End Region
 End Class

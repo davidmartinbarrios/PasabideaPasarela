@@ -44,11 +44,11 @@ Friend Class frmMDI
 		'If Me.WindowState <> vbMinimized Then
 		If Me.WindowState <> System.Windows.Forms.FormWindowState.Minimized And Me.WindowState <> System.Windows.Forms.FormWindowState.Maximized Then
 			'fin aketza
-			
+
 			'Me.Width = mdiAncho
 			'Me.Height = mdiAlto
-			Me.Left = VB6.TwipsToPixelsX((VB6.PixelsToTwipsX(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width) - VB6.PixelsToTwipsX(Me.Width)) / 2)
-			Me.Top = VB6.TwipsToPixelsY((VB6.PixelsToTwipsY(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height) - VB6.PixelsToTwipsY(Me.Height)) / 2)
+			'Me.Left = VB6.TwipsToPixelsX((VB6.PixelsToTwipsX(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width) - VB6.PixelsToTwipsX(Me.Width)) / 2)
+			'Me.Top = VB6.TwipsToPixelsY((VB6.PixelsToTwipsY(System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height) - VB6.PixelsToTwipsY(Me.Height)) / 2)
 		Else
 			If Me.Visible = True Then
                 'If blnSystray = False Then

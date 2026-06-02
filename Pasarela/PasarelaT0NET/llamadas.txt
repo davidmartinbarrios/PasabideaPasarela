@@ -1,0 +1,2322 @@
+SECUENCIA DE LLAMADAS
+====================
+
+Entradas detectadas:
+  Load: frmProceso_Load
+  Activated: frmProceso_Activated
+  Timer/Tick: tmrProg_Tick
+  Otros eventos: CmdCancelarActual_Click, cmdCancelar_Click, cmdForzar_Click, cmdNotepad_Click
+
+FLUJO PRINCIPAL
+---------------
+
+frmProceso_Load
+  -> cerrarConexiones
+  -> FormatoHoras
+    -> FormatoHoras
+      ... [recursiva / ciclo]
+  -> frmProceso_Activated
+  -> tmrProg_Tick
+    -> arrancarConexiones
+    -> msPasarProcedimientos
+      -> msLec_Diagram_Proc
+        -> msProceso
+        -> mfFaseSubfase
+          -> mfFaseSubfase
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msLec_Conectores_DI
+          -> msProceso
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> Mostrar_Error
+        -> msLec_Diagram_Proc
+          ... [recursiva / ciclo]
+      -> msPropiedades_Proc
+        -> msProceso
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msVariables_Alta
+        -> msProceso
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msUd_Tramitacion
+        -> msProceso
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfUnidTra
+          -> mfUnidTra
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msLec_Conectores_ACC
+        -> msProceso
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msComprobarNombres
+      -> msActualizarSalidas
+        -> Mostrar_Error
+      -> msLecTramRamif
+        -> msProceso
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfTratamientoCM10
+          -> mfTratamientoCM10
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> msTablasInfra
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfUnidTra
+          -> mfUnidTra
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfUnidTraComunicacion
+          -> mfUnidTraComunicacion
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfUnidTra
+            -> mfUnidTra
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> msUnidTraRami
+        -> msUnRamPa
+          -> Mostrar_Error
+        -> msPlazT1
+          -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> msFirma
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> msBuscarvbFirma
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> msVBResp1
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> msVBResp2
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> msAcusRecTele
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> msObtenerResponsableFirmaExterno
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msActVar
+          -> Mostrar_Error
+        -> msPlazT2
+          -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+      -> msLecAccTram
+        -> msProceso
+        -> SolucionarINDTIPOA
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> CrearAccion
+          -> CrearAccion
+            ... [recursiva / ciclo]
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> Mostrar_Error
+      -> mslecParamAcc
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msProceso
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> fArranque_Automatico
+          -> fArranque_Automatico
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> fTrat_Varios
+          -> fTrat_Varios
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> fEnv_Mens
+          -> fEnv_Mens
+            ... [recursiva / ciclo]
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> fEval_Ind_Requis
+          -> fEval_Ind_Requis
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> fImpres_Doc
+          -> fImpres_Doc
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> fInitVar
+          -> fInitVar
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> fIntroCampoOb
+          -> fIntroCampoOb
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> fIntroDatos
+          -> fIntroDatos
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> fPresen_Mens
+          -> fPresen_Mens
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> fTD_Aut
+          -> fTD_Aut
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msPruebaTDAUTOMATICA
+            -> msInsertaParamAcc
+              -> mfInsertaVariablesNOMBRE
+                -> Mostrar_Error
+                -> mfInsertaVariablesNOMBRE
+                  ... [recursiva / ciclo]
+              -> mfObtieneRuta
+                -> mfObtieneRuta
+                  ... [recursiva / ciclo]
+              -> Mostrar_Error
+        -> fTD_Usu
+          -> fTD_Usu
+            ... [recursiva / ciclo]
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> fComprobacion_DOC
+          -> fComprobacion_DOC
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> fTrat_Docum
+          -> fTrat_Docum
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> fSin_Implementacion
+          -> fSin_Implementacion
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msRepaso
+        -> msProceso
+        -> msBuscarCancel
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> Mostrar_Error
+        -> msSolucionJumps
+          -> mfComprobarFDP
+            -> mfComprobarFDP
+              ... [recursiva / ciclo]
+          -> msNivelSuperior
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfConectoresValidos
+            -> mfConectoresValidos
+              ... [recursiva / ciclo]
+          -> msCalc
+            -> msCalc
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msEnlaces_sin_Definir
+          -> msMismoEnlaceSinDefinir
+            -> msMismoEnlaceSinDefinir
+              ... [recursiva / ciclo]
+            -> mfBuscaXML
+              -> mfBuscaXML
+                ... [recursiva / ciclo]
+              -> Mostrar_Error
+        -> msJumpsNoDetectados
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> msConectoresOpcionales
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> msMetoCaducar
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msResolPlazTip2
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> msSolucionRampa
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> msFly
+          -> Mostrar_Error
+        -> msSolucionWait
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfMeteOpcionalParaWait
+            -> mfBuscaXML
+              -> mfBuscaXML
+                ... [recursiva / ciclo]
+              -> Mostrar_Error
+            -> msInsertaParamAcc
+              -> mfInsertaVariablesNOMBRE
+                -> Mostrar_Error
+                -> mfInsertaVariablesNOMBRE
+                  ... [recursiva / ciclo]
+              -> mfObtieneRuta
+                -> mfObtieneRuta
+                  ... [recursiva / ciclo]
+              -> Mostrar_Error
+            -> mfInsertaVariables
+              -> mfInsertaVariables
+                ... [recursiva / ciclo]
+              -> Mostrar_Error
+          -> Mostrar_Error
+        -> msSolucionCaducar
+          -> Mostrar_Error
+        -> msResolVariables
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> Mostrar_Error
+        -> msResolPlazo1
+          -> Mostrar_Error
+      -> msValidaciones
+        -> msProceso
+        -> Mostrar_Error
+        -> logTiempos
+        -> formatGTC
+          -> formatGTC
+            ... [recursiva / ciclo]
+      -> msOptimizarFlujo
+        -> msEliminarEDPyPRO
+          -> Mostrar_Error
+        -> msRemplazarTDA_por_IF
+          -> Mostrar_Error
+      -> msCrearFlujo
+        -> msProceso
+        -> Mostrar_Error
+      -> msCrearTramites
+        -> msProceso
+        -> msCorregirTramites
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msCargarInfraestructura
+        -> msProceso
+        -> Mostrar_Error
+      -> msVariablesInfra
+        -> msProceso
+      -> msCargarFlujo
+        -> msProceso
+        -> msProcEnCola
+          -> frmProceso_Activated
+      -> msEliminarJUMP_SiguienteInstruccion
+      -> msModificacionesTramites
+        -> msProceso
+      -> msAdaptarFlujosRamasUnion
+      -> Mostrar_Error
+    -> FormatoHoras
+      -> FormatoHoras
+        ... [recursiva / ciclo]
+
+FUNCIONES SUELTAS / NO ALCANZADAS DESDE EL FLUJO PRINCIPAL
+----------------------------------------------------------
+
+CmdCancelarActual_Click
+  -> msPasarProcedimientos
+    -> msLec_Diagram_Proc
+      -> msProceso
+      -> mfFaseSubfase
+        -> mfFaseSubfase
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msLec_Conectores_DI
+        -> msProceso
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> Mostrar_Error
+      -> msLec_Diagram_Proc
+        ... [recursiva / ciclo]
+    -> msPropiedades_Proc
+      -> msProceso
+      -> mfBuscaXML
+        -> mfBuscaXML
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msInsertaParamAcc
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> mfObtieneRuta
+          -> mfObtieneRuta
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msVariables_Alta
+      -> msProceso
+      -> mfInsertaVariables
+        -> mfInsertaVariables
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msUd_Tramitacion
+      -> msProceso
+      -> mfBuscaXML
+        -> mfBuscaXML
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> mfUnidTra
+        -> mfUnidTra
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msLec_Conectores_ACC
+      -> msProceso
+      -> mfBuscaXML
+        -> mfBuscaXML
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msComprobarNombres
+    -> msActualizarSalidas
+      -> Mostrar_Error
+    -> msLecTramRamif
+      -> msProceso
+      -> mfBuscaXML
+        -> mfBuscaXML
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> mfTratamientoCM10
+        -> mfTratamientoCM10
+          ... [recursiva / ciclo]
+      -> Mostrar_Error
+      -> msTablasInfra
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> mfUnidTra
+        -> mfUnidTra
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> mfUnidTraComunicacion
+        -> mfUnidTraComunicacion
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfUnidTra
+          -> mfUnidTra
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> msUnidTraRami
+      -> msUnRamPa
+        -> Mostrar_Error
+      -> msPlazT1
+        -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> msFirma
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msBuscarvbFirma
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msVBResp1
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msVBResp2
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msAcusRecTele
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msObtenerResponsableFirmaExterno
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msInsertaParamAcc
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> mfObtieneRuta
+          -> mfObtieneRuta
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msActVar
+        -> Mostrar_Error
+      -> msPlazT2
+        -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+    -> msLecAccTram
+      -> msProceso
+      -> SolucionarINDTIPOA
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> CrearAccion
+        -> CrearAccion
+          ... [recursiva / ciclo]
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> Mostrar_Error
+    -> mslecParamAcc
+      -> mfInsertaVariables
+        -> mfInsertaVariables
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msProceso
+      -> mfBuscaXML
+        -> mfBuscaXML
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> fArranque_Automatico
+        -> fArranque_Automatico
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fTrat_Varios
+        -> fTrat_Varios
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fEnv_Mens
+        -> fEnv_Mens
+          ... [recursiva / ciclo]
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fEval_Ind_Requis
+        -> fEval_Ind_Requis
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fImpres_Doc
+        -> fImpres_Doc
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fInitVar
+        -> fInitVar
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fIntroCampoOb
+        -> fIntroCampoOb
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fIntroDatos
+        -> fIntroDatos
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fPresen_Mens
+        -> fPresen_Mens
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fTD_Aut
+        -> fTD_Aut
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msPruebaTDAUTOMATICA
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+      -> fTD_Usu
+        -> fTD_Usu
+          ... [recursiva / ciclo]
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> fComprobacion_DOC
+        -> fComprobacion_DOC
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fTrat_Docum
+        -> fTrat_Docum
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fSin_Implementacion
+        -> fSin_Implementacion
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> msInsertaParamAcc
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> mfObtieneRuta
+          -> mfObtieneRuta
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msRepaso
+      -> msProceso
+      -> msBuscarCancel
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> Mostrar_Error
+      -> msSolucionJumps
+        -> mfComprobarFDP
+          -> mfComprobarFDP
+            ... [recursiva / ciclo]
+        -> msNivelSuperior
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfConectoresValidos
+          -> mfConectoresValidos
+            ... [recursiva / ciclo]
+        -> msCalc
+          -> msCalc
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msEnlaces_sin_Definir
+        -> msMismoEnlaceSinDefinir
+          -> msMismoEnlaceSinDefinir
+            ... [recursiva / ciclo]
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+      -> msJumpsNoDetectados
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msConectoresOpcionales
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> msMetoCaducar
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> msInsertaParamAcc
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> mfObtieneRuta
+          -> mfObtieneRuta
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msResolPlazTip2
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msSolucionRampa
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msFly
+        -> Mostrar_Error
+      -> msSolucionWait
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfMeteOpcionalParaWait
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> Mostrar_Error
+      -> msSolucionCaducar
+        -> Mostrar_Error
+      -> msResolVariables
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msResolPlazo1
+        -> Mostrar_Error
+    -> msValidaciones
+      -> msProceso
+      -> Mostrar_Error
+      -> logTiempos
+      -> formatGTC
+        -> formatGTC
+          ... [recursiva / ciclo]
+    -> msOptimizarFlujo
+      -> msEliminarEDPyPRO
+        -> Mostrar_Error
+      -> msRemplazarTDA_por_IF
+        -> Mostrar_Error
+    -> msCrearFlujo
+      -> msProceso
+      -> Mostrar_Error
+    -> msCrearTramites
+      -> msProceso
+      -> msCorregirTramites
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msCargarInfraestructura
+      -> msProceso
+      -> Mostrar_Error
+    -> msVariablesInfra
+      -> msProceso
+    -> msCargarFlujo
+      -> msProceso
+      -> msProcEnCola
+        -> frmProceso_Activated
+    -> msEliminarJUMP_SiguienteInstruccion
+    -> msModificacionesTramites
+      -> msProceso
+    -> msAdaptarFlujosRamasUnion
+    -> Mostrar_Error
+
+cmdCancelar_Click
+  -> msPasarProcedimientos
+    -> msLec_Diagram_Proc
+      -> msProceso
+      -> mfFaseSubfase
+        -> mfFaseSubfase
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msLec_Conectores_DI
+        -> msProceso
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> Mostrar_Error
+      -> msLec_Diagram_Proc
+        ... [recursiva / ciclo]
+    -> msPropiedades_Proc
+      -> msProceso
+      -> mfBuscaXML
+        -> mfBuscaXML
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msInsertaParamAcc
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> mfObtieneRuta
+          -> mfObtieneRuta
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msVariables_Alta
+      -> msProceso
+      -> mfInsertaVariables
+        -> mfInsertaVariables
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msUd_Tramitacion
+      -> msProceso
+      -> mfBuscaXML
+        -> mfBuscaXML
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> mfUnidTra
+        -> mfUnidTra
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msLec_Conectores_ACC
+      -> msProceso
+      -> mfBuscaXML
+        -> mfBuscaXML
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msComprobarNombres
+    -> msActualizarSalidas
+      -> Mostrar_Error
+    -> msLecTramRamif
+      -> msProceso
+      -> mfBuscaXML
+        -> mfBuscaXML
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> mfTratamientoCM10
+        -> mfTratamientoCM10
+          ... [recursiva / ciclo]
+      -> Mostrar_Error
+      -> msTablasInfra
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> mfUnidTra
+        -> mfUnidTra
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> mfUnidTraComunicacion
+        -> mfUnidTraComunicacion
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfUnidTra
+          -> mfUnidTra
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> msUnidTraRami
+      -> msUnRamPa
+        -> Mostrar_Error
+      -> msPlazT1
+        -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> msFirma
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msBuscarvbFirma
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msVBResp1
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msVBResp2
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msAcusRecTele
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msObtenerResponsableFirmaExterno
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msInsertaParamAcc
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> mfObtieneRuta
+          -> mfObtieneRuta
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msActVar
+        -> Mostrar_Error
+      -> msPlazT2
+        -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+    -> msLecAccTram
+      -> msProceso
+      -> SolucionarINDTIPOA
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> CrearAccion
+        -> CrearAccion
+          ... [recursiva / ciclo]
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> Mostrar_Error
+    -> mslecParamAcc
+      -> mfInsertaVariables
+        -> mfInsertaVariables
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msProceso
+      -> mfBuscaXML
+        -> mfBuscaXML
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> fArranque_Automatico
+        -> fArranque_Automatico
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fTrat_Varios
+        -> fTrat_Varios
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fEnv_Mens
+        -> fEnv_Mens
+          ... [recursiva / ciclo]
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fEval_Ind_Requis
+        -> fEval_Ind_Requis
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fImpres_Doc
+        -> fImpres_Doc
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fInitVar
+        -> fInitVar
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fIntroCampoOb
+        -> fIntroCampoOb
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fIntroDatos
+        -> fIntroDatos
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fPresen_Mens
+        -> fPresen_Mens
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fTD_Aut
+        -> fTD_Aut
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msPruebaTDAUTOMATICA
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+      -> fTD_Usu
+        -> fTD_Usu
+          ... [recursiva / ciclo]
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> fComprobacion_DOC
+        -> fComprobacion_DOC
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fTrat_Docum
+        -> fTrat_Docum
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> fSin_Implementacion
+        -> fSin_Implementacion
+          ... [recursiva / ciclo]
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> msInsertaParamAcc
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> mfObtieneRuta
+          -> mfObtieneRuta
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msRepaso
+      -> msProceso
+      -> msBuscarCancel
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> Mostrar_Error
+      -> msSolucionJumps
+        -> mfComprobarFDP
+          -> mfComprobarFDP
+            ... [recursiva / ciclo]
+        -> msNivelSuperior
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfConectoresValidos
+          -> mfConectoresValidos
+            ... [recursiva / ciclo]
+        -> msCalc
+          -> msCalc
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msEnlaces_sin_Definir
+        -> msMismoEnlaceSinDefinir
+          -> msMismoEnlaceSinDefinir
+            ... [recursiva / ciclo]
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+      -> msJumpsNoDetectados
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msConectoresOpcionales
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> msMetoCaducar
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+      -> msInsertaParamAcc
+        -> mfInsertaVariablesNOMBRE
+          -> Mostrar_Error
+          -> mfInsertaVariablesNOMBRE
+            ... [recursiva / ciclo]
+        -> mfObtieneRuta
+          -> mfObtieneRuta
+            ... [recursiva / ciclo]
+        -> Mostrar_Error
+      -> msResolPlazTip2
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msSolucionRampa
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msFly
+        -> Mostrar_Error
+      -> msSolucionWait
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfMeteOpcionalParaWait
+          -> mfBuscaXML
+            -> mfBuscaXML
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> msInsertaParamAcc
+            -> mfInsertaVariablesNOMBRE
+              -> Mostrar_Error
+              -> mfInsertaVariablesNOMBRE
+                ... [recursiva / ciclo]
+            -> mfObtieneRuta
+              -> mfObtieneRuta
+                ... [recursiva / ciclo]
+            -> Mostrar_Error
+          -> mfInsertaVariables
+            -> mfInsertaVariables
+              ... [recursiva / ciclo]
+            -> Mostrar_Error
+        -> Mostrar_Error
+      -> msSolucionCaducar
+        -> Mostrar_Error
+      -> msResolVariables
+        -> mfInsertaVariables
+          -> mfInsertaVariables
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> mfBuscaXML
+          -> mfBuscaXML
+            ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> msInsertaParamAcc
+          -> mfInsertaVariablesNOMBRE
+            -> Mostrar_Error
+            -> mfInsertaVariablesNOMBRE
+              ... [recursiva / ciclo]
+          -> mfObtieneRuta
+            -> mfObtieneRuta
+              ... [recursiva / ciclo]
+          -> Mostrar_Error
+        -> Mostrar_Error
+      -> msResolPlazo1
+        -> Mostrar_Error
+    -> msValidaciones
+      -> msProceso
+      -> Mostrar_Error
+      -> logTiempos
+      -> formatGTC
+        -> formatGTC
+          ... [recursiva / ciclo]
+    -> msOptimizarFlujo
+      -> msEliminarEDPyPRO
+        -> Mostrar_Error
+      -> msRemplazarTDA_por_IF
+        -> Mostrar_Error
+    -> msCrearFlujo
+      -> msProceso
+      -> Mostrar_Error
+    -> msCrearTramites
+      -> msProceso
+      -> msCorregirTramites
+        -> Mostrar_Error
+      -> Mostrar_Error
+    -> msCargarInfraestructura
+      -> msProceso
+      -> Mostrar_Error
+    -> msVariablesInfra
+      -> msProceso
+    -> msCargarFlujo
+      -> msProceso
+      -> msProcEnCola
+        -> frmProceso_Activated
+    -> msEliminarJUMP_SiguienteInstruccion
+    -> msModificacionesTramites
+      -> msProceso
+    -> msAdaptarFlujosRamasUnion
+    -> Mostrar_Error
+
+cmdForzar_Click
+
+cmdNotepad_Click
+
+mfBuscaTramiteTDUSuperior
+  -> mfBuscaXML
+    -> mfBuscaXML
+      ... [recursiva / ciclo]
+    -> Mostrar_Error
+  -> mfBuscaTramiteTDUSuperior
+    ... [recursiva / ciclo]

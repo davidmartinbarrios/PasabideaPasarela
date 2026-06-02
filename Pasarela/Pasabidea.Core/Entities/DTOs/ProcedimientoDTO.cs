@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Lantik.Pasabidea.Core.Entities.DTOs
+namespace Lantik.Pasabidea.Core.Entities
 {
     public sealed class ProcedimientoDTO
     {

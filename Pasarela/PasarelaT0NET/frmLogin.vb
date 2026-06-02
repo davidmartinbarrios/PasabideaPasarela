@@ -9,8 +9,8 @@ Friend Class frmLogin
 		Dim rstAux As ADODB.Recordset
 		Dim strSQL As String
 
-		Me.Close()
-		frmMigrar.Show()
+        'Me.Close()
+        frmMigrar.Show()
 		'BYPASS
 		'conPasarela = New ADODB.Connection
 		'If ComprobarConexion(conPasarela, ReadIniFile(INIFile, "PASARELA", "Connection")) = False Then

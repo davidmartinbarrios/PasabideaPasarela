@@ -1,0 +1,10 @@
+sequenceDiagram
+    autonumber
+    participant frmProceso_Load as frmProceso_Load
+    participant cerrarConexiones as cerrarConexiones
+    participant FormatoHoras as FormatoHoras
+    participant FormatoHoras__recursiva_ as FormatoHoras [recursiva]
+    frmProceso_Load->>cerrarConexiones: llama a cerrarConexiones
+    frmProceso_Load->>FormatoHoras: llama a FormatoHoras
+    FormatoHoras->>FormatoHoras: llama a FormatoHoras
+    FormatoHoras->>FormatoHoras__recursiva_: llama a FormatoHoras [recursiva]

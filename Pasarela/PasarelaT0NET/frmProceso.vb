@@ -25123,15 +25123,15 @@ procFin:
 		bMinimizado = False
 		'fin aketza
 		'If frmMDI.WindowState <> 0 Then
-		frmMDI.Width = VB6.TwipsToPixelsX(mdiAncho)
-		frmMDI.Height = VB6.TwipsToPixelsY(mdiAlto)
+		''frmMDI.Width = VB6.TwipsToPixelsX(mdiAncho)
+		''frmMDI.Height = VB6.TwipsToPixelsY(mdiAlto)
 		'End If
 		'aketza minimizado
 MINIMI: 
 		bMinimizado = True
 		'fin aketza
-		frmMDI.Icon = Me.Icon
-		frmMDI.Text = Me.Text
+		''frmMDI.Icon = Me.Icon
+		''frmMDI.Text = Me.Text
 		If strFechaProgramada <> "" Then
 			cerrarConexiones()
 			Me.cmdForzar.Visible = False
@@ -29137,5 +29137,9 @@ procErr:
 		
 		Insertar_Error(Me, "Adaptar Flujos", strError, "msAdaptarFlujosRamasUnion")
 		logError("msAdaptarFlujosRamasUnion - Ha ocurrido un error en la adaptación de los flujos: " & strError)
+	End Sub
+
+	Private Sub tmrProg_Tick_1()
+
 	End Sub
 End Class
